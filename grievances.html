@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-translate="grievances_title">Grievances - MigrantConnect</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link href="assets/css/styles.css" rel="stylesheet" />
+  </head>
+
+  <body class="bg-light">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">
+          <i class="fas fa-network-wired me-2"></i>MigrantConnect
+        </a>
+        <div class="navbar-nav ms-auto d-flex flex-row">
+          <div class="nav-item dropdown me-3">
+            <button
+              class="btn btn-outline-light btn-sm dropdown-toggle"
+              type="button"
+              data-bs-toggle="dropdown"
+            >
+              <i class="fas fa-globe me-1"></i
+              ><span id="currentLang">English</span>
+            </button>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item" href="#" onclick="changeLanguage('en')"
+                  >English</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="#" onclick="changeLanguage('hi')"
+                  >हिंदी</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="#" onclick="changeLanguage('bn')"
+                  >বাংলা</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="#" onclick="changeLanguage('te')"
+                  >తెలుగు</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="#" onclick="changeLanguage('mr')"
+                  >मराठी</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="#" onclick="changeLanguage('gu')"
+                  >ગુજરાતી</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="#" onclick="changeLanguage('kn')"
+                  >ಕನ್ನಡ</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="#" onclick="changeLanguage('ml')"
+                  >മലയാളം</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="#" onclick="changeLanguage('ta')"
+                  >தமிழ்</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="#" onclick="changeLanguage('pa')"
+                  >ਪੰਜਾਬੀ</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="#" onclick="changeLanguage('or')"
+                  >ଓଡ଼ିଆ</a
+                >
+              </li>
+            </ul>
+          </div>
+          <a href="dashboard.html" class="btn btn-outline-light btn-sm">
+            <i class="fas fa-arrow-left me-1"></i
+            ><span data-translate="back_to_dashboard">Back to Dashboard</span>
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-5 pt-4">
+      <!-- Header -->
+      <div class="row mb-4">
+        <div class="col-md-8">
+          <h1
+            class="display-5 fw-bold text-primary mb-2"
+            data-translate="grievances_portal"
+          >
+            Grievances Portal
+          </h1>
+          <p class="lead text-muted" data-translate="grievances_desc">
+            File and track workplace complaints and issues
+          </p>
+        </div>
+        <div class="col-md-4 text-md-end">
+          <button
+            class="btn btn-primary btn-lg"
+            onclick="showFileGrievanceModal()"
+          >
+            <i class="fas fa-plus me-2"></i
+            ><span data-translate="file_grievance">File New Grievance</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Stats -->
+      <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+          <div class="card bg-primary text-white">
+            <div class="card-body text-center">
+              <h3 class="mb-0" id="totalGrievances">0</h3>
+              <small data-translate="total_grievances">Total Grievances</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 mb-3">
+          <div class="card bg-warning text-white">
+            <div class="card-body text-center">
+              <h3 class="mb-0" id="activeGrievances">0</h3>
+              <small data-translate="active_grievances">Active</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 mb-3">
+          <div class="card bg-info text-white">
+            <div class="card-body text-center">
+              <h3 class="mb-0" id="inProgressGrievances">0</h3>
+              <small data-translate="in_progress_grievances">In Progress</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 mb-3">
+          <div class="card bg-success text-white">
+            <div class="card-body text-center">
+              <h3 class="mb-0" id="resolvedGrievances">0</h3>
+              <small data-translate="resolved_grievances">Resolved</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <ul class="nav nav-tabs" id="grievancesTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link active"
+            id="active-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#active"
+            type="button"
+            role="tab"
+          >
+            <i class="fas fa-clock me-1"></i
+            ><span data-translate="active_tab">Active Grievances</span>
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="resolved-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#resolved"
+            type="button"
+            role="tab"
+          >
+            <i class="fas fa-check-circle me-1"></i
+            ><span data-translate="resolved_tab">Resolved Grievances</span>
+          </button>
+        </li>
+      </ul>
+
+      <!-- Tab Content -->
+      <div class="tab-content" id="grievancesTabContent">
+        <!-- Active Grievances -->
+        <div class="tab-pane fade show active" id="active" role="tabpanel">
+          <div class="card">
+            <div class="card-body">
+              <div id="activeGrievancesList">
+                <!-- Active grievances will be loaded here -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Resolved Grievances -->
+        <div class="tab-pane fade" id="resolved" role="tabpanel">
+          <div class="card">
+            <div class="card-body">
+              <div id="resolvedGrievancesList">
+                <!-- Resolved grievances will be loaded here -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- File Grievance Modal -->
+    <div
+      class="modal fade"
+      id="fileGrievanceModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" data-translate="file_new_grievance">
+              File New Grievance
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="grievanceForm">
+              <div class="mb-3">
+                <label
+                  for="grievanceTitle"
+                  class="form-label"
+                  data-translate="grievance_title"
+                  >Grievance Title *</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="grievanceTitle"
+                  required
+                  placeholder="Brief description of the issue"
+                  data-translate-placeholder="title_placeholder"
+                />
+              </div>
+              <div class="mb-3">
+                <label
+                  for="grievanceType"
+                  class="form-label"
+                  data-translate="grievance_type"
+                  >Type of Grievance *</label
+                >
+                <select class="form-select" id="grievanceType" required>
+                  <option value="" data-translate="select_type">
+                    Select Type
+                  </option>
+                  <option value="Wage Dispute" data-translate="wage_dispute">
+                    Wage Dispute
+                  </option>
+                  <option value="Working Hours" data-translate="working_hours">
+                    Working Hours
+                  </option>
+                  <option
+                    value="Safety Concern"
+                    data-translate="safety_concern"
+                  >
+                    Safety Concern
+                  </option>
+                  <option
+                    value="Living Conditions"
+                    data-translate="living_conditions"
+                  >
+                    Living Conditions
+                  </option>
+                  <option
+                    value="Discrimination"
+                    data-translate="discrimination"
+                  >
+                    Discrimination
+                  </option>
+                  <option
+                    value="Contract Issues"
+                    data-translate="contract_issues"
+                  >
+                    Contract Issues
+                  </option>
+                  <option value="Other" data-translate="other">Other</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label
+                  for="employer"
+                  class="form-label"
+                  data-translate="employer_name"
+                  >Employer/Company Name *</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="employer"
+                  required
+                  placeholder="Name of employer or company"
+                  data-translate-placeholder="employer_placeholder"
+                />
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label
+                    for="jobTitle"
+                    class="form-label"
+                    data-translate="job_title"
+                    >Job Title</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="jobTitle"
+                    placeholder="Your job position"
+                    data-translate-placeholder="job_title_placeholder"
+                  />
+                </div>
+                <div class="col-md-6">
+                  <label
+                    for="workPeriod"
+                    class="form-label"
+                    data-translate="work_period"
+                    >Work Period</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="workPeriod"
+                    placeholder="e.g., Jan 2024 - Present"
+                    data-translate-placeholder="work_period_placeholder"
+                  />
+                </div>
+              </div>
+              <div class="mb-3">
+                <label
+                  for="amountDue"
+                  class="form-label"
+                  data-translate="amount_due"
+                  >Amount Due (if applicable)</label
+                >
+                <div class="input-group">
+                  <span class="input-group-text">₹</span>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="amountDue"
+                    placeholder="0"
+                    data-translate-placeholder="amount_placeholder"
+                  />
+                </div>
+              </div>
+              <div class="mb-3">
+                <label
+                  for="grievanceDescription"
+                  class="form-label"
+                  data-translate="detailed_description"
+                  >Detailed Description *</label
+                >
+                <textarea
+                  class="form-control"
+                  id="grievanceDescription"
+                  rows="5"
+                  required
+                  placeholder="Provide detailed information about your grievance..."
+                  data-translate-placeholder="description_placeholder"
+                ></textarea>
+              </div>
+              <div class="mb-3">
+                <label
+                  for="evidence"
+                  class="form-label"
+                  data-translate="supporting_evidence"
+                  >Supporting Evidence</label
+                >
+                <input
+                  class="form-control"
+                  type="file"
+                  id="evidence"
+                  multiple
+                  accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+                />
+                <div class="form-text" data-translate="evidence_help">
+                  Upload any supporting documents, photos, or evidence (Max 5MB
+                  per file)
+                </div>
+              </div>
+              <div class="mb-3 form-check">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  id="termsAgreement"
+                  required
+                />
+                <label
+                  class="form-check-label"
+                  for="termsAgreement"
+                  data-translate="terms_agreement"
+                >
+                  I confirm that the information provided is accurate to the
+                  best of my knowledge
+                </label>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+              data-translate="cancel"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              onclick="submitGrievance()"
+            >
+              <i class="fas fa-paper-plane me-1"></i
+              ><span data-translate="submit_grievance">Submit Grievance</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grievance Details Modal -->
+    <div
+      class="modal fade"
+      id="grievanceDetailsModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="grievanceDetailsTitle">
+              Grievance Details
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body" id="grievanceDetailsContent">
+            <!-- Grievance details will be loaded here -->
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+              data-translate="close"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              id="addResponseBtn"
+              onclick="showAddResponseForm()"
+            >
+              <i class="fas fa-comment me-1"></i
+              ><span data-translate="add_response">Add Response</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Response Modal -->
+    <div
+      class="modal fade"
+      id="addResponseModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" data-translate="add_response">
+              Add Response
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="responseForm">
+              <div class="mb-3">
+                <label
+                  for="responseMessage"
+                  class="form-label"
+                  data-translate="your_message"
+                  >Your Message</label
+                >
+                <textarea
+                  class="form-control"
+                  id="responseMessage"
+                  rows="4"
+                  required
+                  placeholder="Add additional information or follow-up..."
+                  data-translate-placeholder="response_placeholder"
+                ></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+              data-translate="cancel"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              onclick="submitResponse()"
+            >
+              <i class="fas fa-paper-plane me-1"></i
+              ><span data-translate="send_response">Send Response</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/language.js"></script>
+    <script src="assets/js/grievances.js"></script>
+  </body>
+</html>
