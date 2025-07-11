@@ -1,321 +1,756 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-translate="health_title">
+      Healthcare Services - MigrantConnect
+    </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="assets/css/tailwind-styles.css" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#2563eb",
+              secondary: "#1e40af",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MigrantConnect - Healthcare Benefits</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/styles.css">
-</head>
-
-<body class="bg-light">
-    <!-- Offline Banner -->
-    <div id="offline-banner" class="alert alert-warning text-center d-none">
-        <i class="fas fa-exclamation-triangle"></i> <span data-translate="offline_warning">⚠️ You're offline – showing
-            cached data</span>
-    </div>
-
+  <body class="min-h-screen bg-gray-50">
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand" href="dashboard.html">🏠 MigrantConnect</a>
-            <div class="navbar-nav ms-auto">
-                <div class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button"
-                        data-bs-toggle="dropdown">
-                        <i class="fas fa-globe"></i> <span data-translate="language">Language</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#" onclick="changeLanguage('en')">English</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeLanguage('hi')">हिंदी</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeLanguage('bn')">বাংলা</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeLanguage('te')">తెలుగు</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeLanguage('ta')">தமிழ்</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeLanguage('mr')">मराठी</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeLanguage('gu')">ગુજરાતી</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeLanguage('kn')">ಕನ್ನಡ</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeLanguage('ml')">മലയാളം</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeLanguage('pa')">ਪੰਜਾਬੀ</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeLanguage('or')">ଓଡ଼ିଆ</a></li>
-                    </ul>
+    <nav class="navbar-modern bg-white shadow-lg">
+      <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between h-16">
+          <div class="flex items-center">
+            <a
+              href="dashboard.html"
+              class="flex items-center text-xl font-bold text-blue-600"
+            >
+              <i class="fas fa-heartbeat mr-2"></i>
+              Healthcare Services
+            </a>
+          </div>
+
+          <div class="flex items-center space-x-4">
+            <!-- Language Dropdown -->
+            <div class="relative" id="languageDropdown">
+              <button
+                class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                onclick="toggleLanguageDropdown()"
+              >
+                <i class="fas fa-globe mr-2"></i>
+                <span id="currentLang">English</span>
+                <i class="fas fa-chevron-down ml-2"></i>
+              </button>
+              <div
+                class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-50 hidden"
+                id="languageMenu"
+              >
+                <div class="py-1">
+                  <a
+                    href="#"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onclick="changeLanguage('en')"
+                    >English</a
+                  >
+                  <a
+                    href="#"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onclick="changeLanguage('hi')"
+                    >हिंदी</a
+                  >
+                  <a
+                    href="#"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onclick="changeLanguage('bn')"
+                    >বাংলা</a
+                  >
                 </div>
-                <a class="nav-link" href="dashboard.html" data-translate="back_to_dashboard">Back to Dashboard</a>
+              </div>
             </div>
+
+            <!-- Emergency Hotline -->
+            <a href="tel:108" class="btn-danger-modern">
+              <i class="fas fa-phone mr-2"></i>
+              Emergency: 108
+            </a>
+
+            <!-- Back to Dashboard -->
+            <a href="dashboard.html" class="btn-outline-modern">
+              <i class="fas fa-arrow-left mr-2"></i>
+              <span data-translate="back_to_dashboard">Back to Dashboard</span>
+            </a>
+          </div>
         </div>
+      </div>
     </nav>
 
-    <div class="container my-4">
-        <!-- Page Header -->
-        <div class="row mb-4">
-            <div class="col-12">
-                <div class="d-flex align-items-center mb-3">
-                    <div class="benefit-icon-large me-3">🏥</div>
-                    <div>
-                        <h2 data-translate="health_benefits">Healthcare Benefits</h2>
-                        <p class="text-muted mb-0" data-translate="health_subtitle">Ayushman Bharat & Other Schemes</p>
-                    </div>
-                </div>
-            </div>
+    <!-- Hero Section -->
+    <div class="gradient-danger text-white py-16 mt-16">
+      <div class="container mx-auto px-4">
+        <div class="text-center">
+          <h1 class="text-4xl font-bold mb-4" data-translate="health_title">
+            Healthcare Services
+          </h1>
+          <p class="text-xl text-red-100 mb-8" data-translate="health_subtitle">
+            Access healthcare facilities, insurance schemes, and medical
+            assistance programs
+          </p>
         </div>
-
-        <div class="row">
-            <!-- Benefit Information -->
-            <div class="col-md-8">
-                <!-- Health Card Status -->
-                <div class="card mb-4">
-                    <div class="card-header bg-success text-white">
-                        <h5 class="mb-0" data-translate="health_card_status">Health Card Status</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h6 data-translate="card_details">Card Details:</h6>
-                                <ul class="list-unstyled">
-                                    <li><strong data-translate="card_number">Card Number:</strong> AB-12-345678901</li>
-                                    <li><strong data-translate="coverage">Coverage:</strong> ₹5,00,000 per year</li>
-                                    <li><strong data-translate="family_members">Family Members:</strong> 4</li>
-                                    <li><strong data-translate="valid_till">Valid Till:</strong> 31 March 2025</li>
-                                </ul>
-                            </div>
-                            <div class="col-md-6">
-                                <h6 data-translate="usage_status">Usage Status:</h6>
-                                <div class="progress mb-2">
-                                    <div class="progress-bar bg-info usage-bar-25">25%</div>
-                                </div>
-                                <small class="text-muted" data-translate="used_this_year">Used this year: ₹1,25,000 of
-                                    ₹5,00,000</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Recent Medical History -->
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h5 class="mb-0" data-translate="recent_medical_history">Recent Medical History</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-sm">
-                                <thead>
-                                    <tr>
-                                        <th data-translate="date">Date</th>
-                                        <th data-translate="hospital">Hospital</th>
-                                        <th data-translate="treatment">Treatment</th>
-                                        <th data-translate="amount">Amount</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>20 Dec 2024</td>
-                                        <td>AIIMS, Delhi</td>
-                                        <td>General Checkup</td>
-                                        <td>₹2,500</td>
-                                    </tr>
-                                    <tr>
-                                        <td>15 Nov 2024</td>
-                                        <td>Safdarjung Hospital, Delhi</td>
-                                        <td>Blood Test</td>
-                                        <td>₹1,200</td>
-                                    </tr>
-                                    <tr>
-                                        <td>10 Oct 2024</td>
-                                        <td>Local PHC, Delhi</td>
-                                        <td>Vaccination</td>
-                                        <td>Free</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Available Services -->
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0" data-translate="available_services">Available Services</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <div class="d-flex align-items-center">
-                                    <i class="fas fa-check-circle text-success me-2"></i>
-                                    <span data-translate="cashless_treatment">Cashless Treatment</span>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <div class="d-flex align-items-center">
-                                    <i class="fas fa-check-circle text-success me-2"></i>
-                                    <span data-translate="emergency_services">Emergency Services</span>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <div class="d-flex align-items-center">
-                                    <i class="fas fa-check-circle text-success me-2"></i>
-                                    <span data-translate="maternity_benefits">Maternity Benefits</span>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <div class="d-flex align-items-center">
-                                    <i class="fas fa-check-circle text-success me-2"></i>
-                                    <span data-translate="medicine_coverage">Medicine Coverage</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Action Panel -->
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0" data-translate="quick_actions">Quick Actions</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-grid gap-2">
-                            <button class="btn btn-primary" onclick="bookAppointment()"
-                                data-translate="book_appointment">
-                                <i class="fas fa-calendar-alt"></i> Book Appointment
-                            </button>
-                            <button class="btn btn-success" onclick="downloadCard('health')"
-                                data-translate="download_card">
-                                <i class="fas fa-download"></i> Download Health Card
-                            </button>
-                            <button class="btn btn-info" onclick="findNearestHospital()" data-translate="find_hospital">
-                                <i class="fas fa-hospital"></i> Find Nearest Hospital
-                            </button>
-                            <button class="btn btn-warning" onclick="emergencyContact()" data-translate="emergency">
-                                <i class="fas fa-phone"></i> Emergency Contact
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Contact Information -->
-                <div class="card mt-3">
-                    <div class="card-header">
-                        <h6 class="mb-0" data-translate="need_help">Need Help?</h6>
-                    </div>
-                    <div class="card-body">
-                        <p class="small mb-2"><strong data-translate="helpline">Helpline:</strong> 14555</p>
-                        <p class="small mb-2"><strong data-translate="website">Website:</strong> <a href="#"
-                                target="_blank">pmjay.gov.in</a></p>
-                        <p class="small mb-0"><strong data-translate="email">Email:</strong> support@pmjay.gov.in</p>
-                    </div>
-                </div>
-
-                <!-- Medicine Reminder -->
-                <div class="card mt-3">
-                    <div class="card-header">
-                        <h6 class="mb-0" data-translate="medicine_reminder">Medicine Reminder</h6>
-                    </div>
-                    <div class="card-body">
-                        <p class="small mb-2" data-translate="reminder_description">Set reminders for your medications
-                        </p>
-                        <button class="btn btn-outline-primary btn-sm w-100" onclick="setReminder()"
-                            data-translate="set_reminder">
-                            Set Reminder
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-light py-5 mt-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <h5><i class="fas fa-info-circle text-primary me-2"></i><span data-translate="footer_about">About
-                            MigrantConnect</span></h5>
-                    <p class="text-light small" data-translate="footer_about_desc">
-                        Empowering India's internal migrant workers with seamless access to essential services across
-                        states.
-                        Making benefits truly portable and accessible for all.
-                    </p>
-                    <div class="mt-3">
-                        <span class="badge bg-primary me-2" data-translate="footer_gov_initiative">Government of India
-                            Initiative</span>
-                    </div>
-                </div>
-
-                <div class="col-md-2 mb-4">
-                    <h6><i class="fas fa-link text-primary me-2"></i><span data-translate="footer_quick_links">Quick
-                            Links</span></h6>
-                    <ul class="list-unstyled">
-                        <li><a href="dashboard.html" class="text-light text-decoration-none small">Dashboard</a></li>
-                        <li><a href="food.html" class="text-light text-decoration-none small">Food Benefits</a></li>
-                        <li><a href="health.html" class="text-light text-decoration-none small">Healthcare</a></li>
-                        <li><a href="education.html" class="text-light text-decoration-none small">Education</a></li>
-                        <li><a href="finance.html" class="text-light text-decoration-none small">Finance</a></li>
-                        <li><a href="qr.html" class="text-light text-decoration-none small">QR Identity</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-md-2 mb-4">
-                    <h6><i class="fas fa-cog text-primary me-2"></i><span
-                            data-translate="footer_services">Services</span></h6>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text-light text-decoration-none small"
-                                data-translate="footer_privacy">Privacy Policy</a></li>
-                        <li><a href="#" class="text-light text-decoration-none small"
-                                data-translate="footer_terms">Terms of Service</a></li>
-                        <li><a href="#" class="text-light text-decoration-none small"
-                                data-translate="footer_accessibility">Accessibility</a></li>
-                        <li><a href="#" class="text-light text-decoration-none small"
-                                data-translate="footer_feedback">Feedback</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-md-4 mb-4">
-                    <h6><i class="fas fa-phone text-primary me-2"></i><span data-translate="footer_contact">Contact
-                            Info</span></h6>
-                    <div class="text-light small">
-                        <p class="mb-2">
-                            <i class="fas fa-headset me-2"></i>
-                            <span data-translate="footer_helpline">National Helpline</span>:
-                            <a href="tel:1800-XXX-XXXX" class="text-primary text-decoration-none">1800-XXX-XXXX</a>
-                        </p>
-                        <p class="mb-2">
-                            <i class="fas fa-envelope me-2"></i>
-                            <span data-translate="footer_email">Email Support</span>:
-                            <a href="mailto:support@migrantconnect.gov.in"
-                                class="text-primary text-decoration-none">support@migrantconnect.gov.in</a>
-                        </p>
-                        <p class="mb-2">
-                            <i class="fas fa-globe me-2"></i>
-                            <span data-translate="footer_website">Official Website</span>:
-                            <a href="#" class="text-primary text-decoration-none">www.migrantconnect.gov.in</a>
-                        </p>
-                    </div>
-                </div>
+    <!-- Emergency Services Banner -->
+    <div class="container mx-auto px-4 -mt-8 relative z-10">
+      <div class="bg-red-600 text-white rounded-2xl shadow-lg p-6 mb-8">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center">
+            <i class="fas fa-ambulance text-3xl mr-4"></i>
+            <div>
+              <h3 class="text-xl font-bold">Emergency Medical Services</h3>
+              <p class="text-red-100">24/7 emergency helpline available</p>
             </div>
-
-            <hr class="my-4">
-
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <p class="mb-0 text-light small">
-                        <span data-translate="footer_copyright">© 2025 MigrantConnect. All rights reserved.</span>
-                    </p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <small class="text-light">
-                        <i class="fas fa-shield-alt me-1"></i>
-                        <span data-translate="footer_secure">Secure Government Platform</span>
-                    </small>
-                </div>
-            </div>
+          </div>
+          <div class="flex space-x-4">
+            <a
+              href="tel:108"
+              class="bg-white text-red-600 px-6 py-3 rounded-xl font-semibold hover:bg-red-50 transition-colors"
+            >
+              <i class="fas fa-phone mr-2"></i>
+              Call 108
+            </a>
+            <a
+              href="tel:102"
+              class="bg-white text-red-600 px-6 py-3 rounded-xl font-semibold hover:bg-red-50 transition-colors"
+            >
+              <i class="fas fa-ambulance mr-2"></i>
+              Call 102
+            </a>
+          </div>
         </div>
-    </footer>
+      </div>
+    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <!-- Quick Actions -->
+    <div class="container mx-auto px-4 mb-8">
+      <div class="bg-white rounded-2xl shadow-lg p-6">
+        <h2
+          class="text-xl font-semibold text-gray-900 mb-6"
+          data-translate="quick_health_services"
+        >
+          Quick Health Services
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <button
+            onclick="findNearbyHospitals()"
+            class="flex items-center p-4 bg-blue-50 rounded-xl hover:bg-blue-100 transition-colors"
+          >
+            <i class="fas fa-hospital text-2xl text-blue-600 mr-3"></i>
+            <div class="text-left">
+              <div
+                class="font-semibold text-gray-900"
+                data-translate="find_hospitals"
+              >
+                Find Hospitals
+              </div>
+              <div class="text-sm text-gray-600">Nearby medical facilities</div>
+            </div>
+          </button>
+
+          <button
+            onclick="showInsuranceInfo()"
+            class="flex items-center p-4 bg-green-50 rounded-xl hover:bg-green-100 transition-colors"
+          >
+            <i class="fas fa-shield-alt text-2xl text-green-600 mr-3"></i>
+            <div class="text-left">
+              <div
+                class="font-semibold text-gray-900"
+                data-translate="health_insurance"
+              >
+                Health Insurance
+              </div>
+              <div class="text-sm text-gray-600">PMJAY & other schemes</div>
+            </div>
+          </button>
+
+          <button
+            onclick="bookAppointment()"
+            class="flex items-center p-4 bg-purple-50 rounded-xl hover:bg-purple-100 transition-colors"
+          >
+            <i class="fas fa-calendar-check text-2xl text-purple-600 mr-3"></i>
+            <div class="text-left">
+              <div
+                class="font-semibold text-gray-900"
+                data-translate="book_appointment"
+              >
+                Book Appointment
+              </div>
+              <div class="text-sm text-gray-600">Schedule medical checkup</div>
+            </div>
+          </button>
+
+          <button
+            onclick="viewHealthRecords()"
+            class="flex items-center p-4 bg-orange-50 rounded-xl hover:bg-orange-100 transition-colors"
+          >
+            <i class="fas fa-file-medical text-2xl text-orange-600 mr-3"></i>
+            <div class="text-left">
+              <div
+                class="font-semibold text-gray-900"
+                data-translate="health_records"
+              >
+                Health Records
+              </div>
+              <div class="text-sm text-gray-600">View medical history</div>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Health Insurance Cards -->
+    <div class="container mx-auto px-4 mb-8">
+      <div class="bg-white rounded-2xl shadow-lg p-6">
+        <h2
+          class="text-xl font-semibold text-gray-900 mb-6"
+          data-translate="your_health_cards"
+        >
+          Your Health Insurance Cards
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Ayushman Bharat Card -->
+          <div
+            class="bg-gradient-to-r from-orange-500 to-red-600 text-white p-6 rounded-2xl"
+          >
+            <div class="flex justify-between items-start mb-4">
+              <div>
+                <h3 class="text-lg font-bold">Ayushman Bharat</h3>
+                <p class="text-orange-100">PMJAY Health Card</p>
+              </div>
+              <i class="fas fa-heart text-2xl"></i>
+            </div>
+            <div class="space-y-2 mb-4">
+              <div class="text-sm">
+                <span class="text-orange-200">Card Number:</span>
+                <span class="font-mono">**** **** **** 1234</span>
+              </div>
+              <div class="text-sm">
+                <span class="text-orange-200">Coverage:</span>
+                <span class="font-bold">₹5,00,000</span>
+              </div>
+              <div class="text-sm">
+                <span class="text-orange-200">Valid Until:</span>
+                <span>31/12/2024</span>
+              </div>
+            </div>
+            <div class="flex space-x-3">
+              <button
+                class="bg-white text-orange-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-orange-50 transition-colors"
+              >
+                View Details
+              </button>
+              <button
+                class="bg-orange-400 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-orange-300 transition-colors"
+              >
+                Download Card
+              </button>
+            </div>
+          </div>
+
+          <!-- State Health Scheme -->
+          <div
+            class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-6 rounded-2xl"
+          >
+            <div class="flex justify-between items-start mb-4">
+              <div>
+                <h3 class="text-lg font-bold">Delhi Health Scheme</h3>
+                <p class="text-blue-100">State Insurance Card</p>
+              </div>
+              <i class="fas fa-plus-circle text-2xl"></i>
+            </div>
+            <div class="space-y-2 mb-4">
+              <div class="text-sm">
+                <span class="text-blue-200">Card Number:</span>
+                <span class="font-mono">DHS-**** 5678</span>
+              </div>
+              <div class="text-sm">
+                <span class="text-blue-200">Coverage:</span>
+                <span class="font-bold">₹2,00,000</span>
+              </div>
+              <div class="text-sm">
+                <span class="text-blue-200">Valid Until:</span>
+                <span>31/03/2025</span>
+              </div>
+            </div>
+            <div class="flex space-x-3">
+              <button
+                class="bg-white text-blue-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-50 transition-colors"
+              >
+                View Details
+              </button>
+              <button
+                class="bg-blue-400 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-300 transition-colors"
+              >
+                Download Card
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nearby Hospitals -->
+    <div class="container mx-auto px-4 mb-8">
+      <div class="bg-white rounded-2xl shadow-lg p-6">
+        <div class="flex justify-between items-center mb-6">
+          <h2
+            class="text-xl font-semibold text-gray-900"
+            data-translate="nearby_hospitals"
+          >
+            Nearby Hospitals & Clinics
+          </h2>
+          <button onclick="refreshLocation()" class="btn-outline-modern">
+            <i class="fas fa-map-marker-alt mr-2"></i>
+            Update Location
+          </button>
+        </div>
+
+        <div id="hospitalsList" class="space-y-4">
+          <!-- Hospitals will be populated by JavaScript -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Health Services -->
+    <div class="container mx-auto px-4 mb-8">
+      <div class="bg-white rounded-2xl shadow-lg p-6">
+        <h2
+          class="text-xl font-semibold text-gray-900 mb-6"
+          data-translate="health_services"
+        >
+          Available Health Services
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="card-feature">
+            <div class="text-center mb-4">
+              <i class="fas fa-stethoscope text-4xl text-blue-600 mb-3"></i>
+              <h3 class="text-lg font-semibold text-gray-900">
+                General Checkup
+              </h3>
+            </div>
+            <ul class="space-y-2 text-sm text-gray-700 mb-4">
+              <li>• Basic health screening</li>
+              <li>• Blood pressure check</li>
+              <li>• Weight and BMI measurement</li>
+              <li>• General consultation</li>
+            </ul>
+            <button class="btn-primary-modern w-full">Book Appointment</button>
+          </div>
+
+          <div class="card-feature">
+            <div class="text-center mb-4">
+              <i class="fas fa-syringe text-4xl text-green-600 mb-3"></i>
+              <h3 class="text-lg font-semibold text-gray-900">Vaccination</h3>
+            </div>
+            <ul class="space-y-2 text-sm text-gray-700 mb-4">
+              <li>• COVID-19 vaccination</li>
+              <li>• Seasonal flu shots</li>
+              <li>• Hepatitis B vaccination</li>
+              <li>• Other preventive vaccines</li>
+            </ul>
+            <button class="btn-success-modern w-full">Check Eligibility</button>
+          </div>
+
+          <div class="card-feature">
+            <div class="text-center mb-4">
+              <i class="fas fa-pills text-4xl text-purple-600 mb-3"></i>
+              <h3 class="text-lg font-semibold text-gray-900">
+                Medicine Support
+              </h3>
+            </div>
+            <ul class="space-y-2 text-sm text-gray-700 mb-4">
+              <li>• Free essential medicines</li>
+              <li>• Subsidized prescriptions</li>
+              <li>• Medicine delivery service</li>
+              <li>• Generic medicine options</li>
+            </ul>
+            <button class="btn-secondary-modern w-full">Find Pharmacy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Health Tips -->
+    <div class="container mx-auto px-4 mb-8">
+      <div class="bg-white rounded-2xl shadow-lg p-6">
+        <h2
+          class="text-xl font-semibold text-gray-900 mb-6"
+          data-translate="health_tips"
+        >
+          Health Tips for Migrant Workers
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-blue-50 p-6 rounded-xl">
+            <h3 class="font-semibold text-blue-900 mb-3">
+              <i class="fas fa-shield-virus mr-2"></i>
+              Workplace Safety
+            </h3>
+            <ul class="space-y-2 text-blue-800 text-sm">
+              <li>• Always wear protective gear at construction sites</li>
+              <li>• Stay hydrated during hot weather</li>
+              <li>• Take regular breaks from heavy work</li>
+              <li>• Report unsafe working conditions</li>
+            </ul>
+          </div>
+
+          <div class="bg-green-50 p-6 rounded-xl">
+            <h3 class="font-semibold text-green-900 mb-3">
+              <i class="fas fa-apple-alt mr-2"></i>
+              Nutrition & Diet
+            </h3>
+            <ul class="space-y-2 text-green-800 text-sm">
+              <li>• Eat balanced meals with proteins and vitamins</li>
+              <li>• Drink clean and safe water</li>
+              <li>• Avoid street food if possible</li>
+              <li>• Include fruits and vegetables in diet</li>
+            </ul>
+          </div>
+
+          <div class="bg-orange-50 p-6 rounded-xl">
+            <h3 class="font-semibold text-orange-900 mb-3">
+              <i class="fas fa-bed mr-2"></i>
+              Rest & Recovery
+            </h3>
+            <ul class="space-y-2 text-orange-800 text-sm">
+              <li>• Get adequate sleep (7-8 hours daily)</li>
+              <li>• Maintain clean living conditions</li>
+              <li>• Practice stress management techniques</li>
+              <li>• Regular exercise and stretching</li>
+            </ul>
+          </div>
+
+          <div class="bg-red-50 p-6 rounded-xl">
+            <h3 class="font-semibold text-red-900 mb-3">
+              <i class="fas fa-first-aid mr-2"></i>
+              Emergency Preparedness
+            </h3>
+            <ul class="space-y-2 text-red-800 text-sm">
+              <li>• Keep emergency contact numbers handy</li>
+              <li>• Know the location of nearest hospital</li>
+              <li>• Carry health insurance cards always</li>
+              <li>• Learn basic first aid techniques</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Appointment Booking Modal -->
+    <div
+      class="fixed inset-0 bg-black bg-opacity-50 items-center justify-center z-50 hidden"
+      id="appointmentModal"
+    >
+      <div
+        class="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 max-h-screen overflow-y-auto"
+      >
+        <div class="p-6 border-b border-gray-100">
+          <div class="flex justify-between items-center">
+            <h3 class="text-xl font-semibold text-gray-900">
+              Book Appointment
+            </h3>
+            <button
+              onclick="closeAppointmentModal()"
+              class="text-gray-400 hover:text-gray-600"
+            >
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <div class="p-6">
+          <form id="appointmentForm" class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2"
+                >Select Hospital</label
+              >
+              <select class="form-select-modern" required>
+                <option value="">Choose a hospital</option>
+                <option value="aiims">AIIMS Delhi</option>
+                <option value="safdarjung">Safdarjung Hospital</option>
+                <option value="rml">RML Hospital</option>
+                <option value="lnjp">LNJP Hospital</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2"
+                >Department</label
+              >
+              <select class="form-select-modern" required>
+                <option value="">Select Department</option>
+                <option value="general">General Medicine</option>
+                <option value="orthopedic">Orthopedic</option>
+                <option value="cardiology">Cardiology</option>
+                <option value="dermatology">Dermatology</option>
+                <option value="ent">ENT</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2"
+                >Preferred Date</label
+              >
+              <input type="date" class="form-input-modern" required />
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2"
+                >Preferred Time</label
+              >
+              <select class="form-select-modern" required>
+                <option value="">Select Time</option>
+                <option value="09:00">09:00 AM</option>
+                <option value="10:00">10:00 AM</option>
+                <option value="11:00">11:00 AM</option>
+                <option value="14:00">02:00 PM</option>
+                <option value="15:00">03:00 PM</option>
+                <option value="16:00">04:00 PM</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2"
+                >Reason for Visit</label
+              >
+              <textarea
+                class="form-input-modern"
+                rows="3"
+                placeholder="Briefly describe your health concern..."
+              ></textarea>
+            </div>
+
+            <div class="flex space-x-3 pt-4">
+              <button type="submit" class="btn-primary-modern flex-1">
+                <i class="fas fa-calendar-check mr-2"></i>
+                Book Appointment
+              </button>
+              <button
+                type="button"
+                onclick="closeAppointmentModal()"
+                class="btn-outline-modern"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
     <script src="assets/js/language.js"></script>
-    <script src="assets/js/main.js"></script>
-</body>
+    <script>
+      // Initialize page
+      document.addEventListener("DOMContentLoaded", function () {
+        loadLanguage(getCurrentLanguage());
+        loadNearbyHospitals();
+        setupEventListeners();
+      });
 
+      function toggleLanguageDropdown() {
+        const menu = document.getElementById("languageMenu");
+        menu.classList.toggle("hidden");
+      }
+
+      // Close dropdown when clicking outside
+      document.addEventListener("click", function (event) {
+        const dropdown = document.getElementById("languageDropdown");
+        const menu = document.getElementById("languageMenu");
+
+        if (!dropdown.contains(event.target)) {
+          menu.classList.add("hidden");
+        }
+      });
+
+      function setupEventListeners() {
+        // Appointment form submit
+        document
+          .getElementById("appointmentForm")
+          .addEventListener("submit", handleAppointmentSubmit);
+      }
+
+      function loadNearbyHospitals() {
+        const hospitals = [
+          {
+            name: "AIIMS Delhi",
+            distance: "2.5 km",
+            specialty: "Multi-specialty",
+            rating: 4.5,
+            emergency: true,
+            cashless: true,
+            phone: "+91-11-26588500",
+          },
+          {
+            name: "Safdarjung Hospital",
+            distance: "3.2 km",
+            specialty: "Government Hospital",
+            rating: 4.2,
+            emergency: true,
+            cashless: true,
+            phone: "+91-11-26165060",
+          },
+          {
+            name: "RML Hospital",
+            distance: "4.1 km",
+            specialty: "Multi-specialty",
+            rating: 4.0,
+            emergency: true,
+            cashless: false,
+            phone: "+91-11-23404040",
+          },
+          {
+            name: "LNJP Hospital",
+            distance: "5.8 km",
+            specialty: "Government Hospital",
+            rating: 3.8,
+            emergency: true,
+            cashless: true,
+            phone: "+91-11-23237177",
+          },
+        ];
+
+        const container = document.getElementById("hospitalsList");
+        container.innerHTML = hospitals
+          .map(
+            (hospital) => `
+          <div class="card-modern p-4 hover:shadow-lg transition-shadow">
+            <div class="flex justify-between items-start">
+              <div class="flex-1">
+                <div class="flex items-center mb-2">
+                  <h3 class="text-lg font-semibold text-gray-900 mr-3">${
+                    hospital.name
+                  }</h3>
+                  <div class="flex items-center">
+                    <i class="fas fa-star text-yellow-400 mr-1"></i>
+                    <span class="text-sm text-gray-600">${
+                      hospital.rating
+                    }</span>
+                  </div>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-3 text-sm">
+                  <div>
+                    <span class="text-gray-500">Distance:</span>
+                    <div class="font-medium">${hospital.distance}</div>
+                  </div>
+                  <div>
+                    <span class="text-gray-500">Specialty:</span>
+                    <div class="font-medium">${hospital.specialty}</div>
+                  </div>
+                  <div>
+                    <span class="text-gray-500">Emergency:</span>
+                    <div class="font-medium ${
+                      hospital.emergency ? "text-green-600" : "text-red-600"
+                    }">
+                      ${hospital.emergency ? "Available" : "Not Available"}
+                    </div>
+                  </div>
+                  <div>
+                    <span class="text-gray-500">Cashless:</span>
+                    <div class="font-medium ${
+                      hospital.cashless ? "text-green-600" : "text-red-600"
+                    }">
+                      ${hospital.cashless ? "Supported" : "Not Supported"}
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="flex space-x-3">
+                  <button onclick="getDirections('${
+                    hospital.name
+                  }')" class="btn-outline-modern">
+                    <i class="fas fa-directions mr-2"></i>
+                    Directions
+                  </button>
+                  <a href="tel:${hospital.phone}" class="btn-secondary-modern">
+                    <i class="fas fa-phone mr-2"></i>
+                    Call Hospital
+                  </a>
+                  <button onclick="bookAppointment()" class="btn-primary-modern">
+                    <i class="fas fa-calendar-plus mr-2"></i>
+                    Book Appointment
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+          )
+          .join("");
+      }
+
+      function findNearbyHospitals() {
+        alert("Finding nearby hospitals based on your current location...");
+        loadNearbyHospitals();
+      }
+
+      function showInsuranceInfo() {
+        alert("Opening health insurance information and benefits...");
+      }
+
+      function bookAppointment() {
+        document.getElementById("appointmentModal").classList.remove("hidden");
+        document.getElementById("appointmentModal").style.display = "flex";
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeAppointmentModal() {
+        document.getElementById("appointmentModal").classList.add("hidden");
+        document.getElementById("appointmentModal").style.display = "none";
+        document.body.style.overflow = "auto";
+      }
+
+      function viewHealthRecords() {
+        alert("Opening your health records and medical history...");
+      }
+
+      function refreshLocation() {
+        alert("Updating your location to find nearby healthcare facilities...");
+        loadNearbyHospitals();
+      }
+
+      function getDirections(hospitalName) {
+        alert(`Getting directions to ${hospitalName}...`);
+      }
+
+      function handleAppointmentSubmit(e) {
+        e.preventDefault();
+
+        // Show success message
+        alert(
+          "Appointment booking request submitted successfully! You will receive a confirmation SMS/call within 24 hours."
+        );
+
+        closeAppointmentModal();
+
+        // Reset form
+        e.target.reset();
+      }
+
+      function getCurrentLanguage() {
+        return localStorage.getItem("selectedLanguage") || "en";
+      }
+    </script>
+  </body>
 </html>

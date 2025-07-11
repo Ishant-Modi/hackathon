@@ -1,337 +1,744 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-translate="education_title">
+      Education Services - MigrantConnect
+    </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="assets/css/tailwind-styles.css" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#2563eb",
+              secondary: "#1e40af",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MigrantConnect - Education Benefits</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/styles.css">
-</head>
-
-<body class="bg-light">
-    <!-- Offline Banner -->
-    <div id="offline-banner" class="alert alert-warning text-center d-none">
-        <i class="fas fa-exclamation-triangle"></i> <span data-translate="offline_warning">⚠️ You're offline – showing
-            cached data</span>
-    </div>
-
+  <body class="min-h-screen bg-gray-50">
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand" href="dashboard.html">🏠 MigrantConnect</a>
-            <div class="navbar-nav ms-auto">
-                <div class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button"
-                        data-bs-toggle="dropdown">
-                        <i class="fas fa-globe"></i> <span data-translate="language">Language</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#" onclick="changeLanguage('en')">English</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeLanguage('hi')">हिंदी</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeLanguage('bn')">বাংলা</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeLanguage('te')">తెలుగు</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeLanguage('ta')">தமிழ்</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeLanguage('mr')">मराठी</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeLanguage('gu')">ગુજરાતી</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeLanguage('kn')">ಕನ್ನಡ</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeLanguage('ml')">മലയാളം</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeLanguage('pa')">ਪੰਜਾਬੀ</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeLanguage('or')">ଓଡ଼ିଆ</a></li>
-                    </ul>
+    <nav class="navbar-modern bg-white shadow-lg">
+      <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between h-16">
+          <div class="flex items-center">
+            <a
+              href="dashboard.html"
+              class="flex items-center text-xl font-bold text-blue-600"
+            >
+              <i class="fas fa-graduation-cap mr-2"></i>
+              Education Services
+            </a>
+          </div>
+
+          <div class="flex items-center space-x-4">
+            <!-- Language Dropdown -->
+            <div class="relative" id="languageDropdown">
+              <button
+                class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                onclick="toggleLanguageDropdown()"
+              >
+                <i class="fas fa-globe mr-2"></i>
+                <span id="currentLang">English</span>
+                <i class="fas fa-chevron-down ml-2"></i>
+              </button>
+              <div
+                class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-50 hidden"
+                id="languageMenu"
+              >
+                <div class="py-1">
+                  <a
+                    href="#"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onclick="changeLanguage('en')"
+                    >English</a
+                  >
+                  <a
+                    href="#"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onclick="changeLanguage('hi')"
+                    >हिंदी</a
+                  >
+                  <a
+                    href="#"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onclick="changeLanguage('bn')"
+                    >বাংলা</a
+                  >
                 </div>
-                <a class="nav-link" href="dashboard.html" data-translate="back_to_dashboard">Back to Dashboard</a>
+              </div>
             </div>
+
+            <!-- Back to Dashboard -->
+            <a href="dashboard.html" class="btn-outline-modern">
+              <i class="fas fa-arrow-left mr-2"></i>
+              <span data-translate="back_to_dashboard">Back to Dashboard</span>
+            </a>
+          </div>
         </div>
+      </div>
     </nav>
 
-    <div class="container my-4">
-        <!-- Page Header -->
-        <div class="row mb-4">
-            <div class="col-12">
-                <div class="d-flex align-items-center mb-3">
-                    <div class="benefit-icon-large me-3">🎓</div>
-                    <div>
-                        <h2 data-translate="education_benefits">Education Benefits</h2>
-                        <p class="text-muted mb-0" data-translate="education_subtitle">School Admissions & Scholarships
-                        </p>
-                    </div>
-                </div>
-            </div>
+    <!-- Hero Section -->
+    <div class="gradient-info text-white py-16 mt-16">
+      <div class="container mx-auto px-4">
+        <div class="text-center">
+          <h1 class="text-4xl font-bold mb-4" data-translate="education_title">
+            Education & Skill Development
+          </h1>
+          <p
+            class="text-xl text-blue-100 mb-8"
+            data-translate="education_subtitle"
+          >
+            Access educational resources, skill development programs, and
+            certification courses
+          </p>
         </div>
-
-        <div class="row">
-            <!-- Benefit Information -->
-            <div class="col-md-8">
-                <!-- Children's Education Status -->
-                <div class="card mb-4">
-                    <div class="card-header bg-primary text-white">
-                        <h5 class="mb-0" data-translate="children_education">Children's Education Status</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h6 data-translate="enrolled_children">Enrolled Children:</h6>
-                                <ul class="list-unstyled">
-                                    <li><strong>Ravi Kumar Jr.</strong> - Class 8, Delhi Public School</li>
-                                    <li><strong>Priya Kumari</strong> - Class 5, Government School</li>
-                                </ul>
-                            </div>
-                            <div class="col-md-6">
-                                <h6 data-translate="scholarship_status">Scholarship Status:</h6>
-                                <div class="mb-2">
-                                    <span class="badge bg-success me-2">Active</span>
-                                    <span data-translate="merit_scholarship">Merit Scholarship</span>
-                                </div>
-                                <div class="mb-2">
-                                    <span class="badge bg-warning me-2">Pending</span>
-                                    <span data-translate="minority_scholarship">Minority Scholarship</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Recent Applications -->
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h5 class="mb-0" data-translate="recent_applications">Recent Applications</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-sm">
-                                <thead>
-                                    <tr>
-                                        <th data-translate="date">Date</th>
-                                        <th data-translate="school_name">School Name</th>
-                                        <th data-translate="class">Class</th>
-                                        <th data-translate="status">Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>20 Dec 2024</td>
-                                        <td>Delhi Public School, Lajpat Nagar</td>
-                                        <td>Class 9</td>
-                                        <td><span class="badge bg-success">Approved</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>15 Nov 2024</td>
-                                        <td>Kendriya Vidyalaya, Delhi Cantt</td>
-                                        <td>Class 6</td>
-                                        <td><span class="badge bg-warning">Under Review</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>10 Oct 2024</td>
-                                        <td>Government Senior Secondary School</td>
-                                        <td>Class 5</td>
-                                        <td><span class="badge bg-success">Approved</span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Available Services -->
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0" data-translate="available_services">Available Services</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <div class="d-flex align-items-center">
-                                    <i class="fas fa-check-circle text-success me-2"></i>
-                                    <span data-translate="school_admission">School Admission</span>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <div class="d-flex align-items-center">
-                                    <i class="fas fa-check-circle text-success me-2"></i>
-                                    <span data-translate="scholarship_programs">Scholarship Programs</span>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <div class="d-flex align-items-center">
-                                    <i class="fas fa-check-circle text-success me-2"></i>
-                                    <span data-translate="free_textbooks">Free Textbooks</span>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <div class="d-flex align-items-center">
-                                    <i class="fas fa-check-circle text-success me-2"></i>
-                                    <span data-translate="midday_meal">Midday Meal Program</span>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <div class="d-flex align-items-center">
-                                    <i class="fas fa-check-circle text-success me-2"></i>
-                                    <span data-translate="transport_allowance">Transport Allowance</span>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <div class="d-flex align-items-center">
-                                    <i class="fas fa-check-circle text-success me-2"></i>
-                                    <span data-translate="uniform_allowance">Uniform Allowance</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Action Panel -->
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0" data-translate="quick_actions">Quick Actions</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-grid gap-2">
-                            <button class="btn btn-primary" onclick="applyForAdmission()"
-                                data-translate="apply_admission">
-                                <i class="fas fa-plus-circle"></i> Apply for Admission
-                            </button>
-                            <button class="btn btn-success" onclick="applyForScholarship()"
-                                data-translate="apply_scholarship">
-                                <i class="fas fa-graduation-cap"></i> Apply for Scholarship
-                            </button>
-                            <button class="btn btn-info" onclick="findNearestSchool()" data-translate="find_schools">
-                                <i class="fas fa-school"></i> Find Nearby Schools
-                            </button>
-                            <button class="btn btn-warning" onclick="downloadCertificates()"
-                                data-translate="download_certificates">
-                                <i class="fas fa-download"></i> Download Certificates
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Contact Information -->
-                <div class="card mt-3">
-                    <div class="card-header">
-                        <h6 class="mb-0" data-translate="need_help">Need Help?</h6>
-                    </div>
-                    <div class="card-body">
-                        <p class="small mb-2"><strong data-translate="helpline">Helpline:</strong> 1800-11-8004</p>
-                        <p class="small mb-2"><strong data-translate="website">Website:</strong> <a href="#"
-                                target="_blank">education.gov.in</a></p>
-                        <p class="small mb-0"><strong data-translate="email">Email:</strong> education.support@gov.in
-                        </p>
-                    </div>
-                </div>
-
-                <!-- School Transfer -->
-                <div class="card mt-3">
-                    <div class="card-header">
-                        <h6 class="mb-0" data-translate="school_transfer">School Transfer</h6>
-                    </div>
-                    <div class="card-body">
-                        <p class="small mb-2" data-translate="transfer_description">Moving to a new state? Transfer your
-                            child's school records.</p>
-                        <button class="btn btn-outline-primary btn-sm w-100" onclick="initiateTransfer()"
-                            data-translate="start_transfer">
-                            Start Transfer Process
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-light py-5 mt-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <h5><i class="fas fa-info-circle text-primary me-2"></i><span data-translate="footer_about">About
-                            MigrantConnect</span></h5>
-                    <p class="text-light small" data-translate="footer_about_desc">
-                        Empowering India's internal migrant workers with seamless access to essential services across
-                        states.
-                        Making benefits truly portable and accessible for all.
-                    </p>
-                    <div class="mt-3">
-                        <span class="badge bg-primary me-2" data-translate="footer_gov_initiative">Government of India
-                            Initiative</span>
-                    </div>
-                </div>
-
-                <div class="col-md-2 mb-4">
-                    <h6><i class="fas fa-link text-primary me-2"></i><span data-translate="footer_quick_links">Quick
-                            Links</span></h6>
-                    <ul class="list-unstyled">
-                        <li><a href="dashboard.html" class="text-light text-decoration-none small">Dashboard</a></li>
-                        <li><a href="food.html" class="text-light text-decoration-none small">Food Benefits</a></li>
-                        <li><a href="health.html" class="text-light text-decoration-none small">Healthcare</a></li>
-                        <li><a href="education.html" class="text-light text-decoration-none small">Education</a></li>
-                        <li><a href="finance.html" class="text-light text-decoration-none small">Finance</a></li>
-                        <li><a href="qr.html" class="text-light text-decoration-none small">QR Identity</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-md-2 mb-4">
-                    <h6><i class="fas fa-cog text-primary me-2"></i><span
-                            data-translate="footer_services">Services</span></h6>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text-light text-decoration-none small"
-                                data-translate="footer_privacy">Privacy Policy</a></li>
-                        <li><a href="#" class="text-light text-decoration-none small"
-                                data-translate="footer_terms">Terms of Service</a></li>
-                        <li><a href="#" class="text-light text-decoration-none small"
-                                data-translate="footer_accessibility">Accessibility</a></li>
-                        <li><a href="#" class="text-light text-decoration-none small"
-                                data-translate="footer_feedback">Feedback</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-md-4 mb-4">
-                    <h6><i class="fas fa-phone text-primary me-2"></i><span data-translate="footer_contact">Contact
-                            Info</span></h6>
-                    <div class="text-light small">
-                        <p class="mb-2">
-                            <i class="fas fa-headset me-2"></i>
-                            <span data-translate="footer_helpline">National Helpline</span>:
-                            <a href="tel:1800-XXX-XXXX" class="text-primary text-decoration-none">1800-XXX-XXXX</a>
-                        </p>
-                        <p class="mb-2">
-                            <i class="fas fa-envelope me-2"></i>
-                            <span data-translate="footer_email">Email Support</span>:
-                            <a href="mailto:support@migrantconnect.gov.in"
-                                class="text-primary text-decoration-none">support@migrantconnect.gov.in</a>
-                        </p>
-                        <p class="mb-2">
-                            <i class="fas fa-globe me-2"></i>
-                            <span data-translate="footer_website">Official Website</span>:
-                            <a href="#" class="text-primary text-decoration-none">www.migrantconnect.gov.in</a>
-                        </p>
-                    </div>
-                </div>
+    <!-- Quick Stats -->
+    <div class="container mx-auto px-4 -mt-8 relative z-10">
+      <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div class="text-center">
+            <div class="text-3xl font-bold text-blue-600">250+</div>
+            <div
+              class="text-sm text-gray-600"
+              data-translate="available_courses"
+            >
+              Available Courses
             </div>
-
-            <hr class="my-4">
-
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <p class="mb-0 text-light small">
-                        <span data-translate="footer_copyright">© 2025 MigrantConnect. All rights reserved.</span>
-                    </p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <small class="text-light">
-                        <i class="fas fa-shield-alt me-1"></i>
-                        <span data-translate="footer_secure">Secure Government Platform</span>
-                    </small>
-                </div>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-green-600">15</div>
+            <div
+              class="text-sm text-gray-600"
+              data-translate="enrolled_courses"
+            >
+              Enrolled Courses
             </div>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-orange-600">8</div>
+            <div
+              class="text-sm text-gray-600"
+              data-translate="completed_courses"
+            >
+              Completed Courses
+            </div>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-purple-600">5</div>
+            <div
+              class="text-sm text-gray-600"
+              data-translate="certificates_earned"
+            >
+              Certificates Earned
+            </div>
+          </div>
         </div>
-    </footer>
+      </div>
+    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <!-- Quick Actions -->
+    <div class="container mx-auto px-4 mb-8">
+      <div class="bg-white rounded-2xl shadow-lg p-6">
+        <h2
+          class="text-xl font-semibold text-gray-900 mb-6"
+          data-translate="quick_education_services"
+        >
+          Quick Education Services
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <button
+            onclick="browseCourses()"
+            class="flex items-center p-4 bg-blue-50 rounded-xl hover:bg-blue-100 transition-colors"
+          >
+            <i class="fas fa-book text-2xl text-blue-600 mr-3"></i>
+            <div class="text-left">
+              <div
+                class="font-semibold text-gray-900"
+                data-translate="browse_courses"
+              >
+                Browse Courses
+              </div>
+              <div class="text-sm text-gray-600">
+                Find skill development programs
+              </div>
+            </div>
+          </button>
+
+          <button
+            onclick="viewCertificates()"
+            class="flex items-center p-4 bg-green-50 rounded-xl hover:bg-green-100 transition-colors"
+          >
+            <i class="fas fa-certificate text-2xl text-green-600 mr-3"></i>
+            <div class="text-left">
+              <div
+                class="font-semibold text-gray-900"
+                data-translate="my_certificates"
+              >
+                My Certificates
+              </div>
+              <div class="text-sm text-gray-600">Download certifications</div>
+            </div>
+          </button>
+
+          <button
+            onclick="trackProgress()"
+            class="flex items-center p-4 bg-purple-50 rounded-xl hover:bg-purple-100 transition-colors"
+          >
+            <i class="fas fa-chart-line text-2xl text-purple-600 mr-3"></i>
+            <div class="text-left">
+              <div
+                class="font-semibold text-gray-900"
+                data-translate="track_progress"
+              >
+                Track Progress
+              </div>
+              <div class="text-sm text-gray-600">Monitor learning progress</div>
+            </div>
+          </button>
+
+          <button
+            onclick="applyScholarship()"
+            class="flex items-center p-4 bg-orange-50 rounded-xl hover:bg-orange-100 transition-colors"
+          >
+            <i class="fas fa-graduation-cap text-2xl text-orange-600 mr-3"></i>
+            <div class="text-left">
+              <div
+                class="font-semibold text-gray-900"
+                data-translate="scholarships"
+              >
+                Scholarships
+              </div>
+              <div class="text-sm text-gray-600">Apply for financial aid</div>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Course Categories -->
+    <div class="container mx-auto px-4 mb-8">
+      <div class="bg-white rounded-2xl shadow-lg p-6">
+        <h2
+          class="text-xl font-semibold text-gray-900 mb-6"
+          data-translate="course_categories"
+        >
+          Course Categories
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="card-feature">
+            <div class="text-center mb-4">
+              <i class="fas fa-tools text-4xl text-blue-600 mb-3"></i>
+              <h3 class="text-lg font-semibold text-gray-900">
+                Technical Skills
+              </h3>
+            </div>
+            <ul class="space-y-2 text-sm text-gray-700 mb-4">
+              <li>• Construction & Masonry</li>
+              <li>• Electrical Work</li>
+              <li>• Plumbing</li>
+              <li>• Welding & Fabrication</li>
+              <li>• Mobile Repair</li>
+            </ul>
+            <button class="btn-primary-modern w-full">View Courses</button>
+          </div>
+
+          <div class="card-feature">
+            <div class="text-center mb-4">
+              <i class="fas fa-language text-4xl text-green-600 mb-3"></i>
+              <h3 class="text-lg font-semibold text-gray-900">
+                Language Skills
+              </h3>
+            </div>
+            <ul class="space-y-2 text-sm text-gray-700 mb-4">
+              <li>• English Communication</li>
+              <li>• Hindi Literacy</li>
+              <li>• Regional Languages</li>
+              <li>• Basic Computer Skills</li>
+              <li>• Digital Literacy</li>
+            </ul>
+            <button class="btn-success-modern w-full">View Courses</button>
+          </div>
+
+          <div class="card-feature">
+            <div class="text-center mb-4">
+              <i class="fas fa-briefcase text-4xl text-purple-600 mb-3"></i>
+              <h3 class="text-lg font-semibold text-gray-900">
+                Entrepreneurship
+              </h3>
+            </div>
+            <ul class="space-y-2 text-sm text-gray-700 mb-4">
+              <li>• Small Business Management</li>
+              <li>• Financial Planning</li>
+              <li>• Marketing Basics</li>
+              <li>• Digital Payments</li>
+              <li>• Business Registration</li>
+            </ul>
+            <button class="btn-secondary-modern w-full">View Courses</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Current Enrollments -->
+    <div class="container mx-auto px-4 mb-8">
+      <div class="bg-white rounded-2xl shadow-lg p-6">
+        <h2
+          class="text-xl font-semibold text-gray-900 mb-6"
+          data-translate="current_enrollments"
+        >
+          Current Enrollments
+        </h2>
+
+        <div id="enrollmentsList" class="space-y-4">
+          <!-- Enrollments will be populated by JavaScript -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Available Scholarships -->
+    <div class="container mx-auto px-4 mb-8">
+      <div class="bg-white rounded-2xl shadow-lg p-6">
+        <h2
+          class="text-xl font-semibold text-gray-900 mb-6"
+          data-translate="scholarship_opportunities"
+        >
+          Scholarship Opportunities
+        </h2>
+
+        <div
+          id="scholarshipsList"
+          class="grid grid-cols-1 md:grid-cols-2 gap-6"
+        >
+          <!-- Scholarships will be populated by JavaScript -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Course Enrollment Modal -->
+    <div
+      class="fixed inset-0 bg-black bg-opacity-50 items-center justify-center z-50 hidden"
+      id="enrollmentModal"
+    >
+      <div
+        class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full mx-4 max-h-screen overflow-y-auto"
+      >
+        <div class="p-6 border-b border-gray-100">
+          <div class="flex justify-between items-center">
+            <h3
+              class="text-xl font-semibold text-gray-900"
+              id="enrollmentTitle"
+            >
+              Course Enrollment
+            </h3>
+            <button
+              onclick="closeEnrollmentModal()"
+              class="text-gray-400 hover:text-gray-600"
+            >
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <div class="p-6">
+          <form id="enrollmentForm" class="space-y-4">
+            <div class="bg-blue-50 p-4 rounded-lg mb-6">
+              <h4 class="font-semibold text-blue-900 mb-2">
+                Course Information
+              </h4>
+              <p class="text-blue-800 text-sm" id="courseInfo">
+                Course details will be displayed here.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2"
+                  >Full Name</label
+                >
+                <input
+                  type="text"
+                  class="form-input-modern"
+                  required
+                  placeholder="Enter your full name"
+                />
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2"
+                  >Mobile Number</label
+                >
+                <input
+                  type="tel"
+                  class="form-input-modern"
+                  required
+                  placeholder="+91 xxxxx xxxxx"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2"
+                >Email Address</label
+              >
+              <input
+                type="email"
+                class="form-input-modern"
+                required
+                placeholder="your.email@example.com"
+              />
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2"
+                >Educational Background</label
+              >
+              <select class="form-select-modern" required>
+                <option value="">Select your education level</option>
+                <option value="no-formal">No Formal Education</option>
+                <option value="primary">Primary School</option>
+                <option value="secondary">Secondary School</option>
+                <option value="higher-secondary">Higher Secondary</option>
+                <option value="graduate">Graduate</option>
+                <option value="postgraduate">Post Graduate</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2"
+                >Work Experience</label
+              >
+              <textarea
+                class="form-input-modern"
+                rows="3"
+                placeholder="Describe your relevant work experience..."
+              ></textarea>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2"
+                >Preferred Learning Mode</label
+              >
+              <div class="space-y-2">
+                <label class="flex items-center">
+                  <input
+                    type="radio"
+                    name="learningMode"
+                    value="online"
+                    class="mr-3"
+                  />
+                  <span class="text-sm">Online Classes</span>
+                </label>
+                <label class="flex items-center">
+                  <input
+                    type="radio"
+                    name="learningMode"
+                    value="offline"
+                    class="mr-3"
+                  />
+                  <span class="text-sm">Offline Classes</span>
+                </label>
+                <label class="flex items-center">
+                  <input
+                    type="radio"
+                    name="learningMode"
+                    value="hybrid"
+                    class="mr-3"
+                  />
+                  <span class="text-sm">Hybrid (Online + Offline)</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="flex items-start">
+              <input type="checkbox" class="mr-3 mt-1 rounded" required />
+              <label class="text-sm text-gray-700">
+                I agree to the terms and conditions of the course enrollment and
+                understand the course requirements.
+              </label>
+            </div>
+
+            <div class="flex space-x-3 pt-4">
+              <button type="submit" class="btn-primary-modern flex-1">
+                <i class="fas fa-user-plus mr-2"></i>
+                Enroll in Course
+              </button>
+              <button
+                type="button"
+                onclick="closeEnrollmentModal()"
+                class="btn-outline-modern"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
     <script src="assets/js/language.js"></script>
-    <script src="assets/js/main.js"></script>
-</body>
+    <script>
+      // Initialize page
+      document.addEventListener("DOMContentLoaded", function () {
+        loadLanguage(getCurrentLanguage());
+        loadCurrentEnrollments();
+        loadScholarships();
+        setupEventListeners();
+      });
 
+      function toggleLanguageDropdown() {
+        const menu = document.getElementById("languageMenu");
+        menu.classList.toggle("hidden");
+      }
+
+      // Close dropdown when clicking outside
+      document.addEventListener("click", function (event) {
+        const dropdown = document.getElementById("languageDropdown");
+        const menu = document.getElementById("languageMenu");
+
+        if (!dropdown.contains(event.target)) {
+          menu.classList.add("hidden");
+        }
+      });
+
+      function setupEventListeners() {
+        // Enrollment form submit
+        document
+          .getElementById("enrollmentForm")
+          .addEventListener("submit", handleEnrollmentSubmit);
+      }
+
+      function loadCurrentEnrollments() {
+        const enrollments = [
+          {
+            id: "COURSE-001",
+            name: "Basic Construction Skills",
+            progress: 75,
+            instructor: "Rajesh Kumar",
+            nextClass: "2025-07-15",
+            duration: "3 months",
+            status: "in-progress",
+          },
+          {
+            id: "COURSE-002",
+            name: "English Communication",
+            progress: 45,
+            instructor: "Priya Sharma",
+            nextClass: "2025-07-14",
+            duration: "2 months",
+            status: "in-progress",
+          },
+          {
+            id: "COURSE-003",
+            name: "Digital Literacy",
+            progress: 100,
+            instructor: "Amit Singh",
+            nextClass: "Completed",
+            duration: "1 month",
+            status: "completed",
+          },
+        ];
+
+        const container = document.getElementById("enrollmentsList");
+        container.innerHTML = enrollments
+          .map(
+            (course) => `
+          <div class="card-modern p-6 hover:shadow-lg transition-shadow">
+            <div class="flex justify-between items-start mb-4">
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900">${
+                  course.name
+                }</h3>
+                <p class="text-sm text-gray-600">Instructor: ${
+                  course.instructor
+                }</p>
+              </div>
+              <span class="badge-modern ${
+                course.status === "completed"
+                  ? "badge-success-modern"
+                  : "badge-info-modern"
+              }">
+                ${course.status === "completed" ? "Completed" : "In Progress"}
+              </span>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 text-sm">
+              <div>
+                <span class="text-gray-500">Progress:</span>
+                <div class="font-medium">${course.progress}%</div>
+              </div>
+              <div>
+                <span class="text-gray-500">Duration:</span>
+                <div class="font-medium">${course.duration}</div>
+              </div>
+              <div>
+                <span class="text-gray-500">Next Class:</span>
+                <div class="font-medium">${course.nextClass}</div>
+              </div>
+              <div>
+                <span class="text-gray-500">Course ID:</span>
+                <div class="font-medium">${course.id}</div>
+              </div>
+            </div>
+            
+            <div class="mb-4">
+              <div class="flex justify-between text-sm mb-1">
+                <span>Progress</span>
+                <span>${course.progress}%</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="bg-blue-600 h-2 rounded-full" style="width: ${
+                  course.progress
+                }%"></div>
+              </div>
+            </div>
+            
+            <div class="flex space-x-3">
+              ${
+                course.status === "completed"
+                  ? '<button class="btn-success-modern">Download Certificate</button>'
+                  : '<button class="btn-primary-modern">Continue Learning</button>'
+              }
+              <button class="btn-outline-modern">View Details</button>
+            </div>
+          </div>
+        `
+          )
+          .join("");
+      }
+
+      function loadScholarships() {
+        const scholarships = [
+          {
+            name: "PM Education Loan Scheme",
+            amount: "₹50,000 - ₹2,00,000",
+            eligibility: "Annual income below ₹4.5 lakh",
+            deadline: "2025-08-31",
+            description:
+              "Financial assistance for higher education and skill development courses.",
+          },
+          {
+            name: "Skill India Scholarship",
+            amount: "₹10,000 - ₹25,000",
+            eligibility: "Age 18-35, BPL certificate",
+            deadline: "2025-09-15",
+            description:
+              "Scholarships for vocational training and certification programs.",
+          },
+          {
+            name: "Digital India Scholarship",
+            amount: "₹5,000 - ₹15,000",
+            eligibility: "Basic education, tech courses",
+            deadline: "2025-07-30",
+            description:
+              "Support for digital literacy and computer skill development programs.",
+          },
+          {
+            name: "Women Empowerment Education Grant",
+            amount: "₹15,000 - ₹40,000",
+            eligibility: "Female applicants, any age",
+            deadline: "2025-10-15",
+            description:
+              "Special scholarships for women to pursue education and skill development.",
+          },
+        ];
+
+        const container = document.getElementById("scholarshipsList");
+        container.innerHTML = scholarships
+          .map(
+            (scholarship) => `
+          <div class="card-modern p-6 hover:shadow-lg transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">${scholarship.name}</h3>
+            <p class="text-gray-700 text-sm mb-4">${scholarship.description}</p>
+            
+            <div class="space-y-2 mb-4 text-sm">
+              <div class="flex justify-between">
+                <span class="text-gray-500">Amount:</span>
+                <span class="font-semibold text-green-600">${scholarship.amount}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-500">Eligibility:</span>
+                <span class="font-medium">${scholarship.eligibility}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-500">Deadline:</span>
+                <span class="font-medium text-red-600">${scholarship.deadline}</span>
+              </div>
+            </div>
+            
+            <div class="flex space-x-3">
+              <button class="btn-primary-modern flex-1">Apply Now</button>
+              <button class="btn-outline-modern">View Details</button>
+            </div>
+          </div>
+        `
+          )
+          .join("");
+      }
+
+      function browseCourses() {
+        alert("Opening course catalog...");
+      }
+
+      function viewCertificates() {
+        alert("Opening your certificates...");
+      }
+
+      function trackProgress() {
+        alert("Opening progress tracker...");
+      }
+
+      function applyScholarship() {
+        alert("Opening scholarship applications...");
+      }
+
+      function openEnrollmentModal(courseId) {
+        document.getElementById("enrollmentModal").classList.remove("hidden");
+        document.getElementById("enrollmentModal").style.display = "flex";
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeEnrollmentModal() {
+        document.getElementById("enrollmentModal").classList.add("hidden");
+        document.getElementById("enrollmentModal").style.display = "none";
+        document.body.style.overflow = "auto";
+      }
+
+      function handleEnrollmentSubmit(e) {
+        e.preventDefault();
+
+        // Show success message
+        alert(
+          "Course enrollment submitted successfully! You will receive a confirmation SMS/email with course details."
+        );
+
+        closeEnrollmentModal();
+
+        // Reset form
+        e.target.reset();
+
+        // Refresh enrollments list
+        loadCurrentEnrollments();
+      }
+
+      function getCurrentLanguage() {
+        return localStorage.getItem("selectedLanguage") || "en";
+      }
+    </script>
+  </body>
 </html>

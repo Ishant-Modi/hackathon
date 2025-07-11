@@ -1,339 +1,714 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-translate="food_title">Food Security - MigrantConnect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="assets/css/tailwind-styles.css" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#2563eb",
+              secondary: "#1e40af",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MigrantConnect - Food Benefits</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/di                          <ul class=" list-unstyled">
-    <li><a href="#" class="text-light text-decoration-none small" data-translate="footer_privacy">Privacy Policy</a>
-    </li>
-    <li><a href="#" class="text-light text-decoration-none small" data-translate="footer_terms">Terms of Service</a>
-    </li>
-    <li><a href="#" class="text-light text-decoration-none small"
-            data-translate="footer_accessibility">Accessibility</a></li>
-    <li><a href="#" class="text-light text-decoration-none small" data-translate="footer_feedback">Feedback</a></li>
-    </ul>
-    <li><a href="#" class="text-light text-decoration-none small" data-translate="footer_privacy">Privacy Policy</a>
-    </li>
-    <li><a href="#" class="text-light text-decoration-none small" data-translate="footer_terms">Terms of Service</a>
-    </li>
-    <li><a href="#" class="text-light text-decoration-none small"
-            data-translate="footer_accessibility">Accessibility</a></li>
-    <li><a href="#" class="text-light text-decoration-none small" data-translate="footer_feedback">Feedback</a></li>
-    ootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/styles.css">
-</head>
-
-<body class="bg-light">
-    <!-- Offline Banner -->
-    <div id="offline-banner" class="alert alert-warning text-center d-none">
-        <i class="fas fa-exclamation-triangle"></i> <span data-translate="offline_warning">⚠️ You're offline – showing
-            cached data</span>
-    </div>
-
+  <body class="min-h-screen bg-gray-50">
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand" href="dashboard.html">🏠 MigrantConnect</a>
-            <div class="navbar-nav ms-auto">
-                <div class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button"
-                        data-bs-toggle="dropdown">
-                        <i class="fas fa-globe"></i> <span data-translate="language">Language</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#" onclick="changeLanguage('en')">English</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeLanguage('hi')">हिंदी</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeLanguage('bn')">বাংলা</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeLanguage('te')">తెలుగు</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeLanguage('ta')">தமிழ்</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeLanguage('mr')">मराठी</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeLanguage('gu')">ગુજરાતી</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeLanguage('kn')">ಕನ್ನಡ</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeLanguage('ml')">മലയാളം</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeLanguage('pa')">ਪੰਜਾਬੀ</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="changeLanguage('or')">ଓଡ଼ିଆ</a></li>
-                    </ul>
+    <nav class="navbar-modern bg-white shadow-lg">
+      <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between h-16">
+          <div class="flex items-center">
+            <a
+              href="dashboard.html"
+              class="flex items-center text-xl font-bold text-blue-600"
+            >
+              <i class="fas fa-utensils mr-2"></i>
+              Food Security
+            </a>
+          </div>
+
+          <div class="flex items-center space-x-4">
+            <!-- Language Dropdown -->
+            <div class="relative" id="languageDropdown">
+              <button
+                class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                onclick="toggleLanguageDropdown()"
+              >
+                <i class="fas fa-globe mr-2"></i>
+                <span id="currentLang">English</span>
+                <i class="fas fa-chevron-down ml-2"></i>
+              </button>
+              <div
+                class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-50 hidden"
+                id="languageMenu"
+              >
+                <div class="py-1">
+                  <a
+                    href="#"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onclick="changeLanguage('en')"
+                    >English</a
+                  >
+                  <a
+                    href="#"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onclick="changeLanguage('hi')"
+                    >हिंदी</a
+                  >
+                  <a
+                    href="#"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onclick="changeLanguage('bn')"
+                    >বাংলা</a
+                  >
                 </div>
-                <a class="nav-link" href="dashboard.html" data-translate="back_to_dashboard">Back to Dashboard</a>
+              </div>
             </div>
+
+            <!-- Back to Dashboard -->
+            <a href="dashboard.html" class="btn-outline-modern">
+              <i class="fas fa-arrow-left mr-2"></i>
+              <span data-translate="back_to_dashboard">Back to Dashboard</span>
+            </a>
+          </div>
         </div>
+      </div>
     </nav>
 
-    <div class="container my-4">
-        <!-- Page Header -->
-        <div class="row mb-4">
-            <div class="col-12">
-                <div class="d-flex align-items-center mb-3">
-                    <div class="benefit-icon-large me-3">🥖</div>
-                    <div>
-                        <h2 data-translate="food_benefits">Food Benefits</h2>
-                        <p class="text-muted mb-0" data-translate="food_subtitle">Public Distribution System (PDS)</p>
-                    </div>
-                </div>
-            </div>
+    <!-- Hero Section -->
+    <div class="gradient-warning text-white py-16 mt-16">
+      <div class="container mx-auto px-4">
+        <div class="text-center">
+          <h1 class="text-4xl font-bold mb-4" data-translate="food_title">
+            Food Security & Nutrition
+          </h1>
+          <p
+            class="text-xl text-orange-100 mb-8"
+            data-translate="food_subtitle"
+          >
+            Access to subsidized food grains, ration cards, and nutrition
+            programs
+          </p>
         </div>
-
-        <div class="row">
-            <!-- Benefit Information -->
-            <div class="col-md-8">
-                <!-- Entitlement Card -->
-                <div class="card mb-4">
-                    <div class="card-header bg-success text-white">
-                        <h5 class="mb-0" data-translate="your_entitlement">Your Entitlement</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h6 data-translate="monthly_allocation">Monthly Allocation:</h6>
-                                <ul class="list-unstyled">
-                                    <li><strong>Rice:</strong> <span data-translate="rice_amount">5kg</span></li>
-                                    <li><strong>Wheat:</strong> <span data-translate="wheat_amount">5kg</span></li>
-                                    <li><strong>Sugar:</strong> <span data-translate="sugar_amount">1kg</span></li>
-                                    <li><strong>Cooking Oil:</strong> <span data-translate="oil_amount">1 Liter</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="col-md-6">
-                                <h6 data-translate="current_status">Current Status:</h6>
-                                <div class="progress mb-2">
-                                    <div class="progress-bar bg-warning usage-bar-75">75%</div>
-                                </div>
-                                <small class="text-muted" data-translate="used_this_month">Used this month: 75% of
-                                    allocation</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Usage History -->
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h5 class="mb-0" data-translate="recent_usage">Recent Usage</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-sm">
-                                <thead>
-                                    <tr>
-                                        <th data-translate="date">Date</th>
-                                        <th data-translate="shop_location">Shop/Location</th>
-                                        <th data-translate="items">Items</th>
-                                        <th data-translate="amount">Amount</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>15 Dec 2024</td>
-                                        <td>Fair Price Shop, Lajpat Nagar, Delhi</td>
-                                        <td>Rice, Wheat</td>
-                                        <td>₹45</td>
-                                    </tr>
-                                    <tr>
-                                        <td>10 Dec 2024</td>
-                                        <td>PDS Center, Karol Bagh, Delhi</td>
-                                        <td>Sugar, Oil</td>
-                                        <td>₹32</td>
-                                    </tr>
-                                    <tr>
-                                        <td>05 Dec 2024</td>
-                                        <td>Ration Shop, Delhi Cantt</td>
-                                        <td>Rice</td>
-                                        <td>₹15</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Eligible Services -->
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0" data-translate="available_services">Available Services</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <div class="d-flex align-items-center">
-                                    <i class="fas fa-check-circle text-success me-2"></i>
-                                    <span data-translate="pds_card">PDS Card Access</span>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <div class="d-flex align-items-center">
-                                    <i class="fas fa-check-circle text-success me-2"></i>
-                                    <span data-translate="antyodaya">Antyodaya Anna Yojana</span>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <div class="d-flex align-items-center">
-                                    <i class="fas fa-check-circle text-success me-2"></i>
-                                    <span data-translate="portability">Interstate Portability</span>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <div class="d-flex align-items-center">
-                                    <i class="fas fa-check-circle text-success me-2"></i>
-                                    <span data-translate="midday_meal">Midday Meal (Children)</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Action Panel -->
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0" data-translate="quick_actions">Quick Actions</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-grid gap-2">
-                            <button class="btn btn-primary" onclick="applyForBenefit('food')"
-                                data-translate="apply_now">
-                                <i class="fas fa-plus-circle"></i> Apply Now
-                            </button>
-                            <button class="btn btn-success" onclick="downloadCard('food')"
-                                data-translate="download_card">
-                                <i class="fas fa-download"></i> Download PDS Card
-                            </button>
-                            <button class="btn btn-info" onclick="findNearestCenter()"
-                                data-translate="find_nearest_shop">
-                                <i class="fas fa-map-marker-alt"></i> Find Nearest Shop
-                            </button>
-                            <button class="btn btn-warning" onclick="reportIssue('food')" data-translate="report_issue">
-                                <i class="fas fa-exclamation-triangle"></i> Report Issue
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Contact Information -->
-                <div class="card mt-3">
-                    <div class="card-header">
-                        <h6 class="mb-0" data-translate="need_help">Need Help?</h6>
-                    </div>
-                    <div class="card-body">
-                        <p class="small mb-2"><strong data-translate="helpline">Helpline:</strong> 1800-11-3663</p>
-                        <p class="small mb-2"><strong data-translate="website">Website:</strong> <a href="#"
-                                target="_blank">dfpd.nic.in</a></p>
-                        <p class="small mb-0"><strong data-translate="email">Email:</strong> pds.support@gov.in</p>
-                    </div>
-                </div>
-
-                <!-- Benefits Transfer -->
-                <div class="card mt-3">
-                    <div class="card-header">
-                        <h6 class="mb-0" data-translate="transfer_benefits">Transfer Benefits</h6>
-                    </div>
-                    <div class="card-body">
-                        <p class="small mb-2" data-translate="transfer_description">Moving to a new state? Transfer your
-                            benefits seamlessly.</p>
-                        <button class="btn btn-outline-primary btn-sm w-100" onclick="transferBenefits('food')"
-                            data-translate="start_transfer">
-                            Start Transfer Process
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-light py-5 mt-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <h5><i class="fas fa-info-circle text-primary me-2"></i><span data-translate="footer_about">About
-                            MigrantConnect</span></h5>
-                    <p class="text-light small" data-translate="footer_about_desc">
-                        Empowering India's internal migrant workers with seamless access to essential services across
-                        states.
-                        Making benefits truly portable and accessible for all.
-                    </p>
-                    <div class="mt-3">
-                        <span class="badge bg-primary me-2" data-translate="footer_gov_initiative">Government of India
-                            Initiative</span>
-                    </div>
-                </div>
-
-                <div class="col-md-2 mb-4">
-                    <h6><i class="fas fa-link text-primary me-2"></i><span data-translate="footer_quick_links">Quick
-                            Links</span></h6>
-                    <ul class="list-unstyled">
-                        <li><a href="dashboard.html" class="text-light text-decoration-none small">Dashboard</a></li>
-                        <li><a href="food.html" class="text-light text-decoration-none small">Food Benefits</a></li>
-                        <li><a href="health.html" class="text-light text-decoration-none small">Healthcare</a></li>
-                        <li><a href="education.html" class="text-light text-decoration-none small">Education</a></li>
-                        <li><a href="finance.html" class="text-light text-decoration-none small">Finance</a></li>
-                        <li><a href="qr.html" class="text-light text-decoration-none small">QR Identity</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-md-2 mb-4">
-                    <h6><i class="fas fa-cog text-primary me-2"></i><span
-                            data-translate="footer_services">Services</span></h6>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text-light text-decoration-none small"
-                                data-translate="footer_privacy">Privacy Policy</a></li>
-                        <li><a href="#" class="text-light text-decoration-none small"
-                                data-translate="footer_terms">Terms of Service</a></li>
-                        <li><a href="#" class="text-light text-decoration-none small"
-                                data-translate="footer_accessibility">Accessibility</a></li>
-                        <li><a href="#" class="text-light text-decoration-none small"
-                                data-translate="footer_feedback">Feedback</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-md-4 mb-4">
-                    <h6><i class="fas fa-phone text-primary me-2"></i><span data-translate="footer_contact">Contact
-                            Info</span></h6>
-                    <div class="text-light small">
-                        <p class="mb-2">
-                            <i class="fas fa-headset me-2"></i>
-                            <span data-translate="footer_helpline">National Helpline</span>:
-                            <a href="tel:1800-XXX-XXXX" class="text-primary text-decoration-none">1800-XXX-XXXX</a>
-                        </p>
-                        <p class="mb-2">
-                            <i class="fas fa-envelope me-2"></i>
-                            <span data-translate="footer_email">Email Support</span>:
-                            <a href="mailto:support@migrantconnect.gov.in"
-                                class="text-primary text-decoration-none">support@migrantconnect.gov.in</a>
-                        </p>
-                        <p class="mb-2">
-                            <i class="fas fa-globe me-2"></i>
-                            <span data-translate="footer_website">Official Website</span>:
-                            <a href="#" class="text-primary text-decoration-none">www.migrantconnect.gov.in</a>
-                        </p>
-                    </div>
-                </div>
+    <!-- Food Security Summary -->
+    <div class="container mx-auto px-4 -mt-8 relative z-10">
+      <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
+        <h2
+          class="text-xl font-semibold text-gray-900 mb-6"
+          data-translate="food_benefits_status"
+        >
+          Your Food Benefits Status
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div class="text-center p-4 bg-green-50 rounded-xl">
+            <div class="text-3xl font-bold text-green-600">Active</div>
+            <div
+              class="text-sm text-gray-600"
+              data-translate="ration_card_status"
+            >
+              Ration Card Status
             </div>
-
-            <hr class="my-4">
-
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <p class="mb-0 text-light small">
-                        <span data-translate="footer_copyright">© 2025 MigrantConnect. All rights reserved.</span>
-                    </p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <small class="text-light">
-                        <i class="fas fa-shield-alt me-1"></i>
-                        <span data-translate="footer_secure">Secure Government Platform</span>
-                    </small>
-                </div>
+          </div>
+          <div class="text-center p-4 bg-blue-50 rounded-xl">
+            <div class="text-3xl font-bold text-blue-600">₹150</div>
+            <div
+              class="text-sm text-gray-600"
+              data-translate="monthly_allowance"
+            >
+              Monthly Allowance
             </div>
+          </div>
+          <div class="text-center p-4 bg-orange-50 rounded-xl">
+            <div class="text-3xl font-bold text-orange-600">15kg</div>
+            <div class="text-sm text-gray-600" data-translate="monthly_quota">
+              Monthly Quota
+            </div>
+          </div>
+          <div class="text-center p-4 bg-purple-50 rounded-xl">
+            <div class="text-3xl font-bold text-purple-600">8kg</div>
+            <div class="text-sm text-gray-600" data-translate="remaining_quota">
+              Remaining Quota
+            </div>
+          </div>
         </div>
-    </footer>
+      </div>
+    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <!-- Quick Actions -->
+    <div class="container mx-auto px-4 mb-8">
+      <div class="bg-white rounded-2xl shadow-lg p-6">
+        <h2
+          class="text-xl font-semibold text-gray-900 mb-6"
+          data-translate="quick_food_services"
+        >
+          Quick Food Services
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <button
+            onclick="findFairPriceShop()"
+            class="flex items-center p-4 bg-blue-50 rounded-xl hover:bg-blue-100 transition-colors"
+          >
+            <i class="fas fa-store text-2xl text-blue-600 mr-3"></i>
+            <div class="text-left">
+              <div
+                class="font-semibold text-gray-900"
+                data-translate="find_fair_price_shop"
+              >
+                Find Fair Price Shop
+              </div>
+              <div class="text-sm text-gray-600">Locate nearby PDS shops</div>
+            </div>
+          </button>
+
+          <button
+            onclick="checkRationStatus()"
+            class="flex items-center p-4 bg-green-50 rounded-xl hover:bg-green-100 transition-colors"
+          >
+            <i class="fas fa-id-card text-2xl text-green-600 mr-3"></i>
+            <div class="text-left">
+              <div
+                class="font-semibold text-gray-900"
+                data-translate="ration_card_status"
+              >
+                Ration Card Status
+              </div>
+              <div class="text-sm text-gray-600">Check card validity</div>
+            </div>
+          </button>
+
+          <button
+            onclick="trackDistribution()"
+            class="flex items-center p-4 bg-purple-50 rounded-xl hover:bg-purple-100 transition-colors"
+          >
+            <i class="fas fa-truck text-2xl text-purple-600 mr-3"></i>
+            <div class="text-left">
+              <div
+                class="font-semibold text-gray-900"
+                data-translate="track_distribution"
+              >
+                Track Distribution
+              </div>
+              <div class="text-sm text-gray-600">Monthly quota tracking</div>
+            </div>
+          </button>
+
+          <button
+            onclick="registerComplaints()"
+            class="flex items-center p-4 bg-orange-50 rounded-xl hover:bg-orange-100 transition-colors"
+          >
+            <i
+              class="fas fa-exclamation-circle text-2xl text-orange-600 mr-3"
+            ></i>
+            <div class="text-left">
+              <div
+                class="font-semibold text-gray-900"
+                data-translate="register_complaint"
+              >
+                Register Complaint
+              </div>
+              <div class="text-sm text-gray-600">Report PDS issues</div>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ration Card Information -->
+    <div class="container mx-auto px-4 mb-8">
+      <div class="bg-white rounded-2xl shadow-lg p-6">
+        <h2
+          class="text-xl font-semibold text-gray-900 mb-6"
+          data-translate="your_ration_card"
+        >
+          Your Ration Card
+        </h2>
+
+        <!-- Ration Card Display -->
+        <div
+          class="bg-gradient-to-r from-green-500 to-green-700 text-white p-6 rounded-2xl mb-6"
+        >
+          <div class="flex justify-between items-start mb-4">
+            <div>
+              <h3 class="text-lg font-bold">Priority Household (PHH)</h3>
+              <p class="text-green-100">Ration Card - Delhi</p>
+            </div>
+            <i class="fas fa-id-card text-2xl"></i>
+          </div>
+          <div class="grid grid-cols-2 gap-4 mb-4">
+            <div>
+              <div class="text-sm text-green-200">Card Number:</div>
+              <div class="font-mono text-lg">DL01 2345 6789</div>
+            </div>
+            <div>
+              <div class="text-sm text-green-200">Card Holder:</div>
+              <div class="font-semibold">Ram Kumar</div>
+            </div>
+            <div>
+              <div class="text-sm text-green-200">Family Members:</div>
+              <div class="font-semibold">4 Members</div>
+            </div>
+            <div>
+              <div class="text-sm text-green-200">Valid Until:</div>
+              <div class="font-semibold">31/12/2025</div>
+            </div>
+          </div>
+          <div class="flex space-x-3">
+            <button
+              class="bg-white text-green-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-50 transition-colors"
+            >
+              Download Card
+            </button>
+            <button
+              class="bg-green-400 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-300 transition-colors"
+            >
+              Update Details
+            </button>
+          </div>
+        </div>
+
+        <!-- Monthly Entitlement -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="card-feature">
+            <div class="text-center mb-4">
+              <i class="fas fa-seedling text-4xl text-amber-600 mb-3"></i>
+              <h3 class="text-lg font-semibold text-gray-900">Rice</h3>
+            </div>
+            <div class="space-y-2 text-sm text-gray-700 mb-4">
+              <div class="flex justify-between">
+                <span>Monthly Quota:</span>
+                <span class="font-semibold">10 kg</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Rate:</span>
+                <span class="font-semibold">₹3 per kg</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Remaining:</span>
+                <span class="font-semibold text-green-600">5 kg</span>
+              </div>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2 mb-3">
+              <div
+                class="bg-amber-600 h-2 rounded-full"
+                style="width: 50%"
+              ></div>
+            </div>
+          </div>
+
+          <div class="card-feature">
+            <div class="text-center mb-4">
+              <i class="fas fa-bread-slice text-4xl text-orange-600 mb-3"></i>
+              <h3 class="text-lg font-semibold text-gray-900">Wheat</h3>
+            </div>
+            <div class="space-y-2 text-sm text-gray-700 mb-4">
+              <div class="flex justify-between">
+                <span>Monthly Quota:</span>
+                <span class="font-semibold">5 kg</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Rate:</span>
+                <span class="font-semibold">₹2 per kg</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Remaining:</span>
+                <span class="font-semibold text-green-600">3 kg</span>
+              </div>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2 mb-3">
+              <div
+                class="bg-orange-600 h-2 rounded-full"
+                style="width: 40%"
+              ></div>
+            </div>
+          </div>
+
+          <div class="card-feature">
+            <div class="text-center mb-4">
+              <i class="fas fa-circle text-4xl text-yellow-600 mb-3"></i>
+              <h3 class="text-lg font-semibold text-gray-900">Sugar</h3>
+            </div>
+            <div class="space-y-2 text-sm text-gray-700 mb-4">
+              <div class="flex justify-between">
+                <span>Monthly Quota:</span>
+                <span class="font-semibold">1 kg</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Rate:</span>
+                <span class="font-semibold">₹13.50 per kg</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Remaining:</span>
+                <span class="font-semibold text-red-600">0 kg</span>
+              </div>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2 mb-3">
+              <div
+                class="bg-yellow-600 h-2 rounded-full"
+                style="width: 100%"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nearby Fair Price Shops -->
+    <div class="container mx-auto px-4 mb-8">
+      <div class="bg-white rounded-2xl shadow-lg p-6">
+        <div class="flex justify-between items-center mb-6">
+          <h2
+            class="text-xl font-semibold text-gray-900"
+            data-translate="nearby_fair_price_shops"
+          >
+            Nearby Fair Price Shops
+          </h2>
+          <button onclick="refreshLocation()" class="btn-outline-modern">
+            <i class="fas fa-map-marker-alt mr-2"></i>
+            Update Location
+          </button>
+        </div>
+
+        <div id="shopsList" class="space-y-4">
+          <!-- Shops will be populated by JavaScript -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Food Distribution Schedule -->
+    <div class="container mx-auto px-4 mb-8">
+      <div class="bg-white rounded-2xl shadow-lg p-6">
+        <h2
+          class="text-xl font-semibold text-gray-900 mb-6"
+          data-translate="distribution_schedule"
+        >
+          Food Distribution Schedule
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-7 gap-4">
+          <div class="text-center p-4 bg-blue-50 rounded-lg">
+            <div class="text-sm font-medium text-gray-600">Monday</div>
+            <div class="text-lg font-bold text-blue-600">Rice</div>
+            <div class="text-xs text-gray-500">9 AM - 5 PM</div>
+          </div>
+          <div class="text-center p-4 bg-gray-100 rounded-lg">
+            <div class="text-sm font-medium text-gray-600">Tuesday</div>
+            <div class="text-lg font-bold text-gray-500">Closed</div>
+            <div class="text-xs text-gray-500">-</div>
+          </div>
+          <div class="text-center p-4 bg-orange-50 rounded-lg">
+            <div class="text-sm font-medium text-gray-600">Wednesday</div>
+            <div class="text-lg font-bold text-orange-600">Wheat</div>
+            <div class="text-xs text-gray-500">9 AM - 5 PM</div>
+          </div>
+          <div class="text-center p-4 bg-gray-100 rounded-lg">
+            <div class="text-sm font-medium text-gray-600">Thursday</div>
+            <div class="text-lg font-bold text-gray-500">Closed</div>
+            <div class="text-xs text-gray-500">-</div>
+          </div>
+          <div class="text-center p-4 bg-yellow-50 rounded-lg">
+            <div class="text-sm font-medium text-gray-600">Friday</div>
+            <div class="text-lg font-bold text-yellow-600">Sugar</div>
+            <div class="text-xs text-gray-500">9 AM - 5 PM</div>
+          </div>
+          <div class="text-center p-4 bg-green-50 rounded-lg">
+            <div class="text-sm font-medium text-gray-600">Saturday</div>
+            <div class="text-lg font-bold text-green-600">All Items</div>
+            <div class="text-xs text-gray-500">9 AM - 2 PM</div>
+          </div>
+          <div class="text-center p-4 bg-gray-100 rounded-lg">
+            <div class="text-sm font-medium text-gray-600">Sunday</div>
+            <div class="text-lg font-bold text-gray-500">Closed</div>
+            <div class="text-xs text-gray-500">-</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nutrition Programs -->
+    <div class="container mx-auto px-4 mb-8">
+      <div class="bg-white rounded-2xl shadow-lg p-6">
+        <h2
+          class="text-xl font-semibold text-gray-900 mb-6"
+          data-translate="nutrition_programs"
+        >
+          Nutrition Programs
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="card-feature">
+            <div class="text-center mb-4">
+              <i class="fas fa-baby text-4xl text-pink-600 mb-3"></i>
+              <h3 class="text-lg font-semibold text-gray-900">
+                Anganwadi Services
+              </h3>
+            </div>
+            <ul class="space-y-2 text-sm text-gray-700 mb-4">
+              <li>• Supplementary nutrition for children</li>
+              <li>• Pre-school education</li>
+              <li>• Health checkups and immunization</li>
+              <li>• Nutrition for pregnant women</li>
+            </ul>
+            <button class="btn-primary-modern w-full">Find Anganwadi</button>
+          </div>
+
+          <div class="card-feature">
+            <div class="text-center mb-4">
+              <i class="fas fa-school text-4xl text-blue-600 mb-3"></i>
+              <h3 class="text-lg font-semibold text-gray-900">Mid Day Meal</h3>
+            </div>
+            <ul class="space-y-2 text-sm text-gray-700 mb-4">
+              <li>• Free hot cooked meals for children</li>
+              <li>• Nutritious breakfast and lunch</li>
+              <li>• Available in government schools</li>
+              <li>• Improves school attendance</li>
+            </ul>
+            <button class="btn-primary-modern w-full">School Enrollment</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Food Safety Tips -->
+    <div class="container mx-auto px-4 mb-8">
+      <div class="bg-white rounded-2xl shadow-lg p-6">
+        <h2
+          class="text-xl font-semibold text-gray-900 mb-6"
+          data-translate="food_safety_tips"
+        >
+          Food Safety & Nutrition Tips
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-green-50 p-6 rounded-xl">
+            <h3 class="font-semibold text-green-900 mb-3">
+              <i class="fas fa-shield-alt mr-2"></i>
+              Food Safety
+            </h3>
+            <ul class="space-y-2 text-green-800 text-sm">
+              <li>• Store grains in clean, dry containers</li>
+              <li>• Check expiry dates before consumption</li>
+              <li>• Wash hands before handling food</li>
+              <li>• Keep cooked and raw foods separate</li>
+            </ul>
+          </div>
+
+          <div class="bg-orange-50 p-6 rounded-xl">
+            <h3 class="font-semibold text-orange-900 mb-3">
+              <i class="fas fa-apple-alt mr-2"></i>
+              Balanced Nutrition
+            </h3>
+            <ul class="space-y-2 text-orange-800 text-sm">
+              <li>• Include vegetables and fruits in diet</li>
+              <li>• Consume adequate proteins and vitamins</li>
+              <li>• Drink plenty of clean water</li>
+              <li>• Limit processed and fried foods</li>
+            </ul>
+          </div>
+
+          <div class="bg-blue-50 p-6 rounded-xl">
+            <h3 class="font-semibold text-blue-900 mb-3">
+              <i class="fas fa-utensils mr-2"></i>
+              Smart Shopping
+            </h3>
+            <ul class="space-y-2 text-blue-800 text-sm">
+              <li>• Buy from authorized PDS shops only</li>
+              <li>• Check quality of grains before buying</li>
+              <li>• Keep receipts for complaint purposes</li>
+              <li>• Report poor quality or shortage</li>
+            </ul>
+          </div>
+
+          <div class="bg-purple-50 p-6 rounded-xl">
+            <h3 class="font-semibold text-purple-900 mb-3">
+              <i class="fas fa-coins mr-2"></i>
+              Budget Management
+            </h3>
+            <ul class="space-y-2 text-purple-800 text-sm">
+              <li>• Plan monthly food budget wisely</li>
+              <li>• Utilize PDS benefits fully</li>
+              <li>• Buy seasonal vegetables for savings</li>
+              <li>• Avoid food wastage</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
     <script src="assets/js/language.js"></script>
-    <script src="assets/js/main.js"></script>
-</body>
+    <script>
+      // Initialize page
+      document.addEventListener("DOMContentLoaded", function () {
+        loadLanguage(getCurrentLanguage());
+        loadNearbyShops();
+        setupEventListeners();
+      });
 
+      function toggleLanguageDropdown() {
+        const menu = document.getElementById("languageMenu");
+        menu.classList.toggle("hidden");
+      }
+
+      // Close dropdown when clicking outside
+      document.addEventListener("click", function (event) {
+        const dropdown = document.getElementById("languageDropdown");
+        const menu = document.getElementById("languageMenu");
+
+        if (!dropdown.contains(event.target)) {
+          menu.classList.add("hidden");
+        }
+      });
+
+      function setupEventListeners() {
+        // Add any event listeners here
+      }
+
+      function loadNearbyShops() {
+        const shops = [
+          {
+            name: "PDS Shop - Karol Bagh",
+            address: "Block A, Karol Bagh, New Delhi",
+            distance: "0.8 km",
+            phone: "+91-11-25751234",
+            timings: "9:00 AM - 5:00 PM",
+            rating: 4.2,
+            availability: "All items available",
+          },
+          {
+            name: "Fair Price Shop - Rajouri Garden",
+            address: "Metro Station Road, Rajouri Garden",
+            distance: "1.2 km",
+            phone: "+91-11-25752345",
+            timings: "9:00 AM - 6:00 PM",
+            rating: 4.0,
+            availability: "Rice temporarily out of stock",
+          },
+          {
+            name: "PDS Store - Patel Nagar",
+            address: "Main Market, Patel Nagar, Delhi",
+            distance: "1.5 km",
+            phone: "+91-11-25753456",
+            timings: "8:30 AM - 5:30 PM",
+            rating: 4.5,
+            availability: "All items available",
+          },
+        ];
+
+        const container = document.getElementById("shopsList");
+        container.innerHTML = shops
+          .map(
+            (shop) => `
+          <div class="card-modern p-4 hover:shadow-lg transition-shadow">
+            <div class="flex justify-between items-start mb-3">
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900">${
+                  shop.name
+                }</h3>
+                <p class="text-sm text-gray-600">${shop.address}</p>
+              </div>
+              <div class="flex items-center">
+                <i class="fas fa-star text-yellow-400 mr-1"></i>
+                <span class="text-sm text-gray-600">${shop.rating}</span>
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-3 text-sm">
+              <div>
+                <span class="text-gray-500">Distance:</span>
+                <div class="font-medium">${shop.distance}</div>
+              </div>
+              <div>
+                <span class="text-gray-500">Timings:</span>
+                <div class="font-medium">${shop.timings}</div>
+              </div>
+              <div>
+                <span class="text-gray-500">Phone:</span>
+                <div class="font-medium">${shop.phone}</div>
+              </div>
+              <div>
+                <span class="text-gray-500">Availability:</span>
+                <div class="font-medium ${
+                  shop.availability.includes("out of stock")
+                    ? "text-red-600"
+                    : "text-green-600"
+                }">
+                  ${shop.availability}
+                </div>
+              </div>
+            </div>
+            
+            <div class="flex space-x-3">
+              <button onclick="getDirections('${
+                shop.name
+              }')" class="btn-outline-modern">
+                <i class="fas fa-directions mr-2"></i>
+                Directions
+              </button>
+              <a href="tel:${shop.phone}" class="btn-secondary-modern">
+                <i class="fas fa-phone mr-2"></i>
+                Call Shop
+              </a>
+              <button onclick="checkAvailability('${
+                shop.name
+              }')" class="btn-primary-modern">
+                <i class="fas fa-check-circle mr-2"></i>
+                Check Stock
+              </button>
+            </div>
+          </div>
+        `
+          )
+          .join("");
+      }
+
+      function findFairPriceShop() {
+        alert("Finding nearby Fair Price Shops based on your location...");
+        loadNearbyShops();
+      }
+
+      function checkRationStatus() {
+        alert("Checking your ration card status and validity...");
+      }
+
+      function trackDistribution() {
+        alert("Opening distribution tracking for your monthly quota...");
+      }
+
+      function registerComplaints() {
+        alert("Opening complaint registration portal for PDS issues...");
+      }
+
+      function refreshLocation() {
+        alert("Updating your location to find nearby Fair Price Shops...");
+        loadNearbyShops();
+      }
+
+      function getDirections(shopName) {
+        alert(`Getting directions to ${shopName}...`);
+      }
+
+      function checkAvailability(shopName) {
+        alert(`Checking current stock availability at ${shopName}...`);
+      }
+
+      function getCurrentLanguage() {
+        return localStorage.getItem("selectedLanguage") || "en";
+      }
+    </script>
+  </body>
 </html>

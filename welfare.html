@@ -3,391 +3,890 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title data-translate="welfare_schemes_title">
+    <title data-translate="welfare_title">
       Welfare Schemes - MigrantConnect
     </title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
-    />
-    <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-      rel="stylesheet"
     />
-    <link href="assets/css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/tailwind-styles.css" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#2563eb",
+              secondary: "#1e40af",
+            },
+          },
+        },
+      };
+    </script>
   </head>
 
-  <body class="bg-light">
+  <body class="min-h-screen bg-gray-50">
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
-      <div class="container">
-        <a class="navbar-brand fw-bold" href="index.html">
-          <i class="fas fa-network-wired me-2"></i>MigrantConnect
-        </a>
-        <div class="navbar-nav ms-auto d-flex flex-row">
-          <div class="nav-item dropdown me-3">
-            <button
-              class="btn btn-outline-light btn-sm dropdown-toggle"
-              type="button"
-              data-bs-toggle="dropdown"
+    <nav class="navbar-modern bg-white shadow-lg">
+      <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between h-16">
+          <div class="flex items-center">
+            <a
+              href="dashboard.html"
+              class="flex items-center text-xl font-bold text-blue-600"
             >
-              <i class="fas fa-globe me-1"></i
-              ><span id="currentLang">English</span>
-            </button>
-            <ul class="dropdown-menu">
-              <li>
-                <a class="dropdown-item" href="#" onclick="changeLanguage('en')"
-                  >English</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" href="#" onclick="changeLanguage('hi')"
-                  >हिंदी</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" href="#" onclick="changeLanguage('bn')"
-                  >বাংলা</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" href="#" onclick="changeLanguage('te')"
-                  >తెలుగు</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" href="#" onclick="changeLanguage('mr')"
-                  >मराठी</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" href="#" onclick="changeLanguage('gu')"
-                  >ગુજરાતી</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" href="#" onclick="changeLanguage('kn')"
-                  >ಕನ್ನಡ</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" href="#" onclick="changeLanguage('ml')"
-                  >മലയാളം</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" href="#" onclick="changeLanguage('ta')"
-                  >தமிழ்</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" href="#" onclick="changeLanguage('pa')"
-                  >ਪੰਜਾਬੀ</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" href="#" onclick="changeLanguage('or')"
-                  >ଓଡ଼ିଆ</a
-                >
-              </li>
-            </ul>
+              <i class="fas fa-heart mr-2"></i>
+              Welfare Schemes
+            </a>
           </div>
-          <a href="dashboard.html" class="btn btn-outline-light btn-sm">
-            <i class="fas fa-arrow-left me-1"></i
-            ><span data-translate="back_to_dashboard">Back to Dashboard</span>
-          </a>
+
+          <div class="flex items-center space-x-4">
+            <!-- Language Dropdown -->
+            <div class="relative" id="languageDropdown">
+              <button
+                class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                onclick="toggleLanguageDropdown()"
+              >
+                <i class="fas fa-globe mr-2"></i>
+                <span id="currentLang">English</span>
+                <i class="fas fa-chevron-down ml-2"></i>
+              </button>
+              <div
+                class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-50 hidden"
+                id="languageMenu"
+              >
+                <div class="py-1">
+                  <a
+                    href="#"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onclick="changeLanguage('en')"
+                    >English</a
+                  >
+                  <a
+                    href="#"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onclick="changeLanguage('hi')"
+                    >हिंदी</a
+                  >
+                  <a
+                    href="#"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onclick="changeLanguage('bn')"
+                    >বাংলা</a
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Back to Dashboard -->
+            <a href="dashboard.html" class="btn-outline-modern">
+              <i class="fas fa-arrow-left mr-2"></i>
+              <span data-translate="back_to_dashboard">Back to Dashboard</span>
+            </a>
+          </div>
         </div>
       </div>
     </nav>
 
-    <!-- Main Content -->
-    <div class="container mt-5 pt-4">
-      <!-- Header -->
-      <div class="row mb-4">
-        <div class="col-12">
-          <h1
-            class="display-5 fw-bold text-primary mb-2"
-            data-translate="welfare_schemes"
-          >
-            Welfare Schemes
+    <!-- Hero Section -->
+    <div class="gradient-success text-white py-16 mt-16">
+      <div class="container mx-auto px-4">
+        <div class="text-center">
+          <h1 class="text-4xl font-bold mb-4" data-translate="welfare_title">
+            Government Welfare Schemes
           </h1>
-          <p class="lead text-muted" data-translate="welfare_schemes_desc">
-            Government schemes you may be eligible for
+          <p
+            class="text-xl text-green-100 mb-8"
+            data-translate="welfare_subtitle"
+          >
+            Discover and apply for various government welfare schemes designed
+            for migrant workers
           </p>
         </div>
       </div>
+    </div>
 
-      <!-- Quick Stats -->
-      <div class="row mb-4">
-        <div class="col-md-3 mb-3">
-          <div class="card bg-success text-white">
-            <div class="card-body text-center">
-              <h3 class="mb-0" id="eligibleSchemes">0</h3>
-              <small data-translate="eligible_schemes">Eligible Schemes</small>
+    <!-- Quick Stats -->
+    <div class="container mx-auto px-4 -mt-8 relative z-10">
+      <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div class="text-center">
+            <div class="text-3xl font-bold text-blue-600">150+</div>
+            <div
+              class="text-sm text-gray-600"
+              data-translate="available_schemes"
+            >
+              Available Schemes
             </div>
           </div>
-        </div>
-        <div class="col-md-3 mb-3">
-          <div class="card bg-info text-white">
-            <div class="card-body text-center">
-              <h3 class="mb-0" id="appliedSchemes">0</h3>
-              <small data-translate="applied_schemes">Applied</small>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-green-600">₹2.5L</div>
+            <div class="text-sm text-gray-600" data-translate="max_benefit">
+              Max Benefit Amount
             </div>
           </div>
-        </div>
-        <div class="col-md-3 mb-3">
-          <div class="card bg-warning text-white">
-            <div class="card-body text-center">
-              <h3 class="mb-0" id="pendingSchemes">0</h3>
-              <small data-translate="pending_schemes">Pending</small>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-orange-600">45</div>
+            <div
+              class="text-sm text-gray-600"
+              data-translate="pending_applications"
+            >
+              Your Pending Applications
             </div>
           </div>
-        </div>
-        <div class="col-md-3 mb-3">
-          <div class="card bg-primary text-white">
-            <div class="card-body text-center">
-              <h3 class="mb-0" id="approvedSchemes">0</h3>
-              <small data-translate="approved_schemes">Approved</small>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-purple-600">12</div>
+            <div
+              class="text-sm text-gray-600"
+              data-translate="approved_schemes"
+            >
+              Approved Schemes
             </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tabs -->
-      <ul class="nav nav-tabs" id="schemesTabs" role="tablist">
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link active"
-            id="eligible-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#eligible"
-            type="button"
-            role="tab"
-          >
-            <i class="fas fa-check-circle me-1"></i
-            ><span data-translate="eligible_tab">Eligible Schemes</span>
-          </button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link"
-            id="my-applications-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#my-applications"
-            type="button"
-            role="tab"
-          >
-            <i class="fas fa-file-alt me-1"></i
-            ><span data-translate="my_applications_tab">My Applications</span>
-          </button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link"
-            id="other-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#other"
-            type="button"
-            role="tab"
-          >
-            <i class="fas fa-list me-1"></i
-            ><span data-translate="other_schemes_tab">Other Schemes</span>
-          </button>
-        </li>
-      </ul>
-
-      <!-- Tab Content -->
-      <div class="tab-content" id="schemesTabContent">
-        <!-- Eligible Schemes -->
-        <div class="tab-pane fade show active" id="eligible" role="tabpanel">
-          <div class="row mt-4" id="eligibleSchemesList">
-            <!-- Eligible schemes will be loaded here -->
-          </div>
-        </div>
-
-        <!-- My Applications -->
-        <div class="tab-pane fade" id="my-applications" role="tabpanel">
-          <div class="mt-4" id="myApplicationsList">
-            <!-- Applications will be loaded here -->
-          </div>
-        </div>
-
-        <!-- Other Schemes -->
-        <div class="tab-pane fade" id="other" role="tabpanel">
-          <div class="row mt-4" id="otherSchemesList">
-            <!-- Other schemes will be loaded here -->
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Apply Scheme Modal -->
-    <div
-      class="modal fade"
-      id="applySchemeModal"
-      tabindex="-1"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="applySchemeTitle">Apply for Scheme</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+    <!-- Filter Section -->
+    <div class="container mx-auto px-4 mb-8">
+      <div class="bg-white rounded-xl shadow-sm p-6">
+        <h2
+          class="text-lg font-semibold text-gray-900 mb-4"
+          data-translate="filter_schemes"
+        >
+          Filter Schemes
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div>
+            <label
+              class="block text-sm font-medium text-gray-700 mb-2"
+              data-translate="category"
+              >Category</label
+            >
+            <select
+              id="categoryFilter"
+              class="form-select-modern"
+              onchange="filterSchemes()"
+            >
+              <option value="">All Categories</option>
+              <option value="housing">Housing</option>
+              <option value="healthcare">Healthcare</option>
+              <option value="education">Education</option>
+              <option value="employment">Employment</option>
+              <option value="financial">Financial Assistance</option>
+              <option value="food">Food Security</option>
+            </select>
           </div>
-          <div class="modal-body" id="applySchemeContent">
-            <!-- Application form will be loaded here -->
+
+          <div>
+            <label
+              class="block text-sm font-medium text-gray-700 mb-2"
+              data-translate="eligibility"
+              >Eligibility</label
+            >
+            <select
+              id="eligibilityFilter"
+              class="form-select-modern"
+              onchange="filterSchemes()"
+            >
+              <option value="">All</option>
+              <option value="eligible">Eligible</option>
+              <option value="not-eligible">Not Eligible</option>
+              <option value="applied">Already Applied</option>
+            </select>
+          </div>
+
+          <div>
+            <label
+              class="block text-sm font-medium text-gray-700 mb-2"
+              data-translate="state"
+              >State</label
+            >
+            <select
+              id="stateFilter"
+              class="form-select-modern"
+              onchange="filterSchemes()"
+            >
+              <option value="">All States</option>
+              <option value="delhi">Delhi</option>
+              <option value="mumbai">Mumbai</option>
+              <option value="bangalore">Bangalore</option>
+              <option value="chennai">Chennai</option>
+              <option value="kolkata">Kolkata</option>
+            </select>
+          </div>
+
+          <div>
+            <label
+              class="block text-sm font-medium text-gray-700 mb-2"
+              data-translate="benefit_amount"
+              >Benefit Amount</label
+            >
+            <select
+              id="amountFilter"
+              class="form-select-modern"
+              onchange="filterSchemes()"
+            >
+              <option value="">Any Amount</option>
+              <option value="0-10000">Up to ₹10,000</option>
+              <option value="10000-50000">₹10,000 - ₹50,000</option>
+              <option value="50000-100000">₹50,000 - ₹1,00,000</option>
+              <option value="100000+">Above ₹1,00,000</option>
+            </select>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Eligibility Check Modal -->
+    <!-- Schemes Grid -->
+    <div class="container mx-auto px-4">
+      <div
+        id="schemesGrid"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+      >
+        <!-- Schemes will be populated by JavaScript -->
+      </div>
+    </div>
+
+    <!-- Scheme Details Modal -->
     <div
-      class="modal fade"
-      id="eligibilityCheckModal"
-      tabindex="-1"
-      aria-hidden="true"
+      class="fixed inset-0 bg-black bg-opacity-50 items-center justify-center z-50 hidden"
+      id="schemeDetailsModal"
     >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" data-translate="eligibility_check">
-              Eligibility Check
-            </h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body" id="eligibilityCheckContent">
-            <!-- Eligibility check content will be loaded here -->
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-              data-translate="close"
+      <div
+        class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full mx-4 max-h-screen overflow-y-auto"
+      >
+        <div class="p-6 border-b border-gray-100">
+          <div class="flex justify-between items-center">
+            <h3
+              class="text-xl font-semibold text-gray-900"
+              id="schemeDetailsTitle"
             >
-              Close
-            </button>
+              Scheme Details
+            </h3>
             <button
-              type="button"
-              class="btn btn-primary"
-              id="proceedToApplyBtn"
-              onclick="proceedToApply()"
-              style="display: none"
+              onclick="closeSchemeDetailsModal()"
+              class="text-gray-400 hover:text-gray-600"
             >
-              <span data-translate="proceed_to_apply">Proceed to Apply</span>
+              <i class="fas fa-times"></i>
             </button>
           </div>
         </div>
+        <div class="p-6" id="schemeDetailsContent">
+          <!-- Scheme details will be populated by JavaScript -->
+        </div>
       </div>
     </div>
 
-    <!-- Aadhaar Verification Modal -->
+    <!-- Application Modal -->
     <div
-      class="modal fade"
-      id="aadhaarVerificationModal"
-      tabindex="-1"
-      aria-hidden="true"
+      class="fixed inset-0 bg-black bg-opacity-50 items-center justify-center z-50 hidden"
+      id="applicationModal"
     >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" data-translate="aadhaar_verification">
-              Aadhaar Verification
-            </h5>
+      <div
+        class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full mx-4 max-h-screen overflow-y-auto"
+      >
+        <div class="p-6 border-b border-gray-100">
+          <div class="flex justify-between items-center">
+            <h3
+              class="text-xl font-semibold text-gray-900"
+              id="applicationTitle"
+            >
+              Apply for Scheme
+            </h3>
             <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+              onclick="closeApplicationModal()"
+              class="text-gray-400 hover:text-gray-600"
+            >
+              <i class="fas fa-times"></i>
+            </button>
           </div>
-          <div class="modal-body">
-            <div class="text-center mb-3">
-              <i class="fas fa-id-card fa-3x text-primary"></i>
+        </div>
+        <div class="p-6">
+          <form id="applicationForm" class="space-y-4">
+            <div class="bg-blue-50 p-4 rounded-lg mb-6">
+              <h4 class="font-semibold text-blue-900 mb-2">
+                Application Information
+              </h4>
+              <p class="text-blue-800 text-sm">
+                Please ensure all information is accurate. Your application will
+                be processed within 7-15 working days.
+              </p>
             </div>
-            <form id="aadhaarForm">
-              <div class="mb-3">
-                <label
-                  for="aadhaarNumber"
-                  class="form-label"
-                  data-translate="aadhaar_number"
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2"
+                  >Full Name</label
+                >
+                <input
+                  type="text"
+                  class="form-input-modern"
+                  required
+                  placeholder="Enter your full name"
+                />
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2"
                   >Aadhaar Number</label
                 >
                 <input
                   type="text"
-                  class="form-control"
-                  id="aadhaarNumber"
-                  placeholder="Enter 12-digit Aadhaar number"
-                  maxlength="12"
-                  pattern="[0-9]{12}"
+                  class="form-input-modern"
+                  required
+                  placeholder="xxxx-xxxx-xxxx"
                 />
               </div>
-              <div class="mb-3" id="otpSection" style="display: none">
-                <label
-                  for="aadhaarOtp"
-                  class="form-label"
-                  data-translate="enter_otp"
-                  >Enter OTP</label
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2"
+                  >Mobile Number</label
                 >
                 <input
-                  type="text"
-                  class="form-control"
-                  id="aadhaarOtp"
-                  placeholder="6-digit OTP"
-                  maxlength="6"
-                  pattern="[0-9]{6}"
+                  type="tel"
+                  class="form-input-modern"
+                  required
+                  placeholder="+91 xxxxx xxxxx"
                 />
-                <div class="form-text" data-translate="otp_sent">
-                  OTP sent to your registered mobile number
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2"
+                  >Email Address</label
+                >
+                <input
+                  type="email"
+                  class="form-input-modern"
+                  required
+                  placeholder="your.email@example.com"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2"
+                >Current Address</label
+              >
+              <textarea
+                class="form-input-modern"
+                rows="3"
+                required
+                placeholder="Enter your current residential address"
+              ></textarea>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2"
+                  >Annual Income</label
+                >
+                <select class="form-select-modern" required>
+                  <option value="">Select Income Range</option>
+                  <option value="below-100000">Below ₹1,00,000</option>
+                  <option value="100000-200000">₹1,00,000 - ₹2,00,000</option>
+                  <option value="200000-300000">₹2,00,000 - ₹3,00,000</option>
+                  <option value="above-300000">Above ₹3,00,000</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2"
+                  >Employment Status</label
+                >
+                <select class="form-select-modern" required>
+                  <option value="">Select Status</option>
+                  <option value="employed">Employed</option>
+                  <option value="unemployed">Unemployed</option>
+                  <option value="self-employed">Self Employed</option>
+                  <option value="daily-wage">Daily Wage Worker</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2"
+                >Required Documents</label
+              >
+              <div class="space-y-3">
+                <div class="flex items-center">
+                  <input type="checkbox" class="mr-3 rounded" required />
+                  <span class="text-sm">Aadhaar Card Copy</span>
+                </div>
+                <div class="flex items-center">
+                  <input type="checkbox" class="mr-3 rounded" required />
+                  <span class="text-sm">Income Certificate</span>
+                </div>
+                <div class="flex items-center">
+                  <input type="checkbox" class="mr-3 rounded" required />
+                  <span class="text-sm">Address Proof</span>
+                </div>
+                <div class="flex items-center">
+                  <input type="checkbox" class="mr-3 rounded" />
+                  <span class="text-sm">Bank Account Details</span>
                 </div>
               </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-              data-translate="cancel"
+            </div>
+
+            <div
+              class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center"
             >
-              Cancel
-            </button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              id="sendOtpBtn"
-              onclick="sendAadhaarOtp()"
-            >
-              <span data-translate="send_otp">Send OTP</span>
-            </button>
-            <button
-              type="button"
-              class="btn btn-success"
-              id="verifyOtpBtn"
-              onclick="verifyAadhaarOtp()"
-              style="display: none"
-            >
-              <span data-translate="verify_otp">Verify OTP</span>
-            </button>
-          </div>
+              <i
+                class="fas fa-cloud-upload-alt text-gray-400 text-3xl mb-4"
+              ></i>
+              <h4 class="text-lg font-medium text-gray-900 mb-2">
+                Upload Documents
+              </h4>
+              <p class="text-sm text-gray-600 mb-4">
+                Drag and drop your documents here, or click to select files
+              </p>
+              <button type="button" class="btn-outline-modern">
+                <i class="fas fa-file-upload mr-2"></i>
+                Choose Files
+              </button>
+              <input
+                type="file"
+                class="hidden"
+                multiple
+                accept=".jpg,.jpeg,.png,.pdf,.doc,.docx"
+              />
+              <p class="text-xs text-gray-500 mt-2">
+                Supported formats: JPG, PNG, PDF, DOC. Max size: 5MB per file
+              </p>
+            </div>
+
+            <div class="flex items-start">
+              <input type="checkbox" class="mr-3 mt-1 rounded" required />
+              <label class="text-sm text-gray-700">
+                I hereby declare that all the information provided is true and
+                correct to the best of my knowledge. I understand that any false
+                information may lead to the rejection of my application.
+              </label>
+            </div>
+
+            <div class="flex space-x-3 pt-4">
+              <button type="submit" class="btn-primary-modern flex-1">
+                <i class="fas fa-paper-plane mr-2"></i>
+                Submit Application
+              </button>
+              <button
+                type="button"
+                onclick="closeApplicationModal()"
+                class="btn-outline-modern"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
 
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/language.js"></script>
     <script src="assets/js/welfare.js"></script>
+    <script>
+      let allSchemes = [];
+      let filteredSchemes = [];
+
+      // Initialize page
+      document.addEventListener("DOMContentLoaded", function () {
+        loadLanguage(getCurrentLanguage());
+        loadSchemes();
+        setupEventListeners();
+      });
+
+      function toggleLanguageDropdown() {
+        const menu = document.getElementById("languageMenu");
+        menu.classList.toggle("hidden");
+      }
+
+      // Close dropdown when clicking outside
+      document.addEventListener("click", function (event) {
+        const dropdown = document.getElementById("languageDropdown");
+        const menu = document.getElementById("languageMenu");
+
+        if (!dropdown.contains(event.target)) {
+          menu.classList.add("hidden");
+        }
+      });
+
+      function setupEventListeners() {
+        // Application form submit
+        document
+          .getElementById("applicationForm")
+          .addEventListener("submit", handleApplicationSubmit);
+      }
+
+      function loadSchemes() {
+        // Sample welfare schemes data
+        allSchemes = [
+          {
+            id: "PM-AWAS-001",
+            name: "Pradhan Mantri Awas Yojana",
+            category: "housing",
+            description:
+              "Financial assistance for construction/enhancement of houses",
+            benefit: "₹1,20,000 - ₹2,50,000",
+            state: "delhi",
+            eligibility: "eligible",
+            documents: [
+              "Aadhaar Card",
+              "Income Certificate",
+              "Property Documents",
+            ],
+            applicationDeadline: "2024-03-31",
+            processingTime: "30-45 days",
+            applied: false,
+          },
+          {
+            id: "AYUSHMAN-002",
+            name: "Ayushman Bharat - PMJAY",
+            category: "healthcare",
+            description: "Health insurance coverage up to ₹5 lakhs per family",
+            benefit: "₹5,00,000",
+            state: "delhi",
+            eligibility: "eligible",
+            documents: [
+              "Aadhaar Card",
+              "Family Income Certificate",
+              "Ration Card",
+            ],
+            applicationDeadline: "Ongoing",
+            processingTime: "15-30 days",
+            applied: true,
+          },
+          {
+            id: "PMKSY-003",
+            name: "PM Kaushal Vikas Yojana",
+            category: "employment",
+            description: "Skill development and training programs",
+            benefit: "₹8,000 - ₹15,000",
+            state: "delhi",
+            eligibility: "eligible",
+            documents: ["Aadhaar Card", "Educational Certificates"],
+            applicationDeadline: "2024-06-30",
+            processingTime: "7-15 days",
+            applied: false,
+          },
+          {
+            id: "NSA-004",
+            name: "National Scholarship",
+            category: "education",
+            description: "Financial assistance for pursuing higher education",
+            benefit: "₹25,000 - ₹75,000",
+            state: "delhi",
+            eligibility: "not-eligible",
+            documents: [
+              "Academic Records",
+              "Income Certificate",
+              "Bank Details",
+            ],
+            applicationDeadline: "2024-05-15",
+            processingTime: "45-60 days",
+            applied: false,
+          },
+          {
+            id: "PMGKY-005",
+            name: "PM Garib Kalyan Yojana",
+            category: "food",
+            description: "Free food grains and direct benefit transfer",
+            benefit: "₹500 per month",
+            state: "delhi",
+            eligibility: "eligible",
+            documents: ["Aadhaar Card", "Ration Card", "Bank Account"],
+            applicationDeadline: "Ongoing",
+            processingTime: "10-20 days",
+            applied: false,
+          },
+          {
+            id: "MUDRA-006",
+            name: "Pradhan Mantri MUDRA Yojana",
+            category: "financial",
+            description: "Micro-finance loans for small businesses",
+            benefit: "₹50,000 - ₹10,00,000",
+            state: "delhi",
+            eligibility: "eligible",
+            documents: ["Business Plan", "Identity Proof", "Address Proof"],
+            applicationDeadline: "Ongoing",
+            processingTime: "20-30 days",
+            applied: false,
+          },
+        ];
+
+        filteredSchemes = [...allSchemes];
+        displaySchemes();
+      }
+
+      function filterSchemes() {
+        const categoryFilter = document.getElementById("categoryFilter").value;
+        const eligibilityFilter =
+          document.getElementById("eligibilityFilter").value;
+        const stateFilter = document.getElementById("stateFilter").value;
+        const amountFilter = document.getElementById("amountFilter").value;
+
+        filteredSchemes = allSchemes.filter((scheme) => {
+          let matches = true;
+
+          if (categoryFilter && scheme.category !== categoryFilter)
+            matches = false;
+          if (eligibilityFilter && scheme.eligibility !== eligibilityFilter)
+            matches = false;
+          if (stateFilter && scheme.state !== stateFilter) matches = false;
+
+          return matches;
+        });
+
+        displaySchemes();
+      }
+
+      function displaySchemes() {
+        const container = document.getElementById("schemesGrid");
+
+        if (filteredSchemes.length === 0) {
+          container.innerHTML = `
+            <div class="col-span-full text-center py-12">
+              <i class="fas fa-search text-gray-400 text-4xl mb-4"></i>
+              <h3 class="text-lg font-medium text-gray-900 mb-2">No schemes found</h3>
+              <p class="text-gray-600">Try adjusting your filters to see more results.</p>
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = filteredSchemes
+          .map(
+            (scheme) => `
+          <div class="card-modern p-6 hover:shadow-lg transition-shadow">
+            <div class="flex justify-between items-start mb-4">
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">${
+                  scheme.name
+                }</h3>
+                <span class="badge-modern ${getCategoryBadgeClass(
+                  scheme.category
+                )}">${scheme.category}</span>
+              </div>
+              <div class="flex flex-col items-end space-y-2">
+                <span class="badge-modern ${getEligibilityBadgeClass(
+                  scheme.eligibility
+                )}">${getEligibilityText(scheme.eligibility)}</span>
+                ${
+                  scheme.applied
+                    ? '<span class="badge-modern badge-info-modern">Applied</span>'
+                    : ""
+                }
+              </div>
+            </div>
+            
+            <p class="text-gray-700 mb-4">${scheme.description}</p>
+            
+            <div class="space-y-3 mb-6">
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-500">Benefit Amount:</span>
+                <span class="font-semibold text-green-600">${
+                  scheme.benefit
+                }</span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-500">Application Deadline:</span>
+                <span class="font-medium">${scheme.applicationDeadline}</span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-500">Processing Time:</span>
+                <span class="font-medium">${scheme.processingTime}</span>
+              </div>
+            </div>
+            
+            <div class="flex space-x-3">
+              <button onclick="openSchemeDetails('${
+                scheme.id
+              }')" class="btn-secondary-modern flex-1">
+                View Details
+              </button>
+              ${
+                scheme.applied
+                  ? '<button class="btn-outline-modern flex-1" disabled>Already Applied</button>'
+                  : scheme.eligibility === "eligible"
+                  ? `<button onclick="openApplicationModal('${scheme.id}')" class="btn-primary-modern flex-1">Apply Now</button>`
+                  : '<button class="btn-outline-modern flex-1" disabled>Not Eligible</button>'
+              }
+            </div>
+          </div>
+        `
+          )
+          .join("");
+      }
+
+      function getCategoryBadgeClass(category) {
+        const classes = {
+          housing: "badge-warning-modern",
+          healthcare: "badge-danger-modern",
+          education: "badge-info-modern",
+          employment: "badge-success-modern",
+          financial: "badge-primary-modern",
+          food: "badge-secondary-modern",
+        };
+        return classes[category] || "badge-info-modern";
+      }
+
+      function getEligibilityBadgeClass(eligibility) {
+        const classes = {
+          eligible: "badge-success-modern",
+          "not-eligible": "badge-danger-modern",
+          applied: "badge-info-modern",
+        };
+        return classes[eligibility] || "badge-info-modern";
+      }
+
+      function getEligibilityText(eligibility) {
+        const texts = {
+          eligible: "Eligible",
+          "not-eligible": "Not Eligible",
+          applied: "Applied",
+        };
+        return texts[eligibility] || eligibility;
+      }
+
+      function openSchemeDetails(schemeId) {
+        const scheme = allSchemes.find((s) => s.id === schemeId);
+        if (!scheme) return;
+
+        document.getElementById("schemeDetailsTitle").textContent = scheme.name;
+        document.getElementById("schemeDetailsContent").innerHTML = `
+          <div class="space-y-6">
+            <div class="bg-blue-50 p-6 rounded-lg">
+              <h4 class="font-semibold text-blue-900 mb-3">Scheme Overview</h4>
+              <p class="text-blue-800">${scheme.description}</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h4 class="font-semibold text-gray-900 mb-3">Benefit Details</h4>
+                <div class="space-y-2">
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">Amount:</span>
+                    <span class="font-semibold text-green-600">${
+                      scheme.benefit
+                    }</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">Processing Time:</span>
+                    <span class="font-medium">${scheme.processingTime}</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-gray-600">Deadline:</span>
+                    <span class="font-medium">${
+                      scheme.applicationDeadline
+                    }</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <h4 class="font-semibold text-gray-900 mb-3">Required Documents</h4>
+                <ul class="space-y-1">
+                  ${scheme.documents
+                    .map(
+                      (doc) => `
+                    <li class="flex items-center text-gray-700">
+                      <i class="fas fa-check text-green-500 mr-2"></i>
+                      ${doc}
+                    </li>
+                  `
+                    )
+                    .join("")}
+                </ul>
+              </div>
+            </div>
+            
+            <div class="bg-gray-50 p-6 rounded-lg">
+              <h4 class="font-semibold text-gray-900 mb-3">Eligibility Criteria</h4>
+              <ul class="space-y-2 text-gray-700">
+                <li>• Annual family income should be below ₹3,00,000</li>
+                <li>• Applicant should be a resident of Delhi for at least 3 years</li>
+                <li>• Should not have benefited from similar schemes in the past 5 years</li>
+                <li>• Valid Aadhaar card is mandatory</li>
+              </ul>
+            </div>
+            
+            <div class="flex space-x-3">
+              ${
+                scheme.applied
+                  ? '<button class="btn-outline-modern flex-1" disabled>Already Applied</button>'
+                  : scheme.eligibility === "eligible"
+                  ? `<button onclick="closeSchemeDetailsModal(); openApplicationModal('${scheme.id}')" class="btn-primary-modern flex-1">Apply Now</button>`
+                  : '<button class="btn-outline-modern flex-1" disabled>Not Eligible</button>'
+              }
+              <button onclick="downloadSchemeInfo('${
+                scheme.id
+              }')" class="btn-secondary-modern">
+                <i class="fas fa-download mr-2"></i>
+                Download Info
+              </button>
+            </div>
+          </div>
+        `;
+
+        document
+          .getElementById("schemeDetailsModal")
+          .classList.remove("hidden");
+        document.getElementById("schemeDetailsModal").style.display = "flex";
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeSchemeDetailsModal() {
+        document.getElementById("schemeDetailsModal").classList.add("hidden");
+        document.getElementById("schemeDetailsModal").style.display = "none";
+        document.body.style.overflow = "auto";
+      }
+
+      function openApplicationModal(schemeId) {
+        const scheme = allSchemes.find((s) => s.id === schemeId);
+        if (!scheme) return;
+
+        document.getElementById(
+          "applicationTitle"
+        ).textContent = `Apply for ${scheme.name}`;
+        document.getElementById("applicationModal").classList.remove("hidden");
+        document.getElementById("applicationModal").style.display = "flex";
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeApplicationModal() {
+        document.getElementById("applicationModal").classList.add("hidden");
+        document.getElementById("applicationModal").style.display = "none";
+        document.body.style.overflow = "auto";
+      }
+
+      function downloadSchemeInfo(schemeId) {
+        alert(`Downloading detailed information for scheme ${schemeId}...`);
+      }
+
+      function handleApplicationSubmit(e) {
+        e.preventDefault();
+
+        // Show success message
+        alert(
+          "Application submitted successfully! You will receive a confirmation SMS/email with your application ID."
+        );
+
+        closeApplicationModal();
+
+        // Reset form
+        e.target.reset();
+
+        // Refresh schemes list
+        loadSchemes();
+      }
+
+      function getCurrentLanguage() {
+        return localStorage.getItem("selectedLanguage") || "en";
+      }
+    </script>
   </body>
 </html>

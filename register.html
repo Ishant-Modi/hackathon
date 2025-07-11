@@ -4,706 +4,897 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MigrantConnect - Register</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
+    <script src="https://cdn.tailwindcss.com"></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <link rel="stylesheet" href="assets/css/styles.css" />
-    <style>
-      .registration-container {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        min-height: 100vh;
-        padding: 20px 0;
-      }
-
-      .registration-card {
-        border: none;
-        border-radius: 16px;
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-      }
-
-      .nav-tabs .nav-link {
-        border: none;
-        border-radius: 8px 8px 0 0;
-        color: #6c757d;
-        font-weight: 600;
-      }
-
-      .nav-tabs .nav-link.active {
-        background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
-        color: white;
-      }
-
-      .skill-badge {
-        background: #e3f2fd;
-        color: #1976d2;
-        border: 1px solid #bbdefb;
-        border-radius: 20px;
-        padding: 5px 12px;
-        margin: 2px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-      }
-
-      .skill-badge.selected {
-        background: #1976d2;
-        color: white;
-      }
-
-      .skill-badge:hover {
-        background: #1976d2;
-        color: white;
-      }
-
-      .form-floating label {
-        color: #6c757d;
-      }
-
-      .btn-gradient {
-        background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
-        border: none;
-        border-radius: 8px;
-        padding: 12px 30px;
-        font-weight: 600;
-        transition: all 0.3s ease;
-      }
-
-      .btn-gradient:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
-      }
-    </style>
+    <link rel="stylesheet" href="assets/css/tailwind-styles.css" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#2563eb",
+              secondary: "#1e40af",
+            },
+          },
+        },
+      };
+    </script>
   </head>
-  <body>
-    <div class="registration-container">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-md-8 col-lg-6">
-            <!-- Header -->
-            <div class="text-center mb-4">
-              <a href="landing.html" class="btn btn-outline-light mb-3">
-                <i class="fas fa-arrow-left me-2"></i>Back to Home
-              </a>
-              <h1 class="text-white mb-2">Create an Account</h1>
-              <p class="text-white-50">
-                Register to access the MigrantConnect platform
-              </p>
-            </div>
 
-            <!-- Registration Form -->
-            <div class="card registration-card">
-              <div class="card-body p-0">
-                <!-- Tabs -->
-                <ul
-                  class="nav nav-tabs nav-fill"
-                  id="registrationTabs"
-                  role="tablist"
-                >
-                  <li class="nav-item" role="presentation">
-                    <button
-                      class="nav-link active"
-                      id="worker-tab"
-                      data-bs-toggle="tab"
-                      data-bs-target="#worker-registration"
-                      type="button"
-                      role="tab"
-                    >
-                      <i class="fas fa-user me-2"></i>Worker Registration
-                    </button>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                    <button
-                      class="nav-link"
-                      id="employer-tab"
-                      data-bs-toggle="tab"
-                      data-bs-target="#employer-registration"
-                      type="button"
-                      role="tab"
-                    >
-                      <i class="fas fa-building me-2"></i>Employer Registration
-                    </button>
-                  </li>
-                </ul>
-
-                <div class="tab-content p-4" id="registrationTabsContent">
-                  <!-- Worker Registration -->
-                  <div
-                    class="tab-pane fade show active"
-                    id="worker-registration"
-                    role="tabpanel"
+  <body
+    class="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50"
+  >
+    <!-- Header -->
+    <div class="bg-white shadow-sm">
+      <div class="container mx-auto px-4 py-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center">
+            <i class="fas fa-users text-2xl text-blue-600 mr-3"></i>
+            <h1 class="text-2xl font-bold text-gray-900">MigrantConnect</h1>
+          </div>
+          <div class="flex items-center space-x-4">
+            <a
+              href="index.html"
+              class="text-gray-600 hover:text-blue-600 transition-colors"
+            >
+              <i class="fas fa-sign-in-alt mr-2"></i>
+              Login
+            </a>
+            <div class="relative" id="languageDropdown">
+              <button
+                class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                onclick="toggleLanguageDropdown()"
+              >
+                <i class="fas fa-globe mr-2"></i>
+                <span id="currentLang">English</span>
+                <i class="fas fa-chevron-down ml-2"></i>
+              </button>
+              <div
+                class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-50 hidden"
+                id="languageMenu"
+              >
+                <div class="py-1">
+                  <a
+                    href="#"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onclick="changeLanguage('en')"
+                    >English</a
                   >
-                    <form id="workerRegistrationForm">
-                      <div class="row g-3">
-                        <!-- Basic Information -->
-                        <div class="col-12">
-                          <h6 class="text-muted mb-3">Basic Information</h6>
-                        </div>
-
-                        <div class="col-md-6">
-                          <div class="form-floating">
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="workerFirstName"
-                              placeholder="First Name"
-                              required
-                            />
-                            <label for="workerFirstName">First Name</label>
-                          </div>
-                        </div>
-
-                        <div class="col-md-6">
-                          <div class="form-floating">
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="workerLastName"
-                              placeholder="Last Name"
-                              required
-                            />
-                            <label for="workerLastName">Last Name</label>
-                          </div>
-                        </div>
-
-                        <div class="col-12">
-                          <div class="form-floating">
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="workerAadhaar"
-                              placeholder="Aadhaar Number"
-                              pattern="[0-9]{12}"
-                              required
-                            />
-                            <label for="workerAadhaar"
-                              >Aadhaar Number (12 digits)</label
-                            >
-                          </div>
-                        </div>
-
-                        <div class="col-md-6">
-                          <div class="form-floating">
-                            <input
-                              type="tel"
-                              class="form-control"
-                              id="workerPhone"
-                              placeholder="Phone Number"
-                              required
-                            />
-                            <label for="workerPhone">Phone Number</label>
-                          </div>
-                        </div>
-
-                        <div class="col-md-6">
-                          <div class="form-floating">
-                            <input
-                              type="date"
-                              class="form-control"
-                              id="workerDOB"
-                              required
-                            />
-                            <label for="workerDOB">Date of Birth</label>
-                          </div>
-                        </div>
-
-                        <!-- Location Information -->
-                        <div class="col-12 mt-4">
-                          <h6 class="text-muted mb-3">Location Information</h6>
-                        </div>
-
-                        <div class="col-md-6">
-                          <div class="form-floating">
-                            <select
-                              class="form-select"
-                              id="workerHomeState"
-                              required
-                            >
-                              <option value="">Select Home State</option>
-                              <option value="bihar">Bihar</option>
-                              <option value="uttar-pradesh">
-                                Uttar Pradesh
-                              </option>
-                              <option value="west-bengal">West Bengal</option>
-                              <option value="rajasthan">Rajasthan</option>
-                              <option value="odisha">Odisha</option>
-                            </select>
-                            <label for="workerHomeState">Home State</label>
-                          </div>
-                        </div>
-
-                        <div class="col-md-6">
-                          <div class="form-floating">
-                            <select
-                              class="form-select"
-                              id="workerCurrentState"
-                              required
-                            >
-                              <option value="">Select Current State</option>
-                              <option value="delhi">Delhi</option>
-                              <option value="maharashtra">Maharashtra</option>
-                              <option value="karnataka">Karnataka</option>
-                              <option value="gujarat">Gujarat</option>
-                              <option value="tamil-nadu">Tamil Nadu</option>
-                            </select>
-                            <label for="workerCurrentState"
-                              >Current Working State</label
-                            >
-                          </div>
-                        </div>
-
-                        <!-- Skills Section -->
-                        <div class="col-12 mt-4">
-                          <h6 class="text-muted mb-3">Skills & Experience</h6>
-                          <p class="small text-muted">
-                            Select your skills (click to select/deselect):
-                          </p>
-                          <div id="skillsContainer" class="mb-3">
-                            <span class="skill-badge" data-skill="construction"
-                              >Construction</span
-                            >
-                            <span class="skill-badge" data-skill="plumbing"
-                              >Plumbing</span
-                            >
-                            <span class="skill-badge" data-skill="electrical"
-                              >Electrical Work</span
-                            >
-                            <span class="skill-badge" data-skill="painting"
-                              >Painting</span
-                            >
-                            <span class="skill-badge" data-skill="welding"
-                              >Welding</span
-                            >
-                            <span class="skill-badge" data-skill="carpentry"
-                              >Carpentry</span
-                            >
-                            <span class="skill-badge" data-skill="masonry"
-                              >Masonry</span
-                            >
-                            <span class="skill-badge" data-skill="cleaning"
-                              >Cleaning</span
-                            >
-                            <span class="skill-badge" data-skill="security"
-                              >Security</span
-                            >
-                            <span class="skill-badge" data-skill="driving"
-                              >Driving</span
-                            >
-                          </div>
-                        </div>
-
-                        <div class="col-md-6">
-                          <div class="form-floating">
-                            <select
-                              class="form-select"
-                              id="workerExperience"
-                              required
-                            >
-                              <option value="">Select Experience</option>
-                              <option value="0-1">0-1 years</option>
-                              <option value="1-3">1-3 years</option>
-                              <option value="3-5">3-5 years</option>
-                              <option value="5+">5+ years</option>
-                            </select>
-                            <label for="workerExperience"
-                              >Years of Experience</label
-                            >
-                          </div>
-                        </div>
-
-                        <div class="col-md-6">
-                          <div class="form-floating">
-                            <select
-                              class="form-select"
-                              id="workerLanguage"
-                              required
-                            >
-                              <option value="">Select Primary Language</option>
-                              <option value="hi">हिंदी</option>
-                              <option value="en">English</option>
-                              <option value="bn">বাংলা</option>
-                              <option value="te">తెలుగు</option>
-                              <option value="ta">தமிழ்</option>
-                              <option value="mr">मराठी</option>
-                            </select>
-                            <label for="workerLanguage">Primary Language</label>
-                          </div>
-                        </div>
-
-                        <div class="col-12 mt-4">
-                          <button type="submit" class="btn btn-gradient w-100">
-                            <i class="fas fa-user-plus me-2"></i>Register as
-                            Worker
-                          </button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-
-                  <!-- Employer Registration -->
-                  <div
-                    class="tab-pane fade"
-                    id="employer-registration"
-                    role="tabpanel"
+                  <a
+                    href="#"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onclick="changeLanguage('hi')"
+                    >हिंदी</a
                   >
-                    <form id="employerRegistrationForm">
-                      <div class="row g-3">
-                        <!-- Company Information -->
-                        <div class="col-12">
-                          <h6 class="text-muted mb-3">Company Information</h6>
-                        </div>
-
-                        <div class="col-12">
-                          <div class="form-floating">
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="companyName"
-                              placeholder="Company Name"
-                              required
-                            />
-                            <label for="companyName">Company Name</label>
-                          </div>
-                        </div>
-
-                        <div class="col-md-6">
-                          <div class="form-floating">
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="companyRegNumber"
-                              placeholder="Registration Number"
-                              required
-                            />
-                            <label for="companyRegNumber"
-                              >Registration Number</label
-                            >
-                          </div>
-                        </div>
-
-                        <div class="col-md-6">
-                          <div class="form-floating">
-                            <select
-                              class="form-select"
-                              id="companyType"
-                              required
-                            >
-                              <option value="">Select Company Type</option>
-                              <option value="construction">Construction</option>
-                              <option value="manufacturing">
-                                Manufacturing
-                              </option>
-                              <option value="agriculture">Agriculture</option>
-                              <option value="services">Services</option>
-                              <option value="other">Other</option>
-                            </select>
-                            <label for="companyType">Company Type</label>
-                          </div>
-                        </div>
-
-                        <div class="col-12">
-                          <div class="form-floating">
-                            <textarea
-                              class="form-control"
-                              id="companyAddress"
-                              placeholder="Company Address"
-                              style="height: 100px"
-                              required
-                            ></textarea>
-                            <label for="companyAddress">Company Address</label>
-                          </div>
-                        </div>
-
-                        <!-- Contact Person Information -->
-                        <div class="col-12 mt-4">
-                          <h6 class="text-muted mb-3">
-                            Contact Person Information
-                          </h6>
-                        </div>
-
-                        <div class="col-md-6">
-                          <div class="form-floating">
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="contactPersonName"
-                              placeholder="Contact Person Name"
-                              required
-                            />
-                            <label for="contactPersonName"
-                              >Contact Person Name</label
-                            >
-                          </div>
-                        </div>
-
-                        <div class="col-md-6">
-                          <div class="form-floating">
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="contactDesignation"
-                              placeholder="Designation"
-                              required
-                            />
-                            <label for="contactDesignation">Designation</label>
-                          </div>
-                        </div>
-
-                        <div class="col-md-6">
-                          <div class="form-floating">
-                            <input
-                              type="email"
-                              class="form-control"
-                              id="contactEmail"
-                              placeholder="Email"
-                              required
-                            />
-                            <label for="contactEmail">Email Address</label>
-                          </div>
-                        </div>
-
-                        <div class="col-md-6">
-                          <div class="form-floating">
-                            <input
-                              type="tel"
-                              class="form-control"
-                              id="contactPhone"
-                              placeholder="Phone"
-                              required
-                            />
-                            <label for="contactPhone">Phone Number</label>
-                          </div>
-                        </div>
-
-                        <!-- Login Credentials -->
-                        <div class="col-12 mt-4">
-                          <h6 class="text-muted mb-3">Login Credentials</h6>
-                        </div>
-
-                        <div class="col-md-6">
-                          <div class="form-floating">
-                            <input
-                              type="password"
-                              class="form-control"
-                              id="employerPassword"
-                              placeholder="Password"
-                              required
-                            />
-                            <label for="employerPassword">Password</label>
-                          </div>
-                        </div>
-
-                        <div class="col-md-6">
-                          <div class="form-floating">
-                            <input
-                              type="password"
-                              class="form-control"
-                              id="confirmPassword"
-                              placeholder="Confirm Password"
-                              required
-                            />
-                            <label for="confirmPassword"
-                              >Confirm Password</label
-                            >
-                          </div>
-                        </div>
-
-                        <div class="col-12 mt-4">
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              id="agreeTerms"
-                              required
-                            />
-                            <label class="form-check-label" for="agreeTerms">
-                              I agree to the
-                              <a href="#" class="text-decoration-none"
-                                >Terms and Conditions</a
-                              >
-                            </label>
-                          </div>
-                        </div>
-
-                        <div class="col-12 mt-4">
-                          <button type="submit" class="btn btn-gradient w-100">
-                            <i class="fas fa-building me-2"></i>Register as
-                            Employer
-                          </button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
+                  <a
+                    href="#"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onclick="changeLanguage('bn')"
+                    >বাংলা</a
+                  >
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-            <!-- Footer Links -->
-            <div class="text-center mt-4">
-              <p class="text-white-50">
-                Already have an account?
-                <a
-                  href="index.html"
-                  class="text-white text-decoration-none fw-bold"
-                  >Login here</a
-                >
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+      <div class="max-w-4xl mx-auto">
+        <!-- Registration Card -->
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+          <!-- Header -->
+          <div
+            class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-6"
+          >
+            <div class="text-center">
+              <h2
+                class="text-2xl font-bold mb-2"
+                data-translate="create_account"
+              >
+                Create Your Account
+              </h2>
+              <p class="text-blue-100" data-translate="join_migrant_connect">
+                Join MigrantConnect and access essential services
+              </p>
+            </div>
+          </div>
+
+          <!-- User Type Selection -->
+          <div class="p-6 border-b border-gray-200">
+            <h3
+              class="text-lg font-semibold text-gray-900 mb-4"
+              data-translate="select_user_type"
+            >
+              Select User Type
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <button
+                onclick="selectUserType('worker')"
+                id="workerTypeBtn"
+                class="p-6 border-2 border-blue-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition-all group"
+              >
+                <div class="text-center">
+                  <i
+                    class="fas fa-hard-hat text-3xl text-blue-600 mb-3 group-hover:scale-110 transition-transform"
+                  ></i>
+                  <h4
+                    class="text-lg font-semibold text-gray-900 mb-2"
+                    data-translate="migrant_worker"
+                  >
+                    Migrant Worker
+                  </h4>
+                  <p
+                    class="text-sm text-gray-600"
+                    data-translate="worker_description"
+                  >
+                    Access jobs, welfare schemes, and support services
+                  </p>
+                </div>
+              </button>
+
+              <button
+                onclick="selectUserType('employer')"
+                id="employerTypeBtn"
+                class="p-6 border-2 border-green-200 rounded-xl hover:border-green-500 hover:bg-green-50 transition-all group"
+              >
+                <div class="text-center">
+                  <i
+                    class="fas fa-building text-3xl text-green-600 mb-3 group-hover:scale-110 transition-transform"
+                  ></i>
+                  <h4
+                    class="text-lg font-semibold text-gray-900 mb-2"
+                    data-translate="employer"
+                  >
+                    Employer
+                  </h4>
+                  <p
+                    class="text-sm text-gray-600"
+                    data-translate="employer_description"
+                  >
+                    Post jobs, manage workforce, and access hiring tools
+                  </p>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <!-- Registration Forms -->
+          <div class="p-6">
+            <!-- Worker Registration Form -->
+            <div id="workerForm" class="hidden">
+              <h3
+                class="text-lg font-semibold text-gray-900 mb-6"
+                data-translate="worker_registration"
+              >
+                Worker Registration
+              </h3>
+              <form class="space-y-6">
+                <!-- Personal Information -->
+                <div class="bg-gray-50 p-6 rounded-xl">
+                  <h4
+                    class="font-semibold text-gray-900 mb-4"
+                    data-translate="personal_information"
+                  >
+                    Personal Information
+                  </h4>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700 mb-2"
+                        data-translate="full_name"
+                        >Full Name *</label
+                      >
+                      <input
+                        type="text"
+                        class="form-input-modern"
+                        required
+                        placeholder="Enter your full name"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700 mb-2"
+                        data-translate="mobile_number"
+                        >Mobile Number *</label
+                      >
+                      <input
+                        type="tel"
+                        class="form-input-modern"
+                        required
+                        placeholder="+91 xxxxx xxxxx"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700 mb-2"
+                        data-translate="email"
+                        >Email Address</label
+                      >
+                      <input
+                        type="email"
+                        class="form-input-modern"
+                        placeholder="your.email@example.com"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700 mb-2"
+                        data-translate="date_of_birth"
+                        >Date of Birth *</label
+                      >
+                      <input type="date" class="form-input-modern" required />
+                    </div>
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700 mb-2"
+                        data-translate="gender"
+                        >Gender *</label
+                      >
+                      <select class="form-select-modern" required>
+                        <option value="">Select Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700 mb-2"
+                        data-translate="aadhaar_number"
+                        >Aadhaar Number *</label
+                      >
+                      <input
+                        type="text"
+                        class="form-input-modern"
+                        required
+                        placeholder="xxxx-xxxx-xxxx"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Address Information -->
+                <div class="bg-gray-50 p-6 rounded-xl">
+                  <h4
+                    class="font-semibold text-gray-900 mb-4"
+                    data-translate="address_information"
+                  >
+                    Address Information
+                  </h4>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="md:col-span-2">
+                      <label
+                        class="block text-sm font-medium text-gray-700 mb-2"
+                        data-translate="home_address"
+                        >Home Address (Permanent) *</label
+                      >
+                      <textarea
+                        class="form-input-modern"
+                        rows="3"
+                        required
+                        placeholder="Enter your permanent address"
+                      ></textarea>
+                    </div>
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700 mb-2"
+                        data-translate="home_state"
+                        >Home State *</label
+                      >
+                      <select class="form-select-modern" required>
+                        <option value="">Select State</option>
+                        <option value="andhra-pradesh">Andhra Pradesh</option>
+                        <option value="bihar">Bihar</option>
+                        <option value="chhattisgarh">Chhattisgarh</option>
+                        <option value="delhi">Delhi</option>
+                        <option value="gujarat">Gujarat</option>
+                        <option value="haryana">Haryana</option>
+                        <option value="jharkhand">Jharkhand</option>
+                        <option value="karnataka">Karnataka</option>
+                        <option value="kerala">Kerala</option>
+                        <option value="madhya-pradesh">Madhya Pradesh</option>
+                        <option value="maharashtra">Maharashtra</option>
+                        <option value="odisha">Odisha</option>
+                        <option value="punjab">Punjab</option>
+                        <option value="rajasthan">Rajasthan</option>
+                        <option value="tamil-nadu">Tamil Nadu</option>
+                        <option value="telangana">Telangana</option>
+                        <option value="uttar-pradesh">Uttar Pradesh</option>
+                        <option value="west-bengal">West Bengal</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700 mb-2"
+                        data-translate="current_location"
+                        >Current Location *</label
+                      >
+                      <select class="form-select-modern" required>
+                        <option value="">Select Current Location</option>
+                        <option value="delhi">Delhi</option>
+                        <option value="mumbai">Mumbai</option>
+                        <option value="bangalore">Bangalore</option>
+                        <option value="chennai">Chennai</option>
+                        <option value="kolkata">Kolkata</option>
+                        <option value="pune">Pune</option>
+                        <option value="hyderabad">Hyderabad</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Work Information -->
+                <div class="bg-gray-50 p-6 rounded-xl">
+                  <h4
+                    class="font-semibold text-gray-900 mb-4"
+                    data-translate="work_information"
+                  >
+                    Work Information
+                  </h4>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700 mb-2"
+                        data-translate="primary_skill"
+                        >Primary Skill *</label
+                      >
+                      <select class="form-select-modern" required>
+                        <option value="">Select Primary Skill</option>
+                        <option value="construction">Construction Work</option>
+                        <option value="domestic">Domestic Work</option>
+                        <option value="delivery">Delivery Services</option>
+                        <option value="manufacturing">Manufacturing</option>
+                        <option value="agriculture">Agriculture</option>
+                        <option value="cleaning">Cleaning Services</option>
+                        <option value="security">Security Services</option>
+                        <option value="retail">Retail</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700 mb-2"
+                        data-translate="experience_years"
+                        >Years of Experience</label
+                      >
+                      <select class="form-select-modern">
+                        <option value="">Select Experience</option>
+                        <option value="0-1">0-1 years</option>
+                        <option value="1-3">1-3 years</option>
+                        <option value="3-5">3-5 years</option>
+                        <option value="5-10">5-10 years</option>
+                        <option value="10+">10+ years</option>
+                      </select>
+                    </div>
+                    <div class="md:col-span-2">
+                      <label
+                        class="block text-sm font-medium text-gray-700 mb-2"
+                        data-translate="additional_skills"
+                        >Additional Skills</label
+                      >
+                      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        <label class="flex items-center">
+                          <input type="checkbox" class="mr-2 rounded" />
+                          <span class="text-sm">Electrical Work</span>
+                        </label>
+                        <label class="flex items-center">
+                          <input type="checkbox" class="mr-2 rounded" />
+                          <span class="text-sm">Plumbing</span>
+                        </label>
+                        <label class="flex items-center">
+                          <input type="checkbox" class="mr-2 rounded" />
+                          <span class="text-sm">Painting</span>
+                        </label>
+                        <label class="flex items-center">
+                          <input type="checkbox" class="mr-2 rounded" />
+                          <span class="text-sm">Cooking</span>
+                        </label>
+                        <label class="flex items-center">
+                          <input type="checkbox" class="mr-2 rounded" />
+                          <span class="text-sm">Driving</span>
+                        </label>
+                        <label class="flex items-center">
+                          <input type="checkbox" class="mr-2 rounded" />
+                          <span class="text-sm">Machine Operation</span>
+                        </label>
+                        <label class="flex items-center">
+                          <input type="checkbox" class="mr-2 rounded" />
+                          <span class="text-sm">Carpentry</span>
+                        </label>
+                        <label class="flex items-center">
+                          <input type="checkbox" class="mr-2 rounded" />
+                          <span class="text-sm">Welding</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Create Password -->
+                <div class="bg-gray-50 p-6 rounded-xl">
+                  <h4
+                    class="font-semibold text-gray-900 mb-4"
+                    data-translate="account_security"
+                  >
+                    Account Security
+                  </h4>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700 mb-2"
+                        data-translate="password"
+                        >Password *</label
+                      >
+                      <input
+                        type="password"
+                        class="form-input-modern"
+                        required
+                        placeholder="Create a strong password"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700 mb-2"
+                        data-translate="confirm_password"
+                        >Confirm Password *</label
+                      >
+                      <input
+                        type="password"
+                        class="form-input-modern"
+                        required
+                        placeholder="Confirm your password"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Terms and Submit -->
+                <div class="space-y-4">
+                  <div class="flex items-start">
+                    <input type="checkbox" class="mr-3 mt-1 rounded" required />
+                    <label class="text-sm text-gray-700">
+                      I agree to the
+                      <a href="#" class="text-blue-600 hover:underline"
+                        >Terms of Service</a
+                      >
+                      and
+                      <a href="#" class="text-blue-600 hover:underline"
+                        >Privacy Policy</a
+                      >
+                      of MigrantConnect.
+                    </label>
+                  </div>
+
+                  <div class="flex items-start">
+                    <input type="checkbox" class="mr-3 mt-1 rounded" />
+                    <label class="text-sm text-gray-700">
+                      I would like to receive SMS notifications about job
+                      opportunities and important updates.
+                    </label>
+                  </div>
+
+                  <button
+                    type="submit"
+                    class="btn-primary-modern w-full text-lg py-4"
+                  >
+                    <i class="fas fa-user-plus mr-2"></i>
+                    <span data-translate="create_worker_account"
+                      >Create Worker Account</span
+                    >
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Employer Registration Form -->
+            <div id="employerForm" class="hidden">
+              <h3
+                class="text-lg font-semibold text-gray-900 mb-6"
+                data-translate="employer_registration"
+              >
+                Employer Registration
+              </h3>
+              <form class="space-y-6">
+                <!-- Company Information -->
+                <div class="bg-gray-50 p-6 rounded-xl">
+                  <h4
+                    class="font-semibold text-gray-900 mb-4"
+                    data-translate="company_information"
+                  >
+                    Company Information
+                  </h4>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700 mb-2"
+                        data-translate="company_name"
+                        >Company Name *</label
+                      >
+                      <input
+                        type="text"
+                        class="form-input-modern"
+                        required
+                        placeholder="Enter company name"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700 mb-2"
+                        data-translate="industry_type"
+                        >Industry Type *</label
+                      >
+                      <select class="form-select-modern" required>
+                        <option value="">Select Industry</option>
+                        <option value="construction">Construction</option>
+                        <option value="manufacturing">Manufacturing</option>
+                        <option value="hospitality">Hospitality</option>
+                        <option value="retail">Retail</option>
+                        <option value="agriculture">Agriculture</option>
+                        <option value="logistics">Logistics</option>
+                        <option value="services">Services</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700 mb-2"
+                        data-translate="company_size"
+                        >Company Size *</label
+                      >
+                      <select class="form-select-modern" required>
+                        <option value="">Select Company Size</option>
+                        <option value="1-10">1-10 employees</option>
+                        <option value="11-50">11-50 employees</option>
+                        <option value="51-200">51-200 employees</option>
+                        <option value="201-500">201-500 employees</option>
+                        <option value="500+">500+ employees</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700 mb-2"
+                        data-translate="registration_number"
+                        >Registration Number</label
+                      >
+                      <input
+                        type="text"
+                        class="form-input-modern"
+                        placeholder="Company registration number"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Contact Person Information -->
+                <div class="bg-gray-50 p-6 rounded-xl">
+                  <h4
+                    class="font-semibold text-gray-900 mb-4"
+                    data-translate="contact_person"
+                  >
+                    Contact Person Information
+                  </h4>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700 mb-2"
+                        data-translate="contact_name"
+                        >Contact Person Name *</label
+                      >
+                      <input
+                        type="text"
+                        class="form-input-modern"
+                        required
+                        placeholder="Enter contact person name"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700 mb-2"
+                        data-translate="designation"
+                        >Designation *</label
+                      >
+                      <input
+                        type="text"
+                        class="form-input-modern"
+                        required
+                        placeholder="HR Manager, Owner, etc."
+                      />
+                    </div>
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700 mb-2"
+                        data-translate="mobile_number"
+                        >Mobile Number *</label
+                      >
+                      <input
+                        type="tel"
+                        class="form-input-modern"
+                        required
+                        placeholder="+91 xxxxx xxxxx"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700 mb-2"
+                        data-translate="email"
+                        >Email Address *</label
+                      >
+                      <input
+                        type="email"
+                        class="form-input-modern"
+                        required
+                        placeholder="contact@company.com"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Company Address -->
+                <div class="bg-gray-50 p-6 rounded-xl">
+                  <h4
+                    class="font-semibold text-gray-900 mb-4"
+                    data-translate="company_address"
+                  >
+                    Company Address
+                  </h4>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="md:col-span-2">
+                      <label
+                        class="block text-sm font-medium text-gray-700 mb-2"
+                        data-translate="office_address"
+                        >Office Address *</label
+                      >
+                      <textarea
+                        class="form-input-modern"
+                        rows="3"
+                        required
+                        placeholder="Enter complete office address"
+                      ></textarea>
+                    </div>
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700 mb-2"
+                        data-translate="city"
+                        >City *</label
+                      >
+                      <select class="form-select-modern" required>
+                        <option value="">Select City</option>
+                        <option value="delhi">Delhi</option>
+                        <option value="mumbai">Mumbai</option>
+                        <option value="bangalore">Bangalore</option>
+                        <option value="chennai">Chennai</option>
+                        <option value="kolkata">Kolkata</option>
+                        <option value="pune">Pune</option>
+                        <option value="hyderabad">Hyderabad</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700 mb-2"
+                        data-translate="state"
+                        >State *</label
+                      >
+                      <select class="form-select-modern" required>
+                        <option value="">Select State</option>
+                        <option value="delhi">Delhi</option>
+                        <option value="maharashtra">Maharashtra</option>
+                        <option value="karnataka">Karnataka</option>
+                        <option value="tamil-nadu">Tamil Nadu</option>
+                        <option value="west-bengal">West Bengal</option>
+                        <option value="gujarat">Gujarat</option>
+                        <option value="telangana">Telangana</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Account Security -->
+                <div class="bg-gray-50 p-6 rounded-xl">
+                  <h4
+                    class="font-semibold text-gray-900 mb-4"
+                    data-translate="account_security"
+                  >
+                    Account Security
+                  </h4>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700 mb-2"
+                        data-translate="password"
+                        >Password *</label
+                      >
+                      <input
+                        type="password"
+                        class="form-input-modern"
+                        required
+                        placeholder="Create a strong password"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700 mb-2"
+                        data-translate="confirm_password"
+                        >Confirm Password *</label
+                      >
+                      <input
+                        type="password"
+                        class="form-input-modern"
+                        required
+                        placeholder="Confirm your password"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Terms and Submit -->
+                <div class="space-y-4">
+                  <div class="flex items-start">
+                    <input type="checkbox" class="mr-3 mt-1 rounded" required />
+                    <label class="text-sm text-gray-700">
+                      I agree to the
+                      <a href="#" class="text-blue-600 hover:underline"
+                        >Terms of Service</a
+                      >
+                      and
+                      <a href="#" class="text-blue-600 hover:underline"
+                        >Privacy Policy</a
+                      >
+                      of MigrantConnect.
+                    </label>
+                  </div>
+
+                  <div class="flex items-start">
+                    <input type="checkbox" class="mr-3 mt-1 rounded" />
+                    <label class="text-sm text-gray-700">
+                      I would like to receive email notifications about platform
+                      updates and hiring insights.
+                    </label>
+                  </div>
+
+                  <button
+                    type="submit"
+                    class="btn-success-modern w-full text-lg py-4"
+                  >
+                    <i class="fas fa-building mr-2"></i>
+                    <span data-translate="create_employer_account"
+                      >Create Employer Account</span
+                    >
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- No Selection State -->
+            <div id="noSelection" class="text-center py-12">
+              <i class="fas fa-arrow-up text-4xl text-gray-400 mb-4"></i>
+              <h3
+                class="text-lg font-semibold text-gray-900 mb-2"
+                data-translate="select_user_type_first"
+              >
+                Please select your user type above
+              </h3>
+              <p class="text-gray-600" data-translate="user_type_description">
+                Choose whether you're registering as a migrant worker or
+                employer to continue
               </p>
             </div>
           </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Success Modal -->
-    <div class="modal fade" id="successModal" tabindex="-1">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-body text-center py-5">
-            <i
-              class="fas fa-check-circle text-success"
-              style="font-size: 4rem"
-            ></i>
-            <h4 class="mt-3 mb-3">Registration Successful!</h4>
-            <p class="text-muted mb-4">
-              Your account has been created successfully. You can now login to
-              access the platform.
-            </p>
-            <button
-              type="button"
-              class="btn btn-primary"
-              onclick="redirectToLogin()"
+        <!-- Login Link -->
+        <div class="text-center mt-8">
+          <p class="text-gray-600">
+            <span data-translate="already_have_account"
+              >Already have an account?</span
             >
-              Go to Login
-            </button>
-          </div>
+            <a
+              href="index.html"
+              class="text-blue-600 hover:underline font-medium ml-1"
+              data-translate="login_here"
+              >Login here</a
+            >
+          </p>
         </div>
       </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Scripts -->
     <script src="assets/js/language.js"></script>
     <script>
-      let selectedSkills = [];
+      let selectedUserType = null;
 
+      // Initialize page
       document.addEventListener("DOMContentLoaded", function () {
-        // Check URL parameters for user type
-        const urlParams = new URLSearchParams(window.location.search);
-        const type = urlParams.get("type");
-
-        if (type === "employer") {
-          document.getElementById("employer-tab").click();
-        }
-
-        // Initialize skill selection
-        initializeSkillSelection();
+        loadLanguage(getCurrentLanguage());
+        setupEventListeners();
       });
 
-      function initializeSkillSelection() {
-        const skillBadges = document.querySelectorAll(".skill-badge");
-        skillBadges.forEach((badge) => {
-          badge.addEventListener("click", function () {
-            const skill = this.getAttribute("data-skill");
-            if (this.classList.contains("selected")) {
-              this.classList.remove("selected");
-              selectedSkills = selectedSkills.filter((s) => s !== skill);
-            } else {
-              this.classList.add("selected");
-              selectedSkills.push(skill);
-            }
-          });
-        });
+      function toggleLanguageDropdown() {
+        const menu = document.getElementById("languageMenu");
+        menu.classList.toggle("hidden");
       }
 
-      // Worker Registration Form Handler
-      document
-        .getElementById("workerRegistrationForm")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
+      // Close dropdown when clicking outside
+      document.addEventListener("click", function (event) {
+        const dropdown = document.getElementById("languageDropdown");
+        const menu = document.getElementById("languageMenu");
 
-          const formData = {
-            type: "worker",
-            firstName: document.getElementById("workerFirstName").value,
-            lastName: document.getElementById("workerLastName").value,
-            aadhaar: document.getElementById("workerAadhaar").value,
-            phone: document.getElementById("workerPhone").value,
-            dob: document.getElementById("workerDOB").value,
-            homeState: document.getElementById("workerHomeState").value,
-            currentState: document.getElementById("workerCurrentState").value,
-            skills: selectedSkills,
-            experience: document.getElementById("workerExperience").value,
-            language: document.getElementById("workerLanguage").value,
-            registrationDate: new Date().toISOString(),
-          };
+        if (!dropdown.contains(event.target)) {
+          menu.classList.add("hidden");
+        }
+      });
 
-          // Validate required fields
-          if (selectedSkills.length === 0) {
-            alert("Please select at least one skill");
-            return;
-          }
+      function setupEventListeners() {
+        // Form submissions
+        document
+          .querySelector("#workerForm form")
+          .addEventListener("submit", handleWorkerRegistration);
+        document
+          .querySelector("#employerForm form")
+          .addEventListener("submit", handleEmployerRegistration);
+      }
 
-          // Store registration data (in real app, this would be sent to server)
-          const registeredUsers = JSON.parse(
-            localStorage.getItem("registeredUsers") || "[]"
-          );
-          registeredUsers.push(formData);
-          localStorage.setItem(
-            "registeredUsers",
-            JSON.stringify(registeredUsers)
-          );
+      function selectUserType(type) {
+        selectedUserType = type;
 
-          // Show success modal
-          new bootstrap.Modal(document.getElementById("successModal")).show();
-        });
+        // Reset button styles
+        document.getElementById("workerTypeBtn").className =
+          "p-6 border-2 border-blue-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition-all group";
+        document.getElementById("employerTypeBtn").className =
+          "p-6 border-2 border-green-200 rounded-xl hover:border-green-500 hover:bg-green-50 transition-all group";
 
-      // Employer Registration Form Handler
-      document
-        .getElementById("employerRegistrationForm")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
+        // Hide all forms
+        document.getElementById("workerForm").classList.add("hidden");
+        document.getElementById("employerForm").classList.add("hidden");
+        document.getElementById("noSelection").classList.add("hidden");
 
-          const password = document.getElementById("employerPassword").value;
-          const confirmPassword =
-            document.getElementById("confirmPassword").value;
+        if (type === "worker") {
+          document.getElementById("workerTypeBtn").className =
+            "p-6 border-2 border-blue-500 bg-blue-50 rounded-xl transition-all group";
+          document.getElementById("workerForm").classList.remove("hidden");
+        } else if (type === "employer") {
+          document.getElementById("employerTypeBtn").className =
+            "p-6 border-2 border-green-500 bg-green-50 rounded-xl transition-all group";
+          document.getElementById("employerForm").classList.remove("hidden");
+        }
+      }
 
-          if (password !== confirmPassword) {
-            alert("Passwords do not match");
-            return;
-          }
+      function handleWorkerRegistration(e) {
+        e.preventDefault();
 
-          const formData = {
-            type: "employer",
-            companyName: document.getElementById("companyName").value,
-            registrationNumber:
-              document.getElementById("companyRegNumber").value,
-            companyType: document.getElementById("companyType").value,
-            address: document.getElementById("companyAddress").value,
-            contactPerson: document.getElementById("contactPersonName").value,
-            designation: document.getElementById("contactDesignation").value,
-            email: document.getElementById("contactEmail").value,
-            phone: document.getElementById("contactPhone").value,
-            password: password,
-            registrationDate: new Date().toISOString(),
-          };
+        // Show success message
+        alert(
+          "Worker registration submitted successfully! Please check your mobile for OTP verification."
+        );
 
-          // Store registration data (in real app, this would be sent to server)
-          const registeredEmployers = JSON.parse(
-            localStorage.getItem("registeredEmployers") || "[]"
-          );
-          registeredEmployers.push(formData);
-          localStorage.setItem(
-            "registeredEmployers",
-            JSON.stringify(registeredEmployers)
-          );
+        // Redirect to login page
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 2000);
+      }
 
-          // Show success modal
-          new bootstrap.Modal(document.getElementById("successModal")).show();
-        });
+      function handleEmployerRegistration(e) {
+        e.preventDefault();
 
-      function redirectToLogin() {
-        window.location.href = "index.html";
+        // Show success message
+        alert(
+          "Employer registration submitted successfully! Your account will be verified within 24-48 hours. You will receive a confirmation email."
+        );
+
+        // Redirect to login page
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 2000);
+      }
+
+      function getCurrentLanguage() {
+        return localStorage.getItem("selectedLanguage") || "en";
       }
     </script>
   </body>

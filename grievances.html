@@ -4,553 +4,663 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title data-translate="grievances_title">Grievances - MigrantConnect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
-    />
-    <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-      rel="stylesheet"
     />
-    <link href="assets/css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/tailwind-styles.css" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#2563eb",
+              secondary: "#1e40af",
+            },
+          },
+        },
+      };
+    </script>
   </head>
 
-  <body class="bg-light">
+  <body class="min-h-screen bg-gray-50">
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
-      <div class="container">
-        <a class="navbar-brand fw-bold" href="index.html">
-          <i class="fas fa-network-wired me-2"></i>MigrantConnect
-        </a>
-        <div class="navbar-nav ms-auto d-flex flex-row">
-          <div class="nav-item dropdown me-3">
-            <button
-              class="btn btn-outline-light btn-sm dropdown-toggle"
-              type="button"
-              data-bs-toggle="dropdown"
+    <nav class="navbar-modern bg-white shadow-lg">
+      <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between h-16">
+          <div class="flex items-center">
+            <a
+              href="dashboard.html"
+              class="flex items-center text-xl font-bold text-blue-600"
             >
-              <i class="fas fa-globe me-1"></i
-              ><span id="currentLang">English</span>
-            </button>
-            <ul class="dropdown-menu">
-              <li>
-                <a class="dropdown-item" href="#" onclick="changeLanguage('en')"
-                  >English</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" href="#" onclick="changeLanguage('hi')"
-                  >हिंदी</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" href="#" onclick="changeLanguage('bn')"
-                  >বাংলা</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" href="#" onclick="changeLanguage('te')"
-                  >తెలుగు</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" href="#" onclick="changeLanguage('mr')"
-                  >मराठी</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" href="#" onclick="changeLanguage('gu')"
-                  >ગુજરાતી</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" href="#" onclick="changeLanguage('kn')"
-                  >ಕನ್ನಡ</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" href="#" onclick="changeLanguage('ml')"
-                  >മലയാളം</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" href="#" onclick="changeLanguage('ta')"
-                  >தமிழ்</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" href="#" onclick="changeLanguage('pa')"
-                  >ਪੰਜਾਬੀ</a
-                >
-              </li>
-              <li>
-                <a class="dropdown-item" href="#" onclick="changeLanguage('or')"
-                  >ଓଡ଼ିଆ</a
-                >
-              </li>
-            </ul>
+              <i class="fas fa-exclamation-triangle mr-2"></i>
+              Grievance Portal
+            </a>
           </div>
-          <a href="dashboard.html" class="btn btn-outline-light btn-sm">
-            <i class="fas fa-arrow-left me-1"></i
-            ><span data-translate="back_to_dashboard">Back to Dashboard</span>
-          </a>
+
+          <div class="flex items-center space-x-4">
+            <!-- Language Dropdown -->
+            <div class="relative" id="languageDropdown">
+              <button
+                class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                onclick="toggleLanguageDropdown()"
+              >
+                <i class="fas fa-globe mr-2"></i>
+                <span id="currentLang">English</span>
+                <i class="fas fa-chevron-down ml-2"></i>
+              </button>
+              <div
+                class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-50 hidden"
+                id="languageMenu"
+              >
+                <div class="py-1">
+                  <a
+                    href="#"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onclick="changeLanguage('en')"
+                    >English</a
+                  >
+                  <a
+                    href="#"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onclick="changeLanguage('hi')"
+                    >हिंदी</a
+                  >
+                  <a
+                    href="#"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onclick="changeLanguage('bn')"
+                    >বাংলা</a
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Back to Dashboard -->
+            <a href="dashboard.html" class="btn-outline-modern">
+              <i class="fas fa-arrow-left mr-2"></i>
+              <span data-translate="back_to_dashboard">Back to Dashboard</span>
+            </a>
+          </div>
         </div>
       </div>
     </nav>
 
-    <!-- Main Content -->
-    <div class="container mt-5 pt-4">
-      <!-- Header -->
-      <div class="row mb-4">
-        <div class="col-md-8">
-          <h1
-            class="display-5 fw-bold text-primary mb-2"
-            data-translate="grievances_portal"
-          >
-            Grievances Portal
+    <!-- Hero Section -->
+    <div class="gradient-warning text-white py-16 mt-16">
+      <div class="container mx-auto px-4">
+        <div class="text-center">
+          <h1 class="text-4xl font-bold mb-4" data-translate="grievances_title">
+            Grievance Redressal
           </h1>
-          <p class="lead text-muted" data-translate="grievances_desc">
-            File and track workplace complaints and issues
+          <p
+            class="text-xl text-orange-100 mb-8"
+            data-translate="grievances_subtitle"
+          >
+            Report issues and track the resolution of your complaints
           </p>
-        </div>
-        <div class="col-md-4 text-md-end">
-          <button
-            class="btn btn-primary btn-lg"
-            data-bs-toggle="modal"
-            data-bs-target="#fileGrievanceModal"
-          >
-            <i class="fas fa-plus me-2"></i
-            ><span data-translate="file_grievance">File New Grievance</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- Quick Stats -->
-      <div class="row mb-4">
-        <div class="col-md-3 mb-3">
-          <div class="card bg-primary text-white">
-            <div class="card-body text-center">
-              <h3 class="mb-0" id="totalGrievances">0</h3>
-              <small data-translate="total_grievances">Total Grievances</small>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3 mb-3">
-          <div class="card bg-warning text-white">
-            <div class="card-body text-center">
-              <h3 class="mb-0" id="activeGrievances">0</h3>
-              <small data-translate="active_grievances">Active</small>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3 mb-3">
-          <div class="card bg-info text-white">
-            <div class="card-body text-center">
-              <h3 class="mb-0" id="inProgressGrievances">0</h3>
-              <small data-translate="in_progress_grievances">In Progress</small>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3 mb-3">
-          <div class="card bg-success text-white">
-            <div class="card-body text-center">
-              <h3 class="mb-0" id="resolvedGrievances">0</h3>
-              <small data-translate="resolved_grievances">Resolved</small>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tabs -->
-      <ul class="nav nav-tabs" id="grievancesTabs" role="tablist">
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link active"
-            id="active-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#active"
-            type="button"
-            role="tab"
-          >
-            <i class="fas fa-clock me-1"></i
-            ><span data-translate="active_tab">Active Grievances</span>
-          </button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link"
-            id="resolved-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#resolved"
-            type="button"
-            role="tab"
-          >
-            <i class="fas fa-check-circle me-1"></i
-            ><span data-translate="resolved_tab">Resolved Grievances</span>
-          </button>
-        </li>
-      </ul>
-
-      <!-- Tab Content -->
-      <div class="tab-content" id="grievancesTabContent">
-        <!-- Active Grievances -->
-        <div class="tab-pane fade show active" id="active" role="tabpanel">
-          <div class="card">
-            <div class="card-body">
-              <div id="activeGrievancesList">
-                <!-- Active grievances will be loaded here -->
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Resolved Grievances -->
-        <div class="tab-pane fade" id="resolved" role="tabpanel">
-          <div class="card">
-            <div class="card-body">
-              <div id="resolvedGrievancesList">
-                <!-- Resolved grievances will be loaded here -->
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
 
-    <!-- File Grievance Modal -->
+    <!-- Quick Actions -->
+    <div class="container mx-auto px-4 -mt-8 relative z-10">
+      <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <button
+            onclick="showNewGrievanceModal()"
+            class="flex items-center p-4 bg-red-50 rounded-xl hover:bg-red-100 transition-colors"
+          >
+            <i class="fas fa-plus-circle text-2xl text-red-600 mr-3"></i>
+            <div class="text-left">
+              <div
+                class="font-semibold text-gray-900"
+                data-translate="file_new_grievance"
+              >
+                File New Grievance
+              </div>
+              <div class="text-sm text-gray-600" data-translate="report_issue">
+                Report a new issue
+              </div>
+            </div>
+          </button>
+
+          <button
+            onclick="switchTab('active')"
+            class="flex items-center p-4 bg-blue-50 rounded-xl hover:bg-blue-100 transition-colors"
+          >
+            <i class="fas fa-clock text-2xl text-blue-600 mr-3"></i>
+            <div class="text-left">
+              <div
+                class="font-semibold text-gray-900"
+                data-translate="active_grievances"
+              >
+                Active Grievances
+              </div>
+              <div class="text-sm text-gray-600">3 pending</div>
+            </div>
+          </button>
+
+          <button
+            onclick="switchTab('resolved')"
+            class="flex items-center p-4 bg-green-50 rounded-xl hover:bg-green-100 transition-colors"
+          >
+            <i class="fas fa-check-circle text-2xl text-green-600 mr-3"></i>
+            <div class="text-left">
+              <div
+                class="font-semibold text-gray-900"
+                data-translate="resolved_grievances"
+              >
+                Resolved Grievances
+              </div>
+              <div class="text-sm text-gray-600">12 resolved</div>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="container mx-auto px-4">
+      <div class="flex space-x-1 bg-gray-100 rounded-xl p-1 mb-6">
+        <button
+          id="activeTab"
+          class="flex-1 py-2 px-4 rounded-lg font-medium transition-colors bg-white text-blue-600 shadow-sm"
+          onclick="switchTab('active')"
+          data-translate="active_grievances"
+        >
+          Active Grievances
+        </button>
+        <button
+          id="resolvedTab"
+          class="flex-1 py-2 px-4 rounded-lg font-medium transition-colors text-gray-600 hover:text-gray-900"
+          onclick="switchTab('resolved')"
+          data-translate="resolved_grievances"
+        >
+          Resolved Grievances
+        </button>
+      </div>
+
+      <!-- Active Grievances -->
+      <div id="activeGrievances" class="space-y-4">
+        <!-- Grievances will be populated by JavaScript -->
+      </div>
+
+      <!-- Resolved Grievances -->
+      <div id="resolvedGrievances" class="space-y-4 hidden">
+        <!-- Resolved grievances will be populated by JavaScript -->
+      </div>
+    </div>
+
+    <!-- New Grievance Modal -->
     <div
-      class="modal fade"
-      id="fileGrievanceModal"
-      tabindex="-1"
-      aria-hidden="true"
+      class="fixed inset-0 bg-black bg-opacity-50 items-center justify-center z-50 hidden"
+      id="newGrievanceModal"
     >
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" data-translate="file_new_grievance">
+      <div
+        class="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 max-h-screen overflow-y-auto"
+      >
+        <div class="p-6 border-b border-gray-100">
+          <div class="flex justify-between items-center">
+            <h3
+              class="text-xl font-semibold text-gray-900"
+              data-translate="file_new_grievance"
+            >
               File New Grievance
-            </h5>
+            </h3>
             <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+              onclick="closeNewGrievanceModal()"
+              class="text-gray-400 hover:text-gray-600"
+            >
+              <i class="fas fa-times"></i>
+            </button>
           </div>
-          <div class="modal-body">
-            <form id="grievanceForm">
-              <div class="mb-3">
-                <label
-                  for="grievanceTitle"
-                  class="form-label"
-                  data-translate="grievance_title"
-                  >Grievance Title *</label
-                >
+        </div>
+        <div class="p-6">
+          <form id="grievanceForm" class="space-y-4">
+            <div>
+              <label
+                class="block text-sm font-medium text-gray-700 mb-2"
+                data-translate="grievance_category"
+                >Category</label
+              >
+              <select class="form-select-modern" required>
+                <option value="">Select Category</option>
+                <option value="wage">Wage Related</option>
+                <option value="working_conditions">Working Conditions</option>
+                <option value="harassment">Harassment</option>
+                <option value="accommodation">Accommodation</option>
+                <option value="documents">Document Issues</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div>
+              <label
+                class="block text-sm font-medium text-gray-700 mb-2"
+                data-translate="subject"
+                >Subject</label
+              >
+              <input
+                type="text"
+                class="form-input-modern"
+                required
+                placeholder="Brief description of the issue"
+              />
+            </div>
+
+            <div>
+              <label
+                class="block text-sm font-medium text-gray-700 mb-2"
+                data-translate="description"
+                >Detailed Description</label
+              >
+              <textarea
+                class="form-input-modern"
+                rows="4"
+                required
+                placeholder="Provide detailed information about your grievance..."
+              ></textarea>
+            </div>
+
+            <div>
+              <label
+                class="block text-sm font-medium text-gray-700 mb-2"
+                data-translate="priority"
+                >Priority</label
+              >
+              <select class="form-select-modern" required>
+                <option value="">Select Priority</option>
+                <option value="high">High</option>
+                <option value="medium">Medium</option>
+                <option value="low">Low</option>
+              </select>
+            </div>
+
+            <div>
+              <label
+                class="block text-sm font-medium text-gray-700 mb-2"
+                data-translate="supporting_documents"
+                >Supporting Documents (Optional)</label
+              >
+              <div
+                class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center"
+              >
+                <i
+                  class="fas fa-cloud-upload-alt text-gray-400 text-2xl mb-2"
+                ></i>
+                <p class="text-sm text-gray-600">
+                  Drag and drop files here, or click to select
+                </p>
                 <input
-                  type="text"
-                  class="form-control"
-                  id="grievanceTitle"
-                  required
-                  placeholder="Brief description of the issue"
-                  data-translate-placeholder="title_placeholder"
-                />
-              </div>
-              <div class="mb-3">
-                <label
-                  for="grievanceType"
-                  class="form-label"
-                  data-translate="grievance_type"
-                  >Type of Grievance *</label
-                >
-                <select class="form-select" id="grievanceType" required>
-                  <option value="" data-translate="select_type">
-                    Select Type
-                  </option>
-                  <option value="Wage Dispute" data-translate="wage_dispute">
-                    Wage Dispute
-                  </option>
-                  <option value="Working Hours" data-translate="working_hours">
-                    Working Hours
-                  </option>
-                  <option
-                    value="Safety Concern"
-                    data-translate="safety_concern"
-                  >
-                    Safety Concern
-                  </option>
-                  <option
-                    value="Living Conditions"
-                    data-translate="living_conditions"
-                  >
-                    Living Conditions
-                  </option>
-                  <option
-                    value="Discrimination"
-                    data-translate="discrimination"
-                  >
-                    Discrimination
-                  </option>
-                  <option
-                    value="Contract Issues"
-                    data-translate="contract_issues"
-                  >
-                    Contract Issues
-                  </option>
-                  <option value="Other" data-translate="other">Other</option>
-                </select>
-              </div>
-              <div class="mb-3">
-                <label
-                  for="employer"
-                  class="form-label"
-                  data-translate="employer_name"
-                  >Employer/Company Name *</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="employer"
-                  required
-                  placeholder="Name of employer or company"
-                  data-translate-placeholder="employer_placeholder"
-                />
-              </div>
-              <div class="row mb-3">
-                <div class="col-md-6">
-                  <label
-                    for="jobTitle"
-                    class="form-label"
-                    data-translate="job_title"
-                    >Job Title</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="jobTitle"
-                    placeholder="Your job position"
-                    data-translate-placeholder="job_title_placeholder"
-                  />
-                </div>
-                <div class="col-md-6">
-                  <label
-                    for="workPeriod"
-                    class="form-label"
-                    data-translate="work_period"
-                    >Work Period</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="workPeriod"
-                    placeholder="e.g., Jan 2024 - Present"
-                    data-translate-placeholder="work_period_placeholder"
-                  />
-                </div>
-              </div>
-              <div class="mb-3">
-                <label
-                  for="amountDue"
-                  class="form-label"
-                  data-translate="amount_due"
-                  >Amount Due (if applicable)</label
-                >
-                <div class="input-group">
-                  <span class="input-group-text">₹</span>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="amountDue"
-                    placeholder="0"
-                    data-translate-placeholder="amount_placeholder"
-                  />
-                </div>
-              </div>
-              <div class="mb-3">
-                <label
-                  for="grievanceDescription"
-                  class="form-label"
-                  data-translate="detailed_description"
-                  >Detailed Description *</label
-                >
-                <textarea
-                  class="form-control"
-                  id="grievanceDescription"
-                  rows="5"
-                  required
-                  placeholder="Provide detailed information about your grievance..."
-                  data-translate-placeholder="description_placeholder"
-                ></textarea>
-              </div>
-              <div class="mb-3">
-                <label
-                  for="evidence"
-                  class="form-label"
-                  data-translate="supporting_evidence"
-                  >Supporting Evidence</label
-                >
-                <input
-                  class="form-control"
                   type="file"
-                  id="evidence"
+                  class="hidden"
                   multiple
-                  accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+                  accept=".jpg,.jpeg,.png,.pdf,.doc,.docx"
                 />
-                <div class="form-text" data-translate="evidence_help">
-                  Upload any supporting documents, photos, or evidence (Max 5MB
-                  per file)
-                </div>
               </div>
-              <div class="mb-3 form-check">
-                <input
-                  type="checkbox"
-                  class="form-check-input"
-                  id="termsAgreement"
-                  required
-                />
-                <label
-                  class="form-check-label"
-                  for="termsAgreement"
-                  data-translate="terms_agreement"
-                >
-                  I confirm that the information provided is accurate to the
-                  best of my knowledge
-                </label>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-              data-translate="cancel"
-            >
-              Cancel
-            </button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              onclick="submitGrievance()"
-            >
-              <i class="fas fa-paper-plane me-1"></i
-              ><span data-translate="submit_grievance">Submit Grievance</span>
-            </button>
-          </div>
+            </div>
+
+            <div class="flex space-x-3 pt-4">
+              <button type="submit" class="btn-primary-modern flex-1">
+                <i class="fas fa-paper-plane mr-2"></i>
+                <span data-translate="submit_grievance">Submit Grievance</span>
+              </button>
+              <button
+                type="button"
+                onclick="closeNewGrievanceModal()"
+                class="btn-outline-modern"
+              >
+                <span data-translate="cancel">Cancel</span>
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
 
     <!-- Grievance Details Modal -->
     <div
-      class="modal fade"
+      class="fixed inset-0 bg-black bg-opacity-50 items-center justify-center z-50 hidden"
       id="grievanceDetailsModal"
-      tabindex="-1"
-      aria-hidden="true"
     >
-      <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="grievanceDetailsTitle">
+      <div
+        class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full mx-4 max-h-screen overflow-y-auto"
+      >
+        <div class="p-6 border-b border-gray-100">
+          <div class="flex justify-between items-center">
+            <h3
+              class="text-xl font-semibold text-gray-900"
+              id="grievanceDetailsTitle"
+            >
               Grievance Details
-            </h5>
+            </h3>
             <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body" id="grievanceDetailsContent">
-            <!-- Grievance details will be loaded here -->
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-              data-translate="close"
+              onclick="closeGrievanceDetailsModal()"
+              class="text-gray-400 hover:text-gray-600"
             >
-              Close
-            </button>
-            <button
-              type="button"
-              class="btn btn-outline-primary"
-              id="addResponseBtn"
-              onclick="showAddResponseForm()"
-            >
-              <i class="fas fa-comment me-1"></i
-              ><span data-translate="add_response">Add Response</span>
+              <i class="fas fa-times"></i>
             </button>
           </div>
         </div>
-      </div>
-    </div>
-
-    <!-- Add Response Modal -->
-    <div
-      class="modal fade"
-      id="addResponseModal"
-      tabindex="-1"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" data-translate="add_response">
-              Add Response
-            </h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <form id="responseForm">
-              <div class="mb-3">
-                <label
-                  for="responseMessage"
-                  class="form-label"
-                  data-translate="your_message"
-                  >Your Message</label
-                >
-                <textarea
-                  class="form-control"
-                  id="responseMessage"
-                  rows="4"
-                  required
-                  placeholder="Add additional information or follow-up..."
-                  data-translate-placeholder="response_placeholder"
-                ></textarea>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-              data-translate="cancel"
-            >
-              Cancel
-            </button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              onclick="submitResponse()"
-            >
-              <i class="fas fa-paper-plane me-1"></i
-              ><span data-translate="send_response">Send Response</span>
-            </button>
-          </div>
+        <div class="p-6" id="grievanceDetailsContent">
+          <!-- Grievance details will be populated by JavaScript -->
         </div>
       </div>
     </div>
 
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/language.js"></script>
     <script src="assets/js/grievances.js"></script>
+    <script>
+      let currentTab = "active";
+
+      // Initialize page
+      document.addEventListener("DOMContentLoaded", function () {
+        loadLanguage(getCurrentLanguage());
+        displayGrievances();
+        setupEventListeners();
+      });
+
+      function toggleLanguageDropdown() {
+        const menu = document.getElementById("languageMenu");
+        menu.classList.toggle("hidden");
+      }
+
+      // Close dropdown when clicking outside
+      document.addEventListener("click", function (event) {
+        const dropdown = document.getElementById("languageDropdown");
+        const menu = document.getElementById("languageMenu");
+
+        if (!dropdown.contains(event.target)) {
+          menu.classList.add("hidden");
+        }
+      });
+
+      function setupEventListeners() {
+        // Grievance form submit
+        document
+          .getElementById("grievanceForm")
+          .addEventListener("submit", handleGrievanceSubmit);
+      }
+
+      function switchTab(tab) {
+        currentTab = tab;
+
+        // Update tab buttons
+        document.getElementById("activeTab").className =
+          tab === "active"
+            ? "flex-1 py-2 px-4 rounded-lg font-medium transition-colors bg-white text-blue-600 shadow-sm"
+            : "flex-1 py-2 px-4 rounded-lg font-medium transition-colors text-gray-600 hover:text-gray-900";
+
+        document.getElementById("resolvedTab").className =
+          tab === "resolved"
+            ? "flex-1 py-2 px-4 rounded-lg font-medium transition-colors bg-white text-blue-600 shadow-sm"
+            : "flex-1 py-2 px-4 rounded-lg font-medium transition-colors text-gray-600 hover:text-gray-900";
+
+        // Show/hide content
+        if (tab === "active") {
+          document
+            .getElementById("activeGrievances")
+            .classList.remove("hidden");
+          document.getElementById("resolvedGrievances").classList.add("hidden");
+        } else {
+          document.getElementById("activeGrievances").classList.add("hidden");
+          document
+            .getElementById("resolvedGrievances")
+            .classList.remove("hidden");
+        }
+
+        displayGrievances();
+      }
+
+      function displayGrievances() {
+        const activeContainer = document.getElementById("activeGrievances");
+        const resolvedContainer = document.getElementById("resolvedGrievances");
+
+        if (currentTab === "active") {
+          activeContainer.innerHTML = generateActiveGrievancesHTML();
+        } else {
+          resolvedContainer.innerHTML = generateResolvedGrievancesHTML();
+        }
+      }
+
+      function generateActiveGrievancesHTML() {
+        const activeGrievances = [
+          {
+            id: "GRV001",
+            subject: "Wage Payment Delay",
+            category: "Wage Related",
+            priority: "High",
+            status: "In Progress",
+            dateSubmitted: "2024-01-15",
+            lastUpdate: "2024-01-18",
+            description:
+              "My employer has not paid my wages for the last 15 days despite completing all assigned work.",
+            assignedOfficer: "Labour Inspector - Delhi",
+          },
+          {
+            id: "GRV002",
+            subject: "Accommodation Issues",
+            category: "Accommodation",
+            priority: "Medium",
+            status: "Under Review",
+            dateSubmitted: "2024-01-10",
+            lastUpdate: "2024-01-16",
+            description:
+              "The provided accommodation lacks basic facilities like clean water and proper sanitation.",
+            assignedOfficer: "Welfare Officer - Delhi",
+          },
+          {
+            id: "GRV003",
+            subject: "Workplace Safety Concerns",
+            category: "Working Conditions",
+            priority: "High",
+            status: "Escalated",
+            dateSubmitted: "2024-01-08",
+            lastUpdate: "2024-01-17",
+            description:
+              "No safety equipment provided at construction site, risking worker safety.",
+            assignedOfficer: "Safety Inspector - Delhi",
+          },
+        ];
+
+        return activeGrievances
+          .map(
+            (grievance) => `
+          <div class="card-modern p-6 hover:shadow-lg transition-shadow">
+            <div class="flex justify-between items-start mb-4">
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900">${
+                  grievance.subject
+                }</h3>
+                <p class="text-sm text-gray-600">ID: ${grievance.id}</p>
+              </div>
+              <div class="flex space-x-2">
+                <span class="badge-modern ${getPriorityBadgeClass(
+                  grievance.priority
+                )}">${grievance.priority}</span>
+                <span class="badge-modern ${getStatusBadgeClass(
+                  grievance.status
+                )}">${grievance.status}</span>
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 text-sm">
+              <div>
+                <span class="text-gray-500">Category:</span>
+                <div class="font-medium">${grievance.category}</div>
+              </div>
+              <div>
+                <span class="text-gray-500">Submitted:</span>
+                <div class="font-medium">${grievance.dateSubmitted}</div>
+              </div>
+              <div>
+                <span class="text-gray-500">Last Update:</span>
+                <div class="font-medium">${grievance.lastUpdate}</div>
+              </div>
+              <div>
+                <span class="text-gray-500">Assigned Officer:</span>
+                <div class="font-medium">${grievance.assignedOfficer}</div>
+              </div>
+            </div>
+            
+            <p class="text-gray-700 mb-4">${grievance.description}</p>
+            
+            <div class="flex space-x-3">
+              <button onclick="openGrievanceDetails('${
+                grievance.id
+              }')" class="btn-primary-modern">
+                View Details
+              </button>
+              <button onclick="trackGrievance('${
+                grievance.id
+              }')" class="btn-secondary-modern">
+                Track Progress
+              </button>
+            </div>
+          </div>
+        `
+          )
+          .join("");
+      }
+
+      function generateResolvedGrievancesHTML() {
+        const resolvedGrievances = [
+          {
+            id: "GRV004",
+            subject: "Ration Card Transfer",
+            category: "Documents",
+            resolvedDate: "2024-01-12",
+            resolution:
+              "Ration card successfully transferred to Delhi. New card issued with updated address.",
+          },
+          {
+            id: "GRV005",
+            subject: "Medical Insurance Claim",
+            category: "Healthcare",
+            resolvedDate: "2024-01-05",
+            resolution:
+              "Insurance claim processed. Amount of ₹5,000 credited to your account.",
+          },
+        ];
+
+        return resolvedGrievances
+          .map(
+            (grievance) => `
+          <div class="card-modern p-6 border-l-4 border-green-500">
+            <div class="flex justify-between items-start mb-4">
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900">${grievance.subject}</h3>
+                <p class="text-sm text-gray-600">ID: ${grievance.id}</p>
+              </div>
+              <span class="badge-modern badge-success-modern">Resolved</span>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4 mb-4 text-sm">
+              <div>
+                <span class="text-gray-500">Category:</span>
+                <div class="font-medium">${grievance.category}</div>
+              </div>
+              <div>
+                <span class="text-gray-500">Resolved Date:</span>
+                <div class="font-medium">${grievance.resolvedDate}</div>
+              </div>
+            </div>
+            
+            <div class="bg-green-50 p-4 rounded-lg">
+              <h4 class="font-semibold text-green-900 mb-2">Resolution:</h4>
+              <p class="text-green-800">${grievance.resolution}</p>
+            </div>
+          </div>
+        `
+          )
+          .join("");
+      }
+
+      function getPriorityBadgeClass(priority) {
+        switch (priority.toLowerCase()) {
+          case "high":
+            return "badge-danger-modern";
+          case "medium":
+            return "badge-warning-modern";
+          case "low":
+            return "badge-success-modern";
+          default:
+            return "badge-info-modern";
+        }
+      }
+
+      function getStatusBadgeClass(status) {
+        switch (status.toLowerCase()) {
+          case "in progress":
+            return "badge-info-modern";
+          case "under review":
+            return "badge-warning-modern";
+          case "escalated":
+            return "badge-danger-modern";
+          case "resolved":
+            return "badge-success-modern";
+          default:
+            return "badge-info-modern";
+        }
+      }
+
+      function showNewGrievanceModal() {
+        document.getElementById("newGrievanceModal").classList.remove("hidden");
+        document.getElementById("newGrievanceModal").style.display = "flex";
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeNewGrievanceModal() {
+        document.getElementById("newGrievanceModal").classList.add("hidden");
+        document.getElementById("newGrievanceModal").style.display = "none";
+        document.body.style.overflow = "auto";
+      }
+
+      function openGrievanceDetails(grievanceId) {
+        document
+          .getElementById("grievanceDetailsModal")
+          .classList.remove("hidden");
+        document.getElementById("grievanceDetailsModal").style.display = "flex";
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeGrievanceDetailsModal() {
+        document
+          .getElementById("grievanceDetailsModal")
+          .classList.add("hidden");
+        document.getElementById("grievanceDetailsModal").style.display = "none";
+        document.body.style.overflow = "auto";
+      }
+
+      function trackGrievance(grievanceId) {
+        alert(
+          `Tracking grievance ${grievanceId}. You will receive SMS/email updates on progress.`
+        );
+      }
+
+      function handleGrievanceSubmit(e) {
+        e.preventDefault();
+
+        // Show success message
+        alert(
+          "Grievance submitted successfully! You will receive a confirmation SMS/email with your grievance ID."
+        );
+
+        closeNewGrievanceModal();
+
+        // Reset form
+        e.target.reset();
+
+        // Refresh grievances list
+        displayGrievances();
+      }
+
+      function getCurrentLanguage() {
+        return localStorage.getItem("selectedLanguage") || "en";
+      }
+    </script>
   </body>
 </html>
