@@ -115,40 +115,37 @@
         </div>
       </div>
 
-      <!-- Search and Filters -->
+      <!-- Enhanced Search and Filters Section -->
       <div class="row mb-4">
         <div class="col-12">
-          <div class="card shadow-sm">
-            <div class="card-body">
-              <div class="row g-3">
+          <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+              <div class="row g-3 align-items-end">
                 <div class="col-md-4">
                   <label
                     for="jobSearch"
-                    class="form-label"
+                    class="form-label fw-semibold"
                     data-translate="search_jobs"
                     >Search Jobs</label
                   >
                   <div class="input-group">
+                    <span class="input-group-text bg-light border-end-0">
+                      <i class="fas fa-search text-muted"></i>
+                    </span>
                     <input
                       type="text"
-                      class="form-control"
+                      class="form-control border-start-0"
                       id="jobSearch"
-                      placeholder="Job title or keywords..."
+                      placeholder="Job title, skills, or keywords..."
                       data-translate-placeholder="job_search_placeholder"
                     />
-                    <button
-                      class="btn btn-primary"
-                      type="button"
-                      onclick="searchJobs()"
-                    >
-                      <i class="fas fa-search"></i>
-                    </button>
                   </div>
                 </div>
+
                 <div class="col-md-2">
                   <label
                     for="locationFilter"
-                    class="form-label"
+                    class="form-label fw-semibold"
                     data-translate="location"
                     >Location</label
                   >
@@ -170,10 +167,11 @@
                     <option value="Ahmedabad">Ahmedabad</option>
                   </select>
                 </div>
+
                 <div class="col-md-2">
                   <label
                     for="categoryFilter"
-                    class="form-label"
+                    class="form-label fw-semibold"
                     data-translate="category"
                     >Category</label
                   >
@@ -195,10 +193,11 @@
                     <option value="Security">Security</option>
                   </select>
                 </div>
+
                 <div class="col-md-2">
                   <label
                     for="salaryFilter"
-                    class="form-label"
+                    class="form-label fw-semibold"
                     data-translate="salary_range"
                     >Salary Range</label
                   >
@@ -207,53 +206,135 @@
                     id="salaryFilter"
                     onchange="filterJobs()"
                   >
-                    <option value="" data-translate="any_salary">
-                      Any Salary
+                    <option value="" data-translate="all_salaries">
+                      All Salaries
                     </option>
-                    <option value="0-15000">₹0 - ₹15,000</option>
+                    <option value="0-15000">Below ₹15,000</option>
                     <option value="15000-25000">₹15,000 - ₹25,000</option>
                     <option value="25000-35000">₹25,000 - ₹35,000</option>
-                    <option value="35000+">₹35,000+</option>
+                    <option value="35000+">Above ₹35,000</option>
                   </select>
                 </div>
+
                 <div class="col-md-2">
-                  <label
-                    for="typeFilter"
-                    class="form-label"
-                    data-translate="job_type"
-                    >Job Type</label
-                  >
-                  <select
-                    class="form-select"
-                    id="typeFilter"
-                    onchange="filterJobs()"
-                  >
-                    <option value="" data-translate="all_types">
-                      All Types
-                    </option>
-                    <option value="Full-time">Full-time</option>
-                    <option value="Part-time">Part-time</option>
-                    <option value="Contract">Contract</option>
-                    <option value="Daily">Daily Wage</option>
-                  </select>
+                  <button class="btn btn-primary w-100" onclick="searchJobs()">
+                    <i class="fas fa-search me-2"></i
+                    ><span data-translate="search_button">Search</span>
+                  </button>
                 </div>
               </div>
+
+              <!-- Advanced Filters Toggle -->
               <div class="row mt-3">
                 <div class="col-12">
                   <button
-                    class="btn btn-outline-secondary me-2"
-                    onclick="clearFilters()"
+                    class="btn btn-link p-0 text-decoration-none"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#advancedFilters"
                   >
-                    <i class="fas fa-times me-1"></i
-                    ><span data-translate="clear_filters">Clear Filters</span>
-                  </button>
-                  <button class="btn btn-success" onclick="showSkillMatcher()">
-                    <i class="fas fa-magic me-1"></i
-                    ><span data-translate="ai_job_match">AI Job Matching</span>
+                    <i class="fas fa-filter me-2"></i
+                    ><span data-translate="advanced_filters"
+                      >Advanced Filters</span
+                    >
+                    <i class="fas fa-chevron-down ms-2"></i>
                   </button>
                 </div>
               </div>
+
+              <!-- Advanced Filters -->
+              <div class="collapse mt-3" id="advancedFilters">
+                <div class="row g-3">
+                  <div class="col-md-3">
+                    <label for="experienceFilter" class="form-label fw-semibold"
+                      >Experience Required</label
+                    >
+                    <select
+                      class="form-select"
+                      id="experienceFilter"
+                      onchange="filterJobs()"
+                    >
+                      <option value="">Any Experience</option>
+                      <option value="0-1">0-1 years</option>
+                      <option value="1-3">1-3 years</option>
+                      <option value="3-5">3-5 years</option>
+                      <option value="5+">5+ years</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <label for="jobTypeFilter" class="form-label fw-semibold"
+                      >Job Type</label
+                    >
+                    <select
+                      class="form-select"
+                      id="jobTypeFilter"
+                      onchange="filterJobs()"
+                    >
+                      <option value="">All Types</option>
+                      <option value="Full-time">Full-time</option>
+                      <option value="Part-time">Part-time</option>
+                      <option value="Contract">Contract</option>
+                      <option value="Temporary">Temporary</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <label
+                      for="accommodationFilter"
+                      class="form-label fw-semibold"
+                      >Accommodation</label
+                    >
+                    <select
+                      class="form-select"
+                      id="accommodationFilter"
+                      onchange="filterJobs()"
+                    >
+                      <option value="">Any</option>
+                      <option value="provided">Provided</option>
+                      <option value="not-provided">Not Provided</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="d-flex align-items-end h-100">
+                      <button
+                        class="btn btn-outline-secondary w-100"
+                        onclick="clearFilters()"
+                      >
+                        <i class="fas fa-times me-2"></i>Clear Filters
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Results Header -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <h5 class="mb-0">
+            <span id="jobCount">0</span>
+            <span data-translate="jobs_found">jobs found</span>
+          </h5>
+          <small class="text-muted" id="filterStatus"></small>
+        </div>
+        <div class="col-md-6 text-end">
+          <div class="d-flex align-items-center justify-content-end gap-3">
+            <label for="sortBy" class="form-label mb-0 fw-semibold"
+              >Sort by:</label
+            >
+            <select
+              class="form-select form-select-sm"
+              id="sortBy"
+              style="width: auto"
+              onchange="sortJobs()"
+            >
+              <option value="recent">Most Recent</option>
+              <option value="salary-high">Salary: High to Low</option>
+              <option value="salary-low">Salary: Low to High</option>
+              <option value="location">Location</option>
+            </select>
           </div>
         </div>
       </div>
@@ -385,138 +466,130 @@
       </div>
     </div>
 
-    <!-- Job Details Modal -->
-    <div
-      class="modal fade"
-      id="jobDetailsModal"
-      tabindex="-1"
-      aria-hidden="true"
-    >
+    <!-- Job Application Modal -->
+    <div class="modal fade" id="applicationModal" tabindex="-1">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="jobTitle">Job Details</h5>
+            <h5 class="modal-title">Apply for Job</h5>
             <button
               type="button"
               class="btn-close"
               data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body" id="jobDetailsContent">
-            <!-- Job details will be loaded dynamically -->
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-              data-translate="close"
-            >
-              Close
-            </button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              id="applyButton"
-              onclick="applyForJob()"
-            >
-              <i class="fas fa-paper-plane me-1"></i
-              ><span data-translate="apply_now">Apply Now</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Application Modal -->
-    <div
-      class="modal fade"
-      id="applicationModal"
-      tabindex="-1"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" data-translate="apply_for_job">
-              Apply for Job
-            </h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
             ></button>
           </div>
           <div class="modal-body">
+            <div class="row mb-3">
+              <div class="col-12">
+                <div class="alert alert-info">
+                  <i class="fas fa-info-circle me-2"></i>
+                  <strong>Applying for:</strong>
+                  <span id="modalJobTitle"></span> at
+                  <span id="modalCompany"></span>
+                </div>
+              </div>
+            </div>
+
             <form id="applicationForm">
-              <div class="mb-3">
-                <label
-                  for="coverLetter"
-                  class="form-label"
-                  data-translate="cover_letter"
-                  >Cover Letter</label
-                >
-                <textarea
-                  class="form-control"
-                  id="coverLetter"
-                  rows="4"
-                  placeholder="Why are you interested in this position?"
-                  data-translate-placeholder="cover_letter_placeholder"
-                ></textarea>
-              </div>
-              <div class="mb-3">
-                <label
-                  for="experience"
-                  class="form-label"
-                  data-translate="relevant_experience"
-                  >Relevant Experience</label
-                >
-                <textarea
-                  class="form-control"
-                  id="experience"
-                  rows="3"
-                  placeholder="Describe your relevant experience"
-                  data-translate-placeholder="experience_placeholder"
-                ></textarea>
-              </div>
-              <div class="mb-3">
-                <label
-                  for="availability"
-                  class="form-label"
-                  data-translate="availability"
-                  >Availability</label
-                >
-                <select class="form-select" id="availability">
-                  <option value="immediate" data-translate="immediate">
-                    Immediate
-                  </option>
-                  <option value="1-week" data-translate="one_week">
-                    Within 1 week
-                  </option>
-                  <option value="2-weeks" data-translate="two_weeks">
-                    Within 2 weeks
-                  </option>
-                  <option value="1-month" data-translate="one_month">
-                    Within 1 month
-                  </option>
-                </select>
-              </div>
-              <div class="mb-3">
-                <label
-                  for="expectedSalary"
-                  class="form-label"
-                  data-translate="expected_salary"
-                  >Expected Salary (₹/month)</label
-                >
-                <input
-                  type="number"
-                  class="form-control"
-                  id="expectedSalary"
-                  placeholder="25000"
-                  data-translate-placeholder="salary_placeholder"
-                />
+              <input type="hidden" id="jobIdForApplication" />
+
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="applicantName" class="form-label"
+                    >Full Name</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="applicantName"
+                    required
+                  />
+                </div>
+                <div class="col-md-6">
+                  <label for="applicantPhone" class="form-label"
+                    >Phone Number</label
+                  >
+                  <input
+                    type="tel"
+                    class="form-control"
+                    id="applicantPhone"
+                    required
+                  />
+                </div>
+                <div class="col-12">
+                  <label for="applicantEmail" class="form-label"
+                    >Email Address</label
+                  >
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="applicantEmail"
+                  />
+                </div>
+                <div class="col-md-6">
+                  <label for="applicantExperience" class="form-label"
+                    >Years of Experience</label
+                  >
+                  <select class="form-select" id="applicantExperience" required>
+                    <option value="">Select Experience</option>
+                    <option value="0-1">0-1 years</option>
+                    <option value="1-3">1-3 years</option>
+                    <option value="3-5">3-5 years</option>
+                    <option value="5+">5+ years</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label for="applicantAvailability" class="form-label"
+                    >Availability</label
+                  >
+                  <select
+                    class="form-select"
+                    id="applicantAvailability"
+                    required
+                  >
+                    <option value="">Select Availability</option>
+                    <option value="immediate">Immediately</option>
+                    <option value="1-week">Within 1 week</option>
+                    <option value="2-weeks">Within 2 weeks</option>
+                    <option value="1-month">Within 1 month</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <label for="applicantSkills" class="form-label"
+                    >Relevant Skills</label
+                  >
+                  <textarea
+                    class="form-control"
+                    id="applicantSkills"
+                    rows="3"
+                    placeholder="List your relevant skills and experience..."
+                  ></textarea>
+                </div>
+                <div class="col-12">
+                  <label for="applicationMessage" class="form-label"
+                    >Cover Message</label
+                  >
+                  <textarea
+                    class="form-control"
+                    id="applicationMessage"
+                    rows="4"
+                    placeholder="Why are you interested in this position? What makes you a good fit?"
+                  ></textarea>
+                </div>
+                <div class="col-12">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="agreeTerms"
+                      required
+                    />
+                    <label class="form-check-label" for="agreeTerms">
+                      I agree to share my information with the employer and
+                      understand the terms of application.
+                    </label>
+                  </div>
+                </div>
               </div>
             </form>
           </div>
@@ -525,7 +598,6 @@
               type="button"
               class="btn btn-secondary"
               data-bs-dismiss="modal"
-              data-translate="cancel"
             >
               Cancel
             </button>
@@ -534,109 +606,129 @@
               class="btn btn-primary"
               onclick="submitApplication()"
             >
-              <i class="fas fa-paper-plane me-1"></i
-              ><span data-translate="submit_application"
-                >Submit Application</span
-              >
+              <i class="fas fa-paper-plane me-2"></i>Submit Application
             </button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Skill Matcher Modal -->
-    <div
-      class="modal fade"
-      id="skillMatcherModal"
-      tabindex="-1"
-      aria-hidden="true"
-    >
+    <!-- Job Details Modal -->
+    <div class="modal fade" id="jobDetailsModal" tabindex="-1">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" data-translate="ai_job_matching">
-              AI Job Matching
-            </h5>
+            <h5 class="modal-title" id="detailsJobTitle"></h5>
             <button
               type="button"
               class="btn-close"
               data-bs-dismiss="modal"
-              aria-label="Close"
             ></button>
           </div>
           <div class="modal-body">
-            <div class="mb-4">
-              <h6 data-translate="select_skills">Select Your Skills</h6>
-              <div id="skillsContainer" class="row g-2">
-                <!-- Skills will be loaded dynamically -->
+            <div class="row">
+              <div class="col-md-8">
+                <div class="mb-3">
+                  <h6 class="text-muted mb-2">Company</h6>
+                  <p class="mb-0" id="detailsCompany"></p>
+                </div>
+
+                <div class="mb-3">
+                  <h6 class="text-muted mb-2">Job Description</h6>
+                  <p id="detailsDescription"></p>
+                </div>
+
+                <div class="mb-3">
+                  <h6 class="text-muted mb-2">Requirements</h6>
+                  <ul id="detailsRequirements"></ul>
+                </div>
+
+                <div class="mb-3">
+                  <h6 class="text-muted mb-2">Benefits</h6>
+                  <ul id="detailsBenefits"></ul>
+                </div>
               </div>
-            </div>
-            <div class="mb-3">
-              <h6 data-translate="experience_level">Experience Level</h6>
-              <div class="btn-group w-100" role="group" id="experienceLevel">
-                <input
-                  type="radio"
-                  class="btn-check"
-                  name="experience"
-                  id="fresher"
-                  value="fresher"
-                  checked
-                />
-                <label
-                  class="btn btn-outline-primary"
-                  for="fresher"
-                  data-translate="fresher"
-                  >Fresher</label
-                >
 
-                <input
-                  type="radio"
-                  class="btn-check"
-                  name="experience"
-                  id="experienced"
-                  value="1-3"
-                />
-                <label
-                  class="btn btn-outline-primary"
-                  for="experienced"
-                  data-translate="one_to_three_years"
-                  >1-3 Years</label
-                >
+              <div class="col-md-4">
+                <div class="card bg-light">
+                  <div class="card-body">
+                    <h6 class="card-title">Job Information</h6>
 
-                <input
-                  type="radio"
-                  class="btn-check"
-                  name="experience"
-                  id="senior"
-                  value="3+"
-                />
-                <label
-                  class="btn btn-outline-primary"
-                  for="senior"
-                  data-translate="three_plus_years"
-                  >3+ Years</label
-                >
+                    <div class="mb-2">
+                      <small class="text-muted">Location</small>
+                      <div>
+                        <i class="fas fa-map-marker-alt me-2"></i
+                        ><span id="detailsLocation"></span>
+                      </div>
+                    </div>
+
+                    <div class="mb-2">
+                      <small class="text-muted">Salary</small>
+                      <div>
+                        <i class="fas fa-rupee-sign me-2"></i
+                        ><span id="detailsSalary"></span>
+                      </div>
+                    </div>
+
+                    <div class="mb-2">
+                      <small class="text-muted">Experience</small>
+                      <div>
+                        <i class="fas fa-user me-2"></i
+                        ><span id="detailsExperience"></span>
+                      </div>
+                    </div>
+
+                    <div class="mb-2">
+                      <small class="text-muted">Job Type</small>
+                      <div>
+                        <i class="fas fa-clock me-2"></i
+                        ><span id="detailsJobType"></span>
+                      </div>
+                    </div>
+
+                    <div class="mb-3">
+                      <small class="text-muted">Posted</small>
+                      <div>
+                        <i class="fas fa-calendar me-2"></i
+                        ><span id="detailsPosted"></span>
+                      </div>
+                    </div>
+
+                    <button
+                      class="btn btn-primary w-100"
+                      onclick="showApplicationModal()"
+                    >
+                      <i class="fas fa-paper-plane me-2"></i>Apply Now
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-              data-translate="cancel"
-            >
-              Cancel
-            </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-body text-center py-5">
+            <i
+              class="fas fa-check-circle text-success"
+              style="font-size: 4rem"
+            ></i>
+            <h4 class="mt-3 mb-3">Application Submitted!</h4>
+            <p class="text-muted mb-4">
+              Your application has been sent to the employer. They will contact
+              you if you're selected for further discussion.
+            </p>
             <button
               type="button"
               class="btn btn-primary"
-              onclick="findMatchingJobs()"
+              data-bs-dismiss="modal"
             >
-              <i class="fas fa-search me-1"></i
-              ><span data-translate="find_matching_jobs"
-                >Find Matching Jobs</span
-              >
+              Continue Job Search
             </button>
           </div>
         </div>

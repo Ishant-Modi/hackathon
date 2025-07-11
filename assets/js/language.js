@@ -21,10 +21,14 @@ let currentLanguage = "en";
 // Load language from JSON file
 async function loadLanguage(langCode) {
   try {
+    console.log("Loading language:", langCode);
+
     if (!languages[langCode]) {
+      console.log("Fetching language file:", `assets/lang/${langCode}.json`);
       const response = await fetch(`assets/lang/${langCode}.json`);
       if (response.ok) {
         languages[langCode] = await response.json();
+        console.log("Language loaded successfully:", languages[langCode]);
       } else {
         console.warn(`Language file for ${langCode} not found, using fallback`);
         languages[langCode] = getFallbackTranslations(langCode);
@@ -33,21 +37,27 @@ async function loadLanguage(langCode) {
 
     currentLanguage = langCode;
     localStorage.setItem("selectedLanguage", langCode);
+    console.log("Applying translations...");
     applyTranslations();
+    updateLanguageDisplay();
   } catch (error) {
     console.error("Error loading language:", error);
     languages[langCode] = getFallbackTranslations(langCode);
     applyTranslations();
+    updateLanguageDisplay();
   }
 }
 
 // Apply translations to the page
 function applyTranslations() {
   const elements = document.querySelectorAll("[data-translate]");
+  console.log("Found", elements.length, "elements to translate");
 
-  elements.forEach((element) => {
+  elements.forEach((element, index) => {
     const key = element.getAttribute("data-translate");
     const translation = getTranslation(key);
+
+    console.log(`Translating element ${index + 1}: ${key} -> ${translation}`);
 
     if (translation) {
       if (element.tagName === "INPUT" || element.tagName === "TEXTAREA") {
@@ -55,6 +65,8 @@ function applyTranslations() {
       } else {
         element.textContent = translation;
       }
+    } else {
+      console.warn(`No translation found for key: ${key}`);
     }
   });
 }
@@ -312,6 +324,27 @@ function getFallbackTranslations(langCode) {
   };
 
   return translations[langCode] || translations.en;
+}
+
+// Update language display
+function updateLanguageDisplay() {
+  const currentLangElement = document.getElementById("currentLanguage");
+  if (currentLangElement) {
+    const langNames = {
+      en: "English",
+      hi: "हिन्दी",
+      ta: "தமிழ்",
+      bn: "বাংলা",
+      te: "తెలుగు",
+      mr: "मराठी",
+      gu: "ગુજરાતી",
+      kn: "ಕನ್ನಡ",
+      ml: "മലയാളം",
+      pa: "ਪੰਜਾਬੀ",
+      or: "ଓଡିଆ",
+    };
+    currentLangElement.textContent = langNames[currentLanguage] || "English";
+  }
 }
 
 // Initialize language system

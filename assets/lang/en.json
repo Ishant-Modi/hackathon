@@ -112,5 +112,64 @@
   "footer_terms": "Terms of Service",
   "footer_accessibility": "Accessibility",
   "footer_feedback": "Feedback",
-  "footer_copyright": "© 2025 MigrantConnect. All rights reserved."
+  "footer_copyright": "© 2025 MigrantConnect. All rights reserved.",
+  
+  "nav_home": "Home",
+  "nav_about": "About Us",
+  "nav_services": "Our Services",
+  "nav_faq": "FAQ",
+  "nav_login": "Login",
+  
+  "login_title": "Choose Account Type",
+  "worker_login": "Worker Login",
+  "employer_login": "Employer Login",
+  
+  "hero_title": "Empowering Migrant Workers with Digital Solutions",
+  "hero_description": "A secure platform connecting workers with verified employers, ensuring fair wages and access to government welfare schemes.",
+  "hero_get_started": "Get Started",
+  "hero_learn_more": "Learn More",
+  
+  "stats_workers": "Registered Workers",
+  "stats_employers": "Verified Employers",
+  "stats_jobs": "Jobs Completed",
+  "stats_wages": "Wages Facilitated",
+  
+  "about_title": "Who We Are?",
+  "about_description": "MigrantConnect is a digital platform designed to address the challenges faced by migrant workers in India. We provide a secure, transparent ecosystem that connects workers with verified employers, ensures fair wages, and facilitates access to government welfare schemes.",
+  "about_feature_1": "Secure Aadhaar-based verification",
+  "about_feature_2": "AI-powered job matching",
+  "about_feature_3": "Real-time grievance redressal",
+  "about_feature_4": "Access to welfare schemes",
+  
+  "services_title": "Our Services",
+  "services_subtitle": "Comprehensive solutions for migrant workers",
+  
+  "service_aadhaar_title": "Aadhaar-Based Registration",
+  "service_aadhaar_desc": "Secure identity verification using Aadhaar ensures authentic profiles for both workers and employers.",
+  "service_jobs_title": "Job Matching & Tracking",
+  "service_jobs_desc": "AI-powered job matching connects workers with suitable employment opportunities based on skills and location.",
+  "service_welfare_title": "Welfare Scheme Access",
+  "service_welfare_desc": "Simplified access to government welfare schemes with eligibility checking and application assistance.",
+  "service_grievance_title": "Grievance Redressal",
+  "service_grievance_desc": "Real-time grievance filing and tracking system to ensure fair treatment of workers.",
+  "service_wages_title": "Wage Transparency",
+  "service_wages_desc": "Transparent wage agreements and payment tracking to ensure timely and fair compensation.",
+  "service_qr_title": "QR Identity",
+  "service_qr_desc": "Digital identity cards with QR codes for easy verification and access to services.",
+  
+  "faq_title": "Frequently Asked Questions",
+  "faq_subtitle": "Get answers to common questions about MigrantConnect",
+  "faq_q1": "How does Aadhaar-based registration work?",
+  "faq_a1": "Our platform uses Aadhaar authentication to verify the identity of workers and employers. This ensures that all users on the platform are genuine and creates a secure environment for job matching.",
+  "faq_q2": "What job services are provided?",
+  "faq_a2": "We offer job matching based on skills and location, transparent wage agreements, payment tracking, and a grievance redressal system to ensure fair treatment of workers.",
+  "faq_q3": "Is this platform free for workers?",
+  "faq_a3": "Yes, the platform is completely free for migrant workers. We believe in providing accessible services to those who need them most.",
+  "faq_q4": "How can I access welfare schemes?",
+  "faq_a4": "Our platform provides information about various government welfare schemes, checks your eligibility, and assists with the application process.",
+  
+  "footer_description": "Empowering migrant workers through technology and creating a more equitable labor market.",
+  "footer_legal": "Legal",
+  "footer_rights": "© 2024 MigrantConnect. All rights reserved.",
+  "footer_tagline": "Bridging Services Across States"
 }

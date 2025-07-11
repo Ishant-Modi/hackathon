@@ -152,7 +152,7 @@ const resolvedGrievancesMock = [
 document.addEventListener("DOMContentLoaded", function () {
   loadUserGrievances();
   updateGrievanceStats();
-  displayActiveGrievances();
+  displayActiveGrievancesEnhanced();
   displayResolvedGrievances();
 });
 
@@ -299,6 +299,175 @@ function displayActiveGrievances() {
         </div>
     `
     )
+    .join("");
+}
+
+function displayActiveGrievancesEnhanced() {
+  const container = document.getElementById("activeGrievancesList");
+  const activeGrievances = userGrievances.filter(
+    (g) => g.status !== "Resolved"
+  );
+
+  if (activeGrievances.length === 0) {
+    container.innerHTML = `
+      <div class="text-center py-5">
+        <i class="fas fa-clipboard-list fa-4x text-muted mb-3"></i>
+        <h5 class="text-muted mb-2">No Active Grievances</h5>
+        <p class="text-muted mb-3">You don't have any active grievances at the moment.</p>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#fileGrievanceModal">
+          <i class="fas fa-plus me-2"></i>File Your First Grievance
+        </button>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = activeGrievances
+    .map((grievance) => {
+      const statusColor = getStatusColor(grievance.status);
+      const hasResponses =
+        grievance.responses && grievance.responses.length > 0;
+      const latestResponse = hasResponses
+        ? grievance.responses[grievance.responses.length - 1]
+        : null;
+
+      return `
+        <div class="card mb-4 border-0 shadow-sm grievance-card" data-grievance-id="${
+          grievance.id
+        }">
+          <div class="card-body">
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-start mb-3">
+              <div>
+                <h5 class="card-title mb-1 fw-bold">
+                  ${grievance.title}
+                  ${
+                    grievance.priority === "high"
+                      ? '<i class="fas fa-exclamation-triangle text-danger ms-2" title="High Priority"></i>'
+                      : ""
+                  }
+                </h5>
+                <div class="d-flex flex-wrap gap-2 mb-2">
+                  <span class="badge bg-${statusColor}">${
+        grievance.status
+      }</span>
+                  <span class="badge bg-light text-dark">
+                    <i class="fas fa-tag me-1"></i>${grievance.type}
+                  </span>
+                  ${
+                    grievance.amountDue
+                      ? `<span class="badge bg-warning text-dark">₹${grievance.amountDue.toLocaleString()}</span>`
+                      : ""
+                  }
+                </div>
+              </div>
+              <div class="text-end">
+                <small class="text-muted d-block">Filed: ${formatDate(
+                  grievance.filedDate
+                )}</small>
+                <small class="text-muted d-block">Updated: ${formatDate(
+                  grievance.lastUpdated
+                )}</small>
+              </div>
+            </div>
+
+            <!-- Details -->
+            <div class="mb-3">
+              <p class="text-muted mb-2">
+                <i class="fas fa-building me-2"></i><strong>Employer:</strong> ${
+                  grievance.employer
+                }
+                ${
+                  grievance.jobTitle
+                    ? ` • <i class="fas fa-briefcase me-2"></i><strong>Position:</strong> ${grievance.jobTitle}`
+                    : ""
+                }
+              </p>
+              ${
+                grievance.workPeriod
+                  ? `<p class="text-muted mb-2"><i class="fas fa-calendar me-2"></i><strong>Work Period:</strong> ${grievance.workPeriod}</p>`
+                  : ""
+              }
+            </div>
+
+            <!-- Description -->
+            <div class="mb-3">
+              <div class="description-container">
+                <p class="card-text description-text" id="desc-${grievance.id}">
+                  ${
+                    grievance.description.length > 150
+                      ? grievance.description.substring(0, 150) + "..."
+                      : grievance.description
+                  }
+                </p>
+                ${
+                  grievance.description.length > 150
+                    ? `
+                  <button class="btn btn-link p-0 text-primary small" onclick="toggleDescription(${grievance.id})">
+                    <i class="fas fa-chevron-down me-1"></i>Show more
+                  </button>
+                `
+                    : ""
+                }
+              </div>
+            </div>
+
+            <!-- Latest Response -->
+            ${
+              hasResponses
+                ? `
+              <div class="alert alert-light border-start border-4 border-info mb-3">
+                <div class="d-flex justify-content-between align-items-start">
+                  <div>
+                    <strong class="text-info">Latest Update:</strong>
+                    <p class="mb-1 mt-1">${latestResponse.message}</p>
+                    <small class="text-muted">
+                      <i class="fas fa-user me-1"></i>${latestResponse.from} • 
+                      <i class="fas fa-clock me-1"></i>${formatDateTime(
+                        latestResponse.timestamp
+                      )}
+                    </small>
+                  </div>
+                </div>
+              </div>
+            `
+                : ""
+            }
+
+            <!-- Actions -->
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="d-flex align-items-center gap-3">
+                <small class="text-muted">
+                  <i class="fas fa-comments me-1"></i>
+                  ${
+                    grievance.responses ? grievance.responses.length : 0
+                  } responses
+                </small>
+                ${
+                  grievance.priority === "high"
+                    ? '<small class="text-danger"><i class="fas fa-flag me-1"></i>High Priority</small>'
+                    : ""
+                }
+              </div>
+              <div class="btn-group">
+                <button 
+                  class="btn btn-outline-primary btn-sm" 
+                  onclick="viewGrievanceDetails(${grievance.id})"
+                >
+                  <i class="fas fa-eye me-1"></i>View Details
+                </button>
+                <button 
+                  class="btn btn-primary btn-sm" 
+                  onclick="showAddResponseForm(${grievance.id})"
+                >
+                  <i class="fas fa-comment me-1"></i>Add Response
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    })
     .join("");
 }
 
@@ -691,6 +860,34 @@ function submitResponse() {
   // If details modal is open, refresh it
   if (document.querySelector("#grievanceDetailsModal.show")) {
     viewGrievanceDetails(selectedGrievanceId);
+  }
+}
+
+// Toggle description expansion
+function toggleDescription(grievanceId) {
+  const descElement = document.getElementById(`desc-${grievanceId}`);
+  const button = descElement.nextElementSibling;
+  const grievance =
+    userGrievances.find((g) => g.id === grievanceId) ||
+    resolvedGrievancesMock.find((g) => g.id === grievanceId);
+
+  if (!grievance) return;
+
+  const isExpanded = descElement.classList.contains("expanded");
+
+  if (isExpanded) {
+    // Collapse
+    descElement.textContent =
+      grievance.description.length > 150
+        ? grievance.description.substring(0, 150) + "..."
+        : grievance.description;
+    descElement.classList.remove("expanded");
+    button.innerHTML = '<i class="fas fa-chevron-down me-1"></i>Show more';
+  } else {
+    // Expand
+    descElement.textContent = grievance.description;
+    descElement.classList.add("expanded");
+    button.innerHTML = '<i class="fas fa-chevron-up me-1"></i>Show less';
   }
 }
 
