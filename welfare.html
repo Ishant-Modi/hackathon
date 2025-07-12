@@ -495,7 +495,7 @@
 
       // Initialize page
       document.addEventListener("DOMContentLoaded", function () {
-
+        loadLanguage(getCurrentLanguage());
         loadSchemes();
         setupEventListeners();
       });
@@ -886,6 +886,11 @@
 
       function getCurrentLanguage() {
         return localStorage.getItem("selectedLanguage") || "en";
+      }
+
+      function changeLanguage(lang) {
+        loadLanguage(lang);
+        document.getElementById("languageMenu").classList.add("hidden");
       }
     </script>
   </body>

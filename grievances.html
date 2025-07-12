@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title data-translate="grievances_title">Grievances - MigrantConnect</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloud // Initialize page
-    document.addEventListener("DOMContentLoaded", function () {
-    loadGrievances(); setupEventListeners();
-    });com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <link rel="stylesheet" href="assets/css/tailwind-styles.css" />
     <script>
       tailwind.config = {
@@ -656,6 +656,180 @@
 
         // Refresh grievances list
         displayGrievances();
+      }
+
+      function openGrievanceDetails(grievanceId) {
+        // Create grievance details content for the modal
+        const activeGrievances = [
+          {
+            id: "GRV001",
+            subject: "Wage Payment Delay",
+            category: "Wage Related",
+            priority: "High",
+            status: "In Progress",
+            dateSubmitted: "2024-01-15",
+            lastUpdate: "2024-01-18",
+            description:
+              "My employer has not paid my wages for the last 15 days despite completing all assigned work.",
+            assignedOfficer: "Labour Inspector - Delhi",
+            updates: [
+              {
+                date: "2024-01-15",
+                message: "Grievance filed and acknowledgment sent",
+              },
+              {
+                date: "2024-01-16",
+                message: "Assigned to Labour Inspector for investigation",
+              },
+              {
+                date: "2024-01-18",
+                message: "Investigation in progress, employer contacted",
+              },
+            ],
+          },
+          {
+            id: "GRV002",
+            subject: "Accommodation Issues",
+            category: "Accommodation",
+            priority: "Medium",
+            status: "Under Review",
+            dateSubmitted: "2024-01-10",
+            lastUpdate: "2024-01-16",
+            description:
+              "The provided accommodation lacks basic facilities like clean water and proper sanitation.",
+            assignedOfficer: "Welfare Officer - Delhi",
+            updates: [
+              { date: "2024-01-10", message: "Grievance received and logged" },
+              { date: "2024-01-12", message: "Site inspection scheduled" },
+              {
+                date: "2024-01-16",
+                message: "Inspection completed, report under review",
+              },
+            ],
+          },
+          {
+            id: "GRV003",
+            subject: "Workplace Safety Concerns",
+            category: "Working Conditions",
+            priority: "High",
+            status: "Escalated",
+            dateSubmitted: "2024-01-08",
+            lastUpdate: "2024-01-17",
+            description:
+              "No safety equipment provided at construction site, risking worker safety.",
+            assignedOfficer: "Safety Inspector - Delhi",
+            updates: [
+              { date: "2024-01-08", message: "Urgent grievance logged" },
+              {
+                date: "2024-01-09",
+                message: "Emergency site inspection conducted",
+              },
+              {
+                date: "2024-01-17",
+                message: "Case escalated to higher authorities",
+              },
+            ],
+          },
+        ];
+
+        const grievance = activeGrievances.find((g) => g.id === grievanceId);
+        if (!grievance) return;
+
+        const content = document.getElementById("grievanceDetailsContent");
+        content.innerHTML = `
+          <div class="space-y-6">
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <span class="text-sm text-gray-500">Grievance ID:</span>
+                <div class="font-semibold">${grievance.id}</div>
+              </div>
+              <div>
+                <span class="text-sm text-gray-500">Status:</span>
+                <div><span class="badge-modern ${getStatusBadgeClass(
+                  grievance.status
+                )}">${grievance.status}</span></div>
+              </div>
+              <div>
+                <span class="text-sm text-gray-500">Category:</span>
+                <div class="font-semibold">${grievance.category}</div>
+              </div>
+              <div>
+                <span class="text-sm text-gray-500">Priority:</span>
+                <div><span class="badge-modern ${getPriorityBadgeClass(
+                  grievance.priority
+                )}">${grievance.priority}</span></div>
+              </div>
+              <div>
+                <span class="text-sm text-gray-500">Submitted:</span>
+                <div class="font-semibold">${grievance.dateSubmitted}</div>
+              </div>
+              <div>
+                <span class="text-sm text-gray-500">Last Update:</span>
+                <div class="font-semibold">${grievance.lastUpdate}</div>
+              </div>
+            </div>
+            
+            <div>
+              <h4 class="font-semibold text-gray-900 mb-2">Subject</h4>
+              <p class="text-lg">${grievance.subject}</p>
+            </div>
+            
+            <div>
+              <h4 class="font-semibold text-gray-900 mb-2">Description</h4>
+              <p class="text-gray-700">${grievance.description}</p>
+            </div>
+            
+            <div>
+              <h4 class="font-semibold text-gray-900 mb-2">Assigned Officer</h4>
+              <p class="text-gray-700">${grievance.assignedOfficer}</p>
+            </div>
+            
+            <div>
+              <h4 class="font-semibold text-gray-900 mb-3">Progress Updates</h4>
+              <div class="space-y-3">
+                ${grievance.updates
+                  .map(
+                    (update) => `
+                  <div class="flex items-start space-x-3 p-3 bg-gray-50 rounded-lg">
+                    <div class="w-3 h-3 bg-blue-500 rounded-full mt-1"></div>
+                    <div class="flex-1">
+                      <div class="text-sm text-gray-500">${update.date}</div>
+                      <div class="text-gray-900">${update.message}</div>
+                    </div>
+                  </div>
+                `
+                  )
+                  .join("")}
+              </div>
+            </div>
+            
+            <div class="flex space-x-3 pt-4">
+              <button onclick="trackGrievance('${
+                grievance.id
+              }')" class="btn-primary-modern">
+                <i class="fas fa-bell mr-2"></i>
+                Get Updates
+              </button>
+              <button onclick="closeGrievanceDetailsModal()" class="btn-outline-modern">
+                Close
+              </button>
+            </div>
+          </div>
+        `;
+
+        document
+          .getElementById("grievanceDetailsModal")
+          .classList.remove("hidden");
+        document.getElementById("grievanceDetailsModal").style.display = "flex";
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeGrievanceDetailsModal() {
+        document
+          .getElementById("grievanceDetailsModal")
+          .classList.add("hidden");
+        document.getElementById("grievanceDetailsModal").style.display = "none";
+        document.body.style.overflow = "auto";
       }
 
       function getCurrentLanguage() {
