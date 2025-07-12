@@ -139,7 +139,11 @@
                 data-translate="language_label"
                 >Language</label
               >
-              <select class="form-select-modern" id="workerLanguage">
+              <select
+                class="form-select-modern"
+                id="workerLanguage"
+                onchange="changeLanguage(this.value)"
+              >
                 <option value="en">English</option>
                 <option value="hi">हिंदी</option>
                 <option value="bn">বাংলা</option>
@@ -230,7 +234,11 @@
                 data-translate="language_label"
                 >Language</label
               >
-              <select class="form-select-modern" id="employerLanguage">
+              <select
+                class="form-select-modern"
+                id="employerLanguage"
+                onchange="changeLanguage(this.value)"
+              >
                 <option value="en">English</option>
                 <option value="hi">हिंदी</option>
                 <option value="bn">বাংলা</option>
@@ -302,8 +310,8 @@
       // Initialize page
       document.addEventListener("DOMContentLoaded", function () {
         checkUrlParams();
-        loadLanguage(getCurrentLanguage());
         checkOfflineStatus();
+        initializeLanguageSelectors();
 
         // Show user type modal if no type specified
         const urlParams = new URLSearchParams(window.location.search);
@@ -311,6 +319,19 @@
           showUserTypeModal();
         }
       });
+
+      function initializeLanguageSelectors() {
+        const currentLang = getCurrentLanguage();
+        const workerLangSelect = document.getElementById("workerLanguage");
+        const employerLangSelect = document.getElementById("employerLanguage");
+
+        if (workerLangSelect) {
+          workerLangSelect.value = currentLang;
+        }
+        if (employerLangSelect) {
+          employerLangSelect.value = currentLang;
+        }
+      }
 
       function checkUrlParams() {
         const urlParams = new URLSearchParams(window.location.search);

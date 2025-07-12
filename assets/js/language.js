@@ -40,6 +40,12 @@ async function loadLanguage(langCode) {
     console.log("Applying translations...");
     applyTranslations();
     updateLanguageDisplay();
+
+    // Trigger a final translation pass after a short delay to catch any dynamic content
+    setTimeout(() => {
+      console.log("Final translation pass...");
+      applyTranslations();
+    }, 500);
   } catch (error) {
     console.error("Error loading language:", error);
     languages[langCode] = getFallbackTranslations(langCode);
@@ -55,20 +61,31 @@ function applyTranslations() {
 
   elements.forEach((element, index) => {
     const key = element.getAttribute("data-translate");
-    const translation = getTranslation(key);
+    let translation = getTranslation(key);
 
     console.log(`Translating element ${index + 1}: ${key} -> ${translation}`);
 
-    if (translation) {
+    // Handle dynamic content
+    if (key === "welcome_message" && window.currentUserName) {
+      translation = `Welcome, ${window.currentUserName}! 🙏`;
+    } else if (key === "location_status" && window.currentUserLocation) {
+      translation = window.currentUserLocation;
+    }
+
+    if (translation && translation !== key) {
       if (element.tagName === "INPUT" || element.tagName === "TEXTAREA") {
         element.placeholder = translation;
       } else {
         element.textContent = translation;
       }
     } else {
-      console.warn(`No translation found for key: ${key}`);
+      console.warn(
+        `No translation found for key: ${key}, using fallback or keeping original`
+      );
     }
   });
+
+  console.log(`Translation complete for language: ${currentLanguage}`);
 }
 
 // Get translation for a key
@@ -82,13 +99,141 @@ function getTranslation(key) {
     return languages.en[key];
   }
 
-  // Return key if no translation found
+  // Return a default fallback for common missing keys
+  const commonDefaults = {
+    welcome_message: "Welcome to MigrantConnect! 🙏",
+    location_status: "📍 Your location information",
+    dashboard_title: "Dashboard",
+    select_language: "Select Language",
+    migrant_connect: "MigrantConnect",
+    my_profile: "My Profile",
+    notifications: "Notifications",
+    settings: "Settings",
+    home: "Home",
+    services: "Services",
+    profile: "Profile",
+    help: "Help",
+    about: "About",
+    contact: "Contact",
+    support: "Support",
+    privacy: "Privacy",
+    terms: "Terms",
+    account: "Account",
+    dashboard: "Dashboard",
+    menu: "Menu",
+    search_placeholder: "Search...",
+    no_results: "No results found",
+    load_more: "Load More",
+    show_all: "Show All",
+    hide: "Hide",
+    show: "Show",
+    yes: "Yes",
+    no: "No",
+    ok: "OK",
+    welcome: "Welcome",
+    hello: "Hello",
+    goodbye: "Goodbye",
+    thank_you: "Thank You",
+    please_wait: "Please wait...",
+    try_again: "Try Again",
+    refresh: "Refresh",
+    update: "Update",
+    continue: "Continue",
+    back: "Back",
+    next: "Next",
+    previous: "Previous",
+    finish: "Finish",
+    done: "Done",
+    complete: "Complete",
+    incomplete: "Incomplete",
+    new: "New",
+    old: "Old",
+    recent: "Recent",
+    popular: "Popular",
+    recommended: "Recommended",
+    featured: "Featured",
+    trending: "Trending",
+    latest: "Latest",
+    oldest: "Oldest",
+    name: "Name",
+    email: "Email",
+    phone: "Phone",
+    address: "Address",
+    city: "City",
+    state: "State",
+    country: "Country",
+    pincode: "PIN Code",
+    age: "Age",
+    gender: "Gender",
+    male: "Male",
+    female: "Female",
+    other: "Other",
+    select: "Select",
+    choose: "Choose",
+    option: "Option",
+    all: "All",
+    none: "None",
+    some: "Some",
+    many: "Many",
+    few: "Few",
+    several: "Several",
+    today: "Today",
+    yesterday: "Yesterday",
+    tomorrow: "Tomorrow",
+    this_week: "This Week",
+    last_week: "Last Week",
+    next_week: "Next Week",
+    this_month: "This Month",
+    last_month: "Last Month",
+    next_month: "Next Month",
+    this_year: "This Year",
+    last_year: "Last Year",
+    next_year: "Next Year",
+  };
+
+  if (commonDefaults[key]) {
+    return commonDefaults[key];
+  }
+
+  // Return formatted key if no translation found
   return key.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
 }
 
 // Change language
 function changeLanguage(langCode) {
   loadLanguage(langCode);
+}
+
+// Re-apply translations (useful after dynamic content updates)
+function reapplyTranslations() {
+  applyTranslations();
+}
+
+// Force translation refresh
+function refreshTranslations() {
+  applyTranslations();
+  updateLanguageDisplay();
+}
+
+// Initialize page translations (call this from any page)
+function initPageTranslations() {
+  const savedLanguage = localStorage.getItem("selectedLanguage") || "en";
+  console.log("Initializing page translations with language:", savedLanguage);
+
+  // Load language and apply translations multiple times to handle dynamic content
+  loadLanguage(savedLanguage);
+
+  // Set up periodic refresh to handle any dynamic content that appears later
+  let refreshCount = 0;
+  const refreshInterval = setInterval(() => {
+    refreshCount++;
+    refreshTranslations();
+
+    // Stop after 5 refreshes (10 seconds)
+    if (refreshCount >= 5) {
+      clearInterval(refreshInterval);
+    }
+  }, 2000);
 }
 
 // Get fallback translations (hardcoded for offline support)
@@ -347,8 +492,49 @@ function updateLanguageDisplay() {
   }
 }
 
+// Toggle language dropdown
+function toggleLanguageDropdown() {
+  const dropdown = document.getElementById("languageDropdown");
+  if (dropdown) {
+    dropdown.classList.toggle("hidden");
+  }
+}
+
 // Initialize language system
-document.addEventListener("DOMContentLoaded", function () {
+function initializeLanguage() {
   const savedLanguage = localStorage.getItem("selectedLanguage") || "en";
+  console.log("Initializing language system with:", savedLanguage);
   loadLanguage(savedLanguage);
+}
+
+// Initialize language system when DOM is ready
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("DOM loaded, initializing language...");
+  setTimeout(() => {
+    initPageTranslations();
+  }, 100);
 });
+
+// Also initialize immediately if document is already loaded
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", function () {
+    setTimeout(initPageTranslations, 100);
+  });
+} else {
+  console.log("Document already loaded, initializing language immediately...");
+  setTimeout(initPageTranslations, 100);
+}
+
+// Ensure translations are applied when the page becomes visible
+document.addEventListener("visibilitychange", function () {
+  if (!document.hidden) {
+    setTimeout(refreshTranslations, 100);
+  }
+});
+
+// Auto-refresh translations periodically to handle dynamic content
+setInterval(function () {
+  if (document.hasFocus()) {
+    refreshTranslations();
+  }
+}, 3000);

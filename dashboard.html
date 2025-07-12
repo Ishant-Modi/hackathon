@@ -153,15 +153,11 @@
           <h1
             class="text-4xl font-bold mb-4 fade-in"
             data-translate="welcome_message"
-          >
-            Welcome, Ravi Kumar! 🙏
-          </h1>
+          ></h1>
           <p
             class="text-xl text-blue-100 mb-6"
             data-translate="location_status"
-          >
-            📍 Currently in Delhi • From Bihar
-          </p>
+          ></p>
           <div
             class="inline-flex items-center bg-white bg-opacity-20 rounded-lg px-4 py-2"
           >
@@ -455,7 +451,6 @@
     <script>
       // Initialize page
       document.addEventListener("DOMContentLoaded", function () {
-        loadLanguage(getCurrentLanguage());
         checkOfflineStatus();
         updateWelcomeMessage();
       });
@@ -480,31 +475,70 @@
 
         // Map migrant IDs to user keys and names
         const userMapping = {
-          "MIG-BH-001": { key: "ravi_kumar", name: "Ravi Kumar" },
-          "MIG-UP-002": { key: "priya_sharma", name: "Priya Sharma" },
-          "MIG-WB-003": { key: "amit_das", name: "Amit Das" },
-          "MIG-RJ-004": { key: "sunita_devi", name: "Sunita Devi" },
+          "MIG-BH-001": {
+            key: "ravi_kumar",
+            name: "Ravi Kumar",
+            current: "Delhi",
+            home: "Bihar",
+          },
+          "MIG-UP-002": {
+            key: "priya_sharma",
+            name: "Priya Sharma",
+            current: "Maharashtra",
+            home: "Uttar Pradesh",
+          },
+          "MIG-WB-003": {
+            key: "amit_das",
+            name: "Amit Das",
+            current: "Karnataka",
+            home: "West Bengal",
+          },
+          "MIG-RJ-004": {
+            key: "sunita_devi",
+            name: "Sunita Devi",
+            current: "Gujarat",
+            home: "Rajasthan",
+          },
           // Allow direct key lookup as fallback
-          ravi_kumar: { key: "ravi_kumar", name: "Ravi Kumar" },
-          priya_sharma: { key: "priya_sharma", name: "Priya Sharma" },
-          amit_das: { key: "amit_das", name: "Amit Das" },
-          sunita_devi: { key: "sunita_devi", name: "Sunita Devi" },
+          ravi_kumar: {
+            key: "ravi_kumar",
+            name: "Ravi Kumar",
+            current: "Delhi",
+            home: "Bihar",
+          },
+          priya_sharma: {
+            key: "priya_sharma",
+            name: "Priya Sharma",
+            current: "Maharashtra",
+            home: "Uttar Pradesh",
+          },
+          amit_das: {
+            key: "amit_das",
+            name: "Amit Das",
+            current: "Karnataka",
+            home: "West Bengal",
+          },
+          sunita_devi: {
+            key: "sunita_devi",
+            name: "Sunita Devi",
+            current: "Gujarat",
+            home: "Rajasthan",
+          },
         };
 
         const userInfo = userMapping[migrantId];
         const userName = userInfo ? userInfo.name : "User";
+        const currentState = userInfo ? userInfo.current : "Unknown";
+        const homeState = userInfo ? userInfo.home : "Unknown";
 
         // Store the user key for other components
         if (userInfo) {
           localStorage.setItem("currentUserKey", userInfo.key);
         }
 
-        const welcomeElement = document.querySelector(
-          '[data-translate="welcome_message"]'
-        );
-        if (welcomeElement) {
-          welcomeElement.textContent = `Welcome, ${userName}! 🙏`;
-        }
+        // Store userName and location globally so translation system can use it
+        window.currentUserName = userName;
+        window.currentUserLocation = `📍 Currently in ${currentState} • From ${homeState}`;
       }
 
       function checkOfflineStatus() {

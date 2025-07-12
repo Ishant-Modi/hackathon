@@ -60,19 +60,19 @@
                   <a
                     href="#"
                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    onclick="changeLanguage('en')"
+                    onclick="changeLanguage('en'); toggleLanguageDropdown();"
                     >English</a
                   >
                   <a
                     href="#"
                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    onclick="changeLanguage('hi')"
+                    onclick="changeLanguage('hi'); toggleLanguageDropdown();"
                     >हिंदी</a
                   >
                   <a
                     href="#"
                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    onclick="changeLanguage('bn')"
+                    onclick="changeLanguage('bn'); toggleLanguageDropdown();"
                     >বাংলা</a
                   >
                 </div>
@@ -545,12 +545,18 @@
     </div>
 
     <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
     <script src="assets/js/qrcode.min.js"></script>
     <script src="assets/js/language.js"></script>
     <script>
       // Initialize page
       document.addEventListener("DOMContentLoaded", function () {
-        loadLanguage(getCurrentLanguage());
+        // Initialize language system first
+        if (typeof loadLanguage === "function") {
+          const savedLang = localStorage.getItem("selectedLanguage") || "en";
+          loadLanguage(savedLang);
+        }
+
         generateQRCode();
         setupEventListeners();
       });
@@ -575,6 +581,8 @@
       }
 
       function generateQRCode() {
+        console.log("Generating QR code for ID card");
+        
         // Worker data for QR code
         const workerData = {
           id: "MCW-DL-2024-1234",
@@ -589,86 +597,285 @@
 
         const qrData = JSON.stringify(workerData);
 
+        // Clear existing QR code
+        const qrContainer = document.getElementById("qrcode");
+        qrContainer.innerHTML = "";
+
         // Generate QR code for small display
         try {
-          const qrCode = new QRCode(document.getElementById("qrcode"), {
-            text: qrData,
-            width: 128,
-            height: 128,
-            colorDark: "#1f2937",
-            colorLight: "#ffffff",
-            correctLevel: QRCode.CorrectLevel.M,
-          });
+          // Try using the CDN QRCode library first
+          if (typeof QRCode !== "undefined" && QRCode.CorrectLevel) {
+            console.log("Using QRCode library for small QR");
+            const qrCode = new QRCode(qrContainer, {
+              text: qrData,
+              width: 128,
+              height: 128,
+              colorDark: "#1f2937",
+              colorLight: "#ffffff",
+              correctLevel: QRCode.CorrectLevel.M,
+            });
+          } else if (typeof window.QRCode !== "undefined") {
+            console.log("Using window.QRCode library for small QR");
+            // Create a canvas element
+            const canvas = document.createElement('canvas');
+            qrContainer.appendChild(canvas);
+            window.QRCode.toCanvas(canvas, qrData, {
+              width: 128,
+              margin: 1,
+              color: {
+                dark: "#1f2937",
+                light: "#ffffff",
+              },
+            });
+          } else {
+            console.log("Using QR API fallback for small QR");
+            // Use QR API as fallback
+            const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=128x128&data=${encodeURIComponent(qrData)}`;
+            qrContainer.innerHTML = `<img src="${qrApiUrl}" alt="QR Code" style="width: 128px; height: 128px; border-radius: 4px;" crossorigin="anonymous" />`;
+          }
+          console.log("Small QR code generated successfully");
         } catch (error) {
-          console.log("QR code library not loaded, showing placeholder");
+          console.error("Error generating small QR code:", error);
+          // Final fallback - use QR API
+          const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=128x128&data=${encodeURIComponent(qrData)}`;
+          qrContainer.innerHTML = `<img src="${qrApiUrl}" alt="QR Code" style="width: 128px; height: 128px; border-radius: 4px;" crossorigin="anonymous" />`;
         }
       }
 
       function showQRCode() {
-        document.getElementById("qrModal").classList.remove("hidden");
-        document.getElementById("qrModal").style.display = "flex";
+        console.log("Show QR Code button clicked");
+        
+        const qrModal = document.getElementById("qrModal");
+        const largeQRContainer = document.getElementById("largeQRCode");
+        
+        // Show the modal
+        qrModal.classList.remove("hidden");
+        qrModal.style.display = "flex";
         document.body.style.overflow = "hidden";
 
+        // Clear existing content and show loading
+        largeQRContainer.innerHTML = `
+          <div class="flex items-center justify-center w-64 h-64 bg-gray-100 rounded-lg">
+            <div class="text-center">
+              <i class="fas fa-spinner fa-spin text-3xl text-gray-400 mb-2"></i>
+              <p class="text-sm text-gray-500">Generating QR Code...</p>
+            </div>
+          </div>
+        `;
+
         // Generate large QR code for modal
-        const largeQRContainer = document.getElementById("largeQRCode");
-        largeQRContainer.innerHTML = "";
+        const workerData = {
+          id: "MCW-DL-2024-1234",
+          name: "Ram Kumar",
+          skill: "Construction Worker",
+          experience: "8 Years",
+          location: "Delhi",
+          verified: true,
+          phone: "+91 98765 43210",
+          issued: "2024-01-01",
+        };
+
+        const qrData = JSON.stringify(workerData);
+        console.log("Generating QR with data:", qrData);
 
         try {
-          const workerData = {
-            id: "MCW-DL-2024-1234",
-            name: "Ram Kumar",
-            skill: "Construction Worker",
-            experience: "8 Years",
-            location: "Delhi",
-            verified: true,
-            phone: "+91 98765 43210",
-            issued: "2024-01-01",
-          };
-
-          const qrData = JSON.stringify(workerData);
-
-          const largeQRCode = new QRCode(largeQRContainer, {
-            text: qrData,
-            width: 256,
-            height: 256,
-            colorDark: "#1f2937",
-            colorLight: "#ffffff",
-            correctLevel: QRCode.CorrectLevel.M,
-          });
+          // Try multiple QR generation methods
+          if (typeof QRCode !== "undefined" && QRCode.CorrectLevel) {
+            console.log("Using QRCode library");
+            const largeQRCode = new QRCode(largeQRContainer, {
+              text: qrData,
+              width: 256,
+              height: 256,
+              colorDark: "#1f2937",
+              colorLight: "#ffffff",
+              correctLevel: QRCode.CorrectLevel.M,
+            });
+          } else if (typeof window.QRCode !== "undefined") {
+            console.log("Using window.QRCode library");
+            // Create a canvas element
+            const canvas = document.createElement('canvas');
+            largeQRContainer.appendChild(canvas);
+            window.QRCode.toCanvas(canvas, qrData, {
+              width: 256,
+              margin: 2,
+              color: {
+                dark: "#1f2937",
+                light: "#ffffff",
+              },
+            });
+          } else {
+            console.log("Using QR API fallback");
+            // Use QR API as fallback for large QR
+            const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=${encodeURIComponent(qrData)}`;
+            largeQRContainer.innerHTML = `<img src="${qrApiUrl}" alt="QR Code" style="width: 256px; height: 256px; border-radius: 8px;" crossorigin="anonymous" />`;
+          }
         } catch (error) {
-          largeQRContainer.innerHTML =
-            '<i class="fas fa-qrcode text-6xl text-gray-400"></i>';
+          console.error("Error generating large QR code:", error);
+          // Final fallback - use QR API
+          const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=${encodeURIComponent(qrData)}`;
+          largeQRContainer.innerHTML = `<img src="${qrApiUrl}" alt="QR Code" style="width: 256px; height: 256px; border-radius: 8px;" crossorigin="anonymous" />`;
         }
       }
 
       function closeQRModal() {
-        document.getElementById("qrModal").classList.add("hidden");
-        document.getElementById("qrModal").style.display = "none";
+        console.log("Closing QR modal");
+        const qrModal = document.getElementById("qrModal");
+        qrModal.classList.add("hidden");
+        qrModal.style.display = "none";
         document.body.style.overflow = "auto";
       }
 
+      // Close modal when clicking outside of it
+      document.addEventListener("click", function(event) {
+        const qrModal = document.getElementById("qrModal");
+        if (event.target === qrModal) {
+          closeQRModal();
+        }
+      });
+
+      // Close modal with Escape key
+      document.addEventListener("keydown", function(event) {
+        if (event.key === "Escape") {
+          const qrModal = document.getElementById("qrModal");
+          if (!qrModal.classList.contains("hidden")) {
+            closeQRModal();
+          }
+        }
+      });
+
       function downloadQR() {
-        // Create a canvas with the QR code and download it
-        alert("QR code downloaded to your device!");
+        console.log("Download QR button clicked");
+        
+        const workerData = {
+          id: "MCW-DL-2024-1234",
+          name: "Ram Kumar",
+          skill: "Construction Worker",
+          experience: "8 Years",
+          location: "Delhi",
+          verified: true,
+          phone: "+91 98765 43210",
+          issued: "2024-01-01",
+        };
+
+        const qrData = JSON.stringify(workerData);
+
+        try {
+          // Try to get QR code from the modal if it exists
+          const largeQRContainer = document.getElementById("largeQRCode");
+          const existingCanvas = largeQRContainer.querySelector('canvas');
+          const existingImg = largeQRContainer.querySelector('img');
+
+          if (existingCanvas) {
+            // Download from existing canvas
+            const link = document.createElement('a');
+            link.download = 'MigrantConnect-QR-' + workerData.id + '.png';
+            link.href = existingCanvas.toDataURL();
+            link.click();
+            console.log("Downloaded QR from canvas");
+          } else if (existingImg) {
+            // Download from existing image
+            const link = document.createElement('a');
+            link.download = 'MigrantConnect-QR-' + workerData.id + '.png';
+            link.href = existingImg.src;
+            link.target = '_blank';
+            link.click();
+            console.log("Downloaded QR from image");
+          } else {
+            // Generate new QR for download using API
+            const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=512x512&format=png&data=${encodeURIComponent(qrData)}`;
+            const link = document.createElement('a');
+            link.download = 'MigrantConnect-QR-' + workerData.id + '.png';
+            link.href = qrApiUrl;
+            link.target = '_blank';
+            link.click();
+            console.log("Downloaded QR from API");
+          }
+          
+          // Show success message
+          const successMsg = document.createElement('div');
+          successMsg.innerHTML = `
+            <div style="position: fixed; top: 20px; right: 20px; background: #16a34a; color: white; padding: 12px 20px; border-radius: 8px; z-index: 10000; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+              <i class="fas fa-check-circle mr-2"></i>QR Code downloaded successfully!
+            </div>
+          `;
+          document.body.appendChild(successMsg);
+          
+          // Remove success message after 3 seconds
+          setTimeout(() => {
+            document.body.removeChild(successMsg);
+          }, 3000);
+
+        } catch (error) {
+          console.error("Error downloading QR code:", error);
+          alert("QR code download initiated! Check your downloads folder.");
+        }
       }
 
       function shareQR() {
+        console.log("Share QR button clicked");
+        
+        const workerData = {
+          id: "MCW-DL-2024-1234",
+          name: "Ram Kumar",
+          skill: "Construction Worker",
+        };
+
+        const shareData = {
+          title: "MigrantConnect Digital ID",
+          text: `${workerData.name} - ${workerData.skill}\nWorker ID: ${workerData.id}\n\nVerify my credentials with MigrantConnect`,
+          url: window.location.href,
+        };
+
         if (navigator.share) {
-          navigator.share({
-            title: "My MigrantConnect QR Code",
-            text: "Here is my digital worker ID QR code for verification",
-            url: window.location.href,
-          });
+          navigator.share(shareData)
+            .then(() => console.log('Successfully shared'))
+            .catch((error) => {
+              console.log('Error sharing:', error);
+              fallbackShare();
+            });
         } else {
-          // Fallback for browsers that don't support Web Share API
+          fallbackShare();
+        }
+
+        function fallbackShare() {
+          const textToShare = `${shareData.text}\n\nView profile: ${shareData.url}`;
+          
+          if (navigator.clipboard) {
+            navigator.clipboard.writeText(textToShare).then(() => {
+              showNotification("Profile information copied to clipboard!", "success");
+            }).catch(() => {
+              legacyCopyToClipboard(textToShare);
+            });
+          } else {
+            legacyCopyToClipboard(textToShare);
+          }
+        }
+
+        function legacyCopyToClipboard(text) {
           const textArea = document.createElement("textarea");
-          textArea.value =
-            "Check out my MigrantConnect profile: " + window.location.href;
+          textArea.value = text;
+          textArea.style.position = "fixed";
+          textArea.style.opacity = "0";
           document.body.appendChild(textArea);
           textArea.select();
           document.execCommand("copy");
           document.body.removeChild(textArea);
-          alert("Profile link copied to clipboard!");
+          showNotification("Profile information copied to clipboard!", "success");
+        }
+
+        function showNotification(message, type = "info") {
+          const notification = document.createElement('div');
+          const bgColor = type === "success" ? "#16a34a" : "#2563eb";
+          notification.innerHTML = `
+            <div style="position: fixed; top: 20px; right: 20px; background: ${bgColor}; color: white; padding: 12px 20px; border-radius: 8px; z-index: 10000; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+              <i class="fas fa-${type === "success" ? "check-circle" : "info-circle"} mr-2"></i>${message}
+            </div>
+          `;
+          document.body.appendChild(notification);
+          
+          setTimeout(() => {
+            document.body.removeChild(notification);
+          }, 3000);
         }
       }
 
@@ -679,6 +886,32 @@
       function getCurrentLanguage() {
         return localStorage.getItem("selectedLanguage") || "en";
       }
+
+      function updateLanguageDisplay() {
+        const currentLang = getCurrentLanguage();
+        const langDisplay = document.getElementById("currentLang");
+        if (langDisplay) {
+          const langNames = {
+            en: "English",
+            hi: "हिंदी",
+            bn: "বাংলা",
+            te: "తెలుగు",
+            ta: "தமிழ்",
+            mr: "मराठी",
+            gu: "ગુજરાતી",
+            kn: "ಕನ್ನಡ",
+            ml: "മലയാളം",
+            pa: "ਪੰਜਾਬੀ",
+            or: "ଓଡ଼ିଆ",
+          };
+          langDisplay.textContent = langNames[currentLang] || "English";
+        }
+      }
+
+      // Initialize language display on page load
+      document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(updateLanguageDisplay, 100);
+      });
     </script>
   </body>
 </html>
