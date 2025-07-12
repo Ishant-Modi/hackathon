@@ -260,49 +260,57 @@ function loadJobListings(jobs = jobListings) {
   container.innerHTML = jobs
     .map(
       (job) => `
-    <div class="card-modern hover:shadow-lg transition-shadow">
-      <div class="flex justify-between items-start mb-4">
-        <div>
-          <h3 class="text-lg font-semibold text-gray-900 mb-1">${job.title}</h3>
-          <p class="text-gray-600 mb-2">${job.company}</p>
-          <div class="flex items-center text-sm text-gray-500">
-            <i class="fas fa-map-marker-alt mr-1"></i>
-            <span>${job.location}</span>
-            <span class="mx-2">•</span>
-            <span>${job.type}</span>
+    <div class="card-modern">
+      <div class="job-card-content">
+        <div class="job-card-header">
+          <div class="flex justify-between items-start">
+            <div class="flex-1">
+              <h3 class="job-title">${job.title}</h3>
+              <p class="job-company">${job.company}</p>
+              <div class="job-location-info">
+                <i class="fas fa-map-marker-alt mr-1"></i>
+                <span>${job.location}</span>
+                <span class="mx-2">•</span>
+                <span>${job.type}</span>
+              </div>
+            </div>
+            <div class="flex-shrink-0">
+              ${
+                job.verified
+                  ? '<span class="badge-modern badge-success-modern">Verified</span>'
+                  : ""
+              }
+            </div>
           </div>
         </div>
-        <div class="text-right">
-          ${
-            job.verified
-              ? '<span class="badge-modern badge-success-modern">Verified</span>'
-              : ""
-          }
+        
+        <div class="job-card-body">
+          <div class="job-salary">${job.salary}</div>
+          <p class="job-description line-clamp-2">${job.description}</p>
         </div>
-      </div>
-      
-      <div class="mb-4">
-        <div class="text-lg font-semibold text-green-600 mb-2">${
-          job.salary
-        }</div>
-        <p class="text-sm text-gray-700 line-clamp-2">${job.description}</p>
-      </div>
-      
-      <div class="flex items-center justify-between">
-        <div class="text-sm text-gray-500">
-          <span>${job.posted}</span>
-          <span class="mx-2">•</span>
-          <span>${job.applications} applications</span>
-        </div>
-        <div class="flex space-x-2">
-          <button onclick="viewJobDetails('${
-            job.id
-          }')" class="btn-outline-modern">
-            View Details
-          </button>
-          <button onclick="applyForJob('${job.id}')" class="btn-primary-modern">
-            Apply Now
-          </button>
+        
+        <div class="job-card-footer">
+          <div class="job-meta">
+            <div>
+              <span>${job.posted}</span>
+              <span class="mx-2">•</span>
+              <span>${job.applications} applications</span>
+            </div>
+            <div class="job-actions">
+              <button onclick="viewJobDetails('${
+                job.id
+              }')" class="btn-outline-modern">
+                <i class="fas fa-eye mr-1"></i>
+                View Details
+              </button>
+              <button onclick="applyForJob('${
+                job.id
+              }')" class="btn-primary-modern">
+                <i class="fas fa-paper-plane mr-1"></i>
+                Apply Now
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
